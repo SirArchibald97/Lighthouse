@@ -6,6 +6,8 @@ export function getRankIcon(ranks) {
     const rankIcons = {
         "NOXCREW": "noxcrew.png",
         "MODERATOR": "moderator.png",
+        "CONTESTANT": "contestant.png",
+        "CREATOR": "creator.png",
         "GRAND_CHAMP_ROYALE": "grand_champ_royale.png",
         "GRAND_CHAMP": "grand_champ.png",
         "CHAMP": "champ.png"
@@ -17,4 +19,28 @@ export function getRankIcon(ranks) {
         }
     }
     return "default.png";
+}
+
+export function getStatusIcon(game) {
+    const games = {
+        "LOBBY": "",
+        "SKY_BATTLE": "",
+        "BATTLE_BOX": "",
+        "TGTTOS": "",
+        "HITW": ""
+    };
+    return games[game];
+}
+
+export function getStatusGame(game) {
+    const games = {
+        "LOBBY": "Lobby",
+        "SKY_BATTLE": "Sky Battle",
+        "BATTLE_BOX": "Battle Box",
+        "TGTTOS": "TGTTOS",
+        "HITW": "Hole in the Wall",
+        "PARKOUR_WARRIOR": "Parkour Warrior Dojo",
+        "PARKOUR_WARRIOR_SURVIVOR": "Parkour Warrior Survivor"
+    };
+    return games[game];
 }
