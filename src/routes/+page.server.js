@@ -1,4 +1,10 @@
 import { redirect } from '@sveltejs/kit';
+import db from "$lib/db.js";
+
+export async function load() {
+    const topRequests = await db.collection("requests").find().sort({ requests: -1 }).limit(4).toArray();
+    return { topRequests: JSON.parse(JSON.stringify(topRequests)) };
+}
 
 export const actions = {
     default: async ({ request }) => {

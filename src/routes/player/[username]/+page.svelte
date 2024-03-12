@@ -123,7 +123,7 @@
                             {#each data.player.party.members as member}
                                 <div class="flex flex-row">
                                     <img class="w-8 h-8" src={`https://cdn.islandstats.xyz/ranks/${getRankIcon(member.ranks)}`} alt={`${member.username}'s Rank'`} />
-                                    <a class="flex flex-row gap-1" href={`/player/${member.username}`}>
+                                    <a class="flex flex-row gap-1" href={`/player/${member.username}`} data-sveltekit-reload>
                                         <p class="text-lg ml-2 hover:underline">{member.username}</p>
                                         {#if member.username === data.player.party.leader.username}
                                             <Star />
@@ -145,7 +145,7 @@
                                 {#each fullList[friendIndex] as friend}
                                     <div class="flex flex-row gap-y-1">
                                         <img class="w-8 h-8 mr-2 rounded-md bg-slate-400" src={`https://cdn.islandstats.xyz/ranks/${getRankIcon(friend.ranks)}`} alt={`${friend.username}'s Rank'`} />
-                                        <a class="hover:underline" href={`/player/${friend.username}`}>
+                                        <a class="hover:underline" href={`/player/${friend.username}`} data-sveltekit-reload>
                                             <p class="text-lg">{friend.username}</p>
                                         </a>
                                         {#if data.player.friends.find(f => f.username === friend.username).status.online}<span class={`ml-2 self-center w-4 h-4 rounded-full bg-green-500`}></span>{/if}

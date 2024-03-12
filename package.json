@@ -19,6 +19,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"luxon": "^3.4.4"
+		"luxon": "^3.4.4",
+		"mongodb": "^6.5.0"
 	}
 }
