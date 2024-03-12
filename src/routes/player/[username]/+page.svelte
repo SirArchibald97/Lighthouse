@@ -36,7 +36,7 @@
     <title>{data.player.username ? `${data.player.username}'s Stats` : "Unknown Player"}</title>
     <link rel="icon" href={`https://crafatar.com/avatars/${data.uuid}.ico`} />
 </head>
-<main class="mx-4 sm:mx-24 my-4 h-full sm:h-dvh">
+<main class="py-4 mx-4 sm:mx-24 h-full sm:h-dvh">
     {#if data.success === false}
         <div class="border-2 border-red-300 bg-red-100 rounded-lg py-2">
             <p class="text-center text-2xl font-semibold">I couldn't find that player!</p>
@@ -46,7 +46,7 @@
         <div class="flex flex-col sm:flex-row gap-4">
 
             <!-- player card -->
-            <div class="border-2 border-slate-600 bg-slate-50 rounded-lg p-4 grow-0">
+            <div class="border-2 border-slate-400 bg-slate-50 rounded-lg p-4 grow-0">
                 <!-- username & rank -->
                 <div class="flex flex-row">
                     <img src={`https://cdn.islandstats.xyz/ranks/${getRankIcon(data.player.ranks)}`} class="w-10 h-10 rounded-md bg-slate-400" alt="" />
