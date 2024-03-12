@@ -12,9 +12,7 @@ export const actions = {
         const username = await data.get("username");
 
         const mj_res = await fetch(`https://api.mojang.com/users/profiles/minecraft/${username}`);
-        const { id, name } = await mj_res.json();
-        if (!id) throw error(404);
-
-        throw redirect(301, `/player/${name}`);
+        const { name } = await mj_res.json();
+        throw redirect(301, `/player/${name || username}`);
     }
 }

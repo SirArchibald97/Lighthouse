@@ -58,9 +58,21 @@
                 <!-- status -->
                 <div class="flex flex-col mt-2 text-lg">
                     {#if data.player.status.server.category === "GAME"}
-                        <p>Playing <span class="px-2 py-1 bg-slate-300 rounded-md">{getStatusGame(data.player.status.server.associatedGame)}</span></p>
-                    {:else}
-                        <p>In the <span class="px-2 py-1 bg-slate-300 rounded-md">{getStatusGame(data.player.status.server.associatedGame) || "Main"} Lobby</span></p>
+                        <p class="flex flex-row gap-x-2">
+                            Playing 
+                            <span class="flex flex-row gap-x-1 font-semibold">
+                                <img class="w-6 h-6 self-center" src={`https://cdn.islandstats.xyz/games/${getStatusIcon(data.player.status.server.associatedGame)}/icon.png`} alt={``} />
+                                {getStatusGame(data.player.status.server.associatedGame)}
+                            </span>
+                        </p>
+                    {:else if data.player.status.server.category === "LOBBY"}
+                        <p class="flex flex-row gap-x-2">
+                            In the 
+                            <span class="flex flex-row gap-x-1 font-semibold">
+                                <img class="w-6 h-6 self-center" src={`https://cdn.islandstats.xyz/games/${getStatusIcon(data.player.status.server.associatedGame) || "lobby"}/icon.png`} alt={``} />
+                                {getStatusGame(data.player.status.server.associatedGame) || "Main"} Lobby
+                            </span>
+                        </p>
                     {/if}
                 </div>
                 {/if}

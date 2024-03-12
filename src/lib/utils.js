@@ -21,26 +21,27 @@ export function getRankIcon(ranks) {
     return "default.png";
 }
 
-export function getStatusIcon(game) {
-    const games = {
-        "LOBBY": "",
-        "SKY_BATTLE": "",
-        "BATTLE_BOX": "",
-        "TGTTOS": "",
-        "HITW": ""
-    };
-    return games[game];
-}
-
 export function getStatusGame(game) {
     const games = {
-        "LOBBY": "Lobby",
         "SKY_BATTLE": "Sky Battle",
         "BATTLE_BOX": "Battle Box",
         "TGTTOS": "TGTTOS",
         "HITW": "Hole in the Wall",
         "PARKOUR_WARRIOR": "Parkour Warrior Dojo",
-        "PARKOUR_WARRIOR_SURVIVOR": "Parkour Warrior Survivor"
+        "PARKOUR_WARRIOR_SURVIVOR": "Parkour Warrior Survivor",
+        "DYNABALL": "Dynaball",
+    };
+    return games[game];
+}
+
+export function getStatusIcon(game) {
+    const games = {
+        "SKY_BATTLE": "sky_battle",
+        "BATTLE_BOX": "battle_box",
+        "TGTTOS": "tgttos",
+        "HITW": "hitw",
+        "PARKOUR_WARRIOR": "pkw",
+        "DYNABALL": "dynaball",
     };
     return games[game];
 }

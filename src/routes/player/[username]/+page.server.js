@@ -25,7 +25,7 @@ export async function load({ params }) {
     const { data: { player }} = await api_res.json();
 
     if (player) {
-        return { uuid: id, player, rank: getRankIcon(player.ranks) };
+        return { uuid: await formatUUID(id), player, rank: getRankIcon(player.ranks) };
     } else return { success: false, player: {} };
 }
 
