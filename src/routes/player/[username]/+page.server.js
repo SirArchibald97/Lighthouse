@@ -28,7 +28,7 @@ export async function load({ params }) {
             await db.collection("requests").insertOne({ username: name, uuid: await formatUUID(id), requests_current: 1 });
         }
 
-        return { uuid: await formatUUID(id), name: name, player, rank: getRankIcon(player.ranks), searches: { current: result.requests_current || 0, one_month_ago: result.requests_m1 || 0, two_months_ago: result.requests_m2 || 0 } };
+        return { uuid: await formatUUID(id), name: name, player, rank: getRankIcon(player.ranks), searches: { current: result?.requests_current || 0, one_month_ago: result?.requests_m1 || 0, two_months_ago: result?.requests_m2 || 0 } };
     } else return { success: false, player: {} };
 }
 
