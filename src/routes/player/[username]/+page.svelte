@@ -11,6 +11,8 @@
     const firstJoin = DateTime.fromISO(data.player.firstJoin);
     const lastJoin = DateTime.fromISO(data.player.lastJoin);
 
+    const averageSearches = Math.floor((data.searches.current + data.searches.one_month_ago + data.searches.two_months_ago) / 3)
+
     let fullList = [];
     let friendIndex = 0;
     let intList = [];
@@ -50,7 +52,7 @@
                 <!-- username & rank -->
                 <div class="flex flex-row">
                     <img src={`https://cdn.islandstats.xyz/ranks/${getRankIcon(data.player.ranks)}`} class="w-10 h-10 rounded-md bg-slate-400" alt="" />
-                    <p class="text-3xl font-bold p-1 pl-2">{data.player.username}</p>
+                    <p class="text-3xl font-bold p-1 pl-2">{data.name}</p>
                     <span class={`ml-2 self-center w-4 h-4 rounded-full ${data.player.status.online ? "bg-green-500" : "bg-red-500"}`}></span>
                 </div>
 
@@ -103,6 +105,9 @@
                     <p class="text-xl">{data.player.currency.materialDust.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
                     </div>
                 </div>
+
+                <!-- searches -->
+                <p class="mt-4 text-slate-500">Views: <span>{averageSearches} / month</span></p>
             </div>
 
 
@@ -110,15 +115,9 @@
             <div class="flex flex-col col-span-4 grow">
                 <!-- info tabs -->
                 <div class="flex flex-row text-xl mb-4 gap-x-4">
-                    <div class="flex flex-col">
-                        <button class={`bg-slate-50 border-b-red-500 rounded-sm px-6 py-2 ${infoTab === "stats" ? "font-bold border-b-4" : ""}`} on:click={() => switchInfoTab("stats")}>Stats</button>
-                    </div>
-                    <div class="flex flex-col">
-                        <button class={`bg-slate-50 border-b-red-500 rounded-sm px-6 py-2 ${infoTab === "party" ? "font-bold border-b-4" : ""}`} on:click={() => switchInfoTab("party")}>Party</button>
-                    </div>
-                    <div class="flex flex-col">
-                        <button class={`bg-slate-50 border-b-red-500 rounded-sm px-6 py-2 ${infoTab === "friends" ? "font-bold border-b-4" : ""}`} on:click={() => switchInfoTab("friends")}>Friends</button>
-                    </div>
+                    <button class={`bg-slate-50 hover:bg-slate-100 border-b-red-500 rounded-sm px-6 py-2 ${infoTab === "stats" ? "font-bold border-b-4" : ""}`} on:click={() => switchInfoTab("stats")}>Stats</button>
+                    <button class={`bg-slate-50 hover:bg-slate-100 border-b-red-500 rounded-sm px-6 py-2 ${infoTab === "party" ? "font-bold border-b-4" : ""}`} on:click={() => switchInfoTab("party")}>Party</button>
+                    <button class={`bg-slate-50 hover:bg-slate-100 border-b-red-500 rounded-sm px-6 py-2 ${infoTab === "friends" ? "font-bold border-b-4" : ""}`} on:click={() => switchInfoTab("friends")}>Friends</button>
                 </div>
 
                 {#if infoTab === "stats"}
@@ -174,7 +173,10 @@
                                 {/each}
                             </div>
                         {:else}
-                            <p class="text-xl font-semibold">Nothing to show here...</p>
+                            <div class="flex flex-row gap-x-2">
+                                <p class="text-xl">Nothing to show here yet!</p>
+                                <img class="w-6 h-6 self-center" src="https://cdn.islandstats.xyz/emojis/pensive.png" alt="Sad emoji"/>
+                            </div>
                         {/if}
                     </div>
                 {/if}                

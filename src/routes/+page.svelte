@@ -1,6 +1,7 @@
 <script>
     import Search from "../svgs/Search.svelte";
     import Star from "../svgs/Star.svelte";
+    import { getRankIcon } from "$lib/utils.js";
 
     export let data;
 </script>
@@ -10,7 +11,7 @@
 </head>
 <main>
     <div class="flex flex-col items-center px-4 sm:px-24 py-32 bg-red-500">
-        <p class="text-slate-100 text-6xl font-bold text-center">MCC Island Stats</p>
+        <p class="text-slate-100 text-5xl sm:text-6xl font-bold text-center">MCC Island Stats</p>
         <p class="text-slate-100 text-xl mt-2">by SirArchibald</p>
 
         <!-- search -->
@@ -26,9 +27,12 @@
 
     <!-- main -->
     <div class="mx-4 sm:mx-96 my-12">
-        <p class="text-slate-700 text-3xl text-center mb-8 font-semibold">Featured Profiles</p>
-        <div class="grid grid-cols-3 gap-6">
 
+        <!-- featured profiles -->
+        <p class="text-slate-700 text-3xl text-center mb-8 font-semibold">Featured Profiles</p>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-6">
+
+            <!-- favourites -->
             <div class="flex flex-col justify-center items-center bg-white border-2 border-slate-200 rounded-lg p-4 hover:bg-slate-100 duration-100">
                 <div class="flex flex-row gap-x-1">
                     <span class="self-center w-6 h-6"><Star /></span>
@@ -37,17 +41,26 @@
                 <p class="text-xl">Coming Soon</p>
             </div>
 
+            <!-- SirArchibald97 -->
             <a href={`/player/SirArchibald97`} class="bg-white border-2 border-slate-200 rounded-lg p-4 hover:bg-slate-100 duration-100">
                 <div class="flex flex-col justify-center items-center gap-y-3">
                     <img class="rounded-md" src={`https://crafatar.com/avatars/19f9fd28-558c-4959-98c2-fb1a18bed0a1?overlay`} alt={`SirArchibald97's Profile'`} />
-                    <p class="text-slate-700 text-center text-lg font-semibold self-center">SirArchibald97</p>
+                    <div class="flex flex-row gap-x-2">
+                        <img class="h-8 w-8 rounded-md hidden sm:block" src={`https://cdn.islandstats.xyz/ranks/moderator.png`} alt={`SirArchibald97's rank`} />
+                        <p class="text-slate-700 text-center text-lg font-semibold self-center">SirArchibald97</p>
+                    </div>
                 </div>
             </a>
-            {#each data.topRequests as profile}
+
+            <!-- most searched usernames -->
+            {#each data.profiles as profile}
                 <a href={`/player/${profile.username}`} class="bg-white border-2 border-slate-200 rounded-lg p-4 hover:bg-slate-100 duration-100">
                     <div class="flex flex-col justify-center items-center gap-y-3">
                         <img class="rounded-md" src={`https://crafatar.com/avatars/${profile.uuid}?overlay`} alt={`${profile.username}'s Profile'`} />
-                        <p class="text-slate-700 text-center text-lg font-semibold self-center">{profile.username}</p>
+                        <div class="flex flex-row gap-x-2">
+                            <img class="h-8 w-8 rounded-md bg-slate-400 hidden sm:block" src={`https://cdn.islandstats.xyz/ranks/${getRankIcon(profile.player.ranks)}`} alt={`${profile.username}'s rank`} />
+                            <p class="text-slate-700 text-center text-lg font-semibold self-center">{profile.username}</p>
+                        </div>
                     </div>
                 </a>
             {/each}
