@@ -17,8 +17,8 @@ export async function load() {
             method: "POST",
             body: JSON.stringify({ query })
         });
-        const { data: { player }} = await api_res.json();
-        if (player) profiles.push({ uuid: request.uuid, username: request.username, player: player });
+        const { data } = await api_res.json();
+        if (data.player) profiles.push({ uuid: request.uuid, username: request.username, player: data.player });
     }
     return { profiles };
 }

@@ -36,7 +36,7 @@
 
 <head>
     <title>{data.player.username ? `${data.player.username}'s Stats` : "Unknown Player"}</title>
-    <link rel="icon" href={`https://crafatar.com/avatars/${data.uuid}.ico`} />
+    <link rel="icon" href={`https://crafatar.com/avatars/${data.uuid}.png`} type="image/png" />
 </head>
 <main class="py-4 mx-4 sm:mx-24 h-full sm:h-dvh">
     {#if data.success === false}

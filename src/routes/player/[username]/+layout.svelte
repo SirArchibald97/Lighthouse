@@ -3,9 +3,6 @@
     import Home from "../../../svgs/Home.svelte";
 </script>
 
-<head>
-    <title>MCC Island Stats</title>
-</head>
 <main class="bg-slate-200">
     <header class="flex flex-row bg-red-500">
         <a href="/" class="self-center ml-4 flex flex-row gap-x-2 px-3 py-1 rounded-md bg-slate-100 text-slate-800 hover:bg-slate-300 duration-100">

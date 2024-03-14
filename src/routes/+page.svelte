@@ -8,6 +8,7 @@
 
 <head>
     <title>MCC Island Stats by SirArchibald</title>
+    <link rel="icon" href="%sveltekit.assets%/favicon.png" type="image/png" />
 </head>
 <main>
     <div class="flex flex-col items-center px-4 sm:px-24 py-32 bg-red-500">
