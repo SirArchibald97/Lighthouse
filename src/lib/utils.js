@@ -25,7 +25,7 @@ export function getStatusGame(game) {
     const games = {
         "SKY_BATTLE": "Sky Battle",
         "BATTLE_BOX": "Battle Box",
-        "TO_GET_TO_THE_OTHER_SIDE": "TGTTOS",
+        "TGTTOS": "TGTTOS",
         "HOLE_IN_THE_WALL": "Hole in the Wall",
         "PARKOUR_WARRIOR": "Parkour Warrior Dojo",
         "PARKOUR_WARRIOR_SURVIVOR": "Parkour Warrior Survivor",
@@ -38,7 +38,7 @@ export function getStatusIcon(game) {
     const games = {
         "SKY_BATTLE": "sky_battle",
         "BATTLE_BOX": "battle_box",
-        "TO_GET_TO_THE_OTHER_SIDE": "tgttos",
+        "TGTTOS": "tgttos",
         "HOLE_IN_THE_WALL": "hitw",
         "PARKOUR_WARRIOR": "pkw",
         "DYNABALL": "dynaball",
