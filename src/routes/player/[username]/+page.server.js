@@ -1,5 +1,5 @@
 import { redirect } from '@sveltejs/kit';
-import { API_KEY, DEV } from "$env/static/private";
+import { SAD_API_KEY, DEV } from "$env/static/private";
 import { formatUUID, getRankIcon } from "$lib/utils.js";
 import db from "$lib/db.js";
 
@@ -10,7 +10,7 @@ export async function load({ params }) {
     if (!id) return { success: false, player: {} };
     
     // fetch player data from the MCC Island API
-    const res = await fetch(`${DEV === "true" ? "http://localhost:3000" : "https://api.sirarchibald.dev"}/islandstats/${await formatUUID(id)}`, { headers: { "auth": `${API_KEY}` } });
+    const res = await fetch(`${DEV === "true" ? "http://localhost:3000" : "https://api.sirarchibald.dev"}/islandstats/${await formatUUID(id)}`, { headers: { "auth": `${SAD_API_KEY}` } });
     const { player } = await res.json();
 
     // if the player exists, update requests in the database and return data to client
