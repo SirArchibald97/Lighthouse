@@ -20,7 +20,7 @@
     }
     "Uknown";
 
-    const averageSearches = Math.floor((data.searches.current + data.searches.one_month_ago + data.searches.two_months_ago) / 3)
+    const averageSearches = Math.floor((data.searches?.current + data.searches?.one_month_ago + data.searches?.two_months_ago) / 3)
 
     let fullList = [];
     let friendIndex = 0;
