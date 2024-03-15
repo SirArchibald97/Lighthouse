@@ -1,6 +1,5 @@
-import { API_KEY } from "$env/static/private";
+import { SAD_API_KEY, DEV } from "$env/static/private";
 import { redirect } from '@sveltejs/kit';
-import { getPlayer } from "$lib/query.js";
 import db from "$lib/db.js";
 
 export async function load() {
@@ -11,14 +10,9 @@ export async function load() {
     if (topRequests.length === 0) return { profiles: [] };
     for (let request of topRequests) {
         // fetch player data from the MCC Island API
-        const query = getPlayer.replace("%%UUID%%", request.uuid);
-        const api_res = await fetch("https://api.mccisland.net/graphql", {
-            headers: { "Content-Type": "application/json", "X-API-Key": `${API_KEY}` },
-            method: "POST",
-            body: JSON.stringify({ query })
-        });
-        const { data } = await api_res.json();
-        if (data?.player) profiles.push({ uuid: request.uuid, username: request.username, player: data.player });
+        const res = await fetch(`${DEV === "true" ? "http://localhost:3000" : "https://api.sirarchibald.dev"}/islandstats/${request.uuid}`, { headers: { "auth": `${SAD_API_KEY}` } });
+        const { player } = await res.json();
+        if (player) profiles.push({ uuid: request.uuid, username: request.username, player: player });
     }
     return { profiles };
 }
