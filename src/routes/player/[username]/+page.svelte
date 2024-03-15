@@ -129,11 +129,11 @@
                 {:else if infoTab === "party"}
                     <!-- party -->
                     <div class="bg-slate-50 border-l-4 border-l-red-500 rounded-sm p-4">
-                        {#if data.player.party.active}
+                        {#if data.player.party.members.length > 0}
                             <p class="text-3xl font-bold mb-2">Party ({data.player.party.members.length} members)</p>
                             {#each data.player.party.members as member}
-                                <div class="flex flex-row">
-                                    <img class="w-8 h-8" src={`https://cdn.islandstats.xyz/ranks/${getRankIcon(member.ranks)}`} alt={`${member.username}'s Rank'`} />
+                                <div class="flex flex-row mb-2">
+                                    <img class="w-8 h-8 rounded-md bg-slate-400" src={`https://cdn.islandstats.xyz/ranks/${getRankIcon(member.ranks)}`} alt={`${member.username}'s Rank'`} />
                                     <a class="flex flex-row gap-1" href={`/player/${member.username}`} data-sveltekit-reload>
                                         <p class="text-lg ml-2 hover:underline">{member.username}</p>
                                         {#if member.username === data.player.party.leader.username}

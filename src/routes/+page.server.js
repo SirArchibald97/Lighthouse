@@ -18,7 +18,7 @@ export async function load() {
             body: JSON.stringify({ query })
         });
         const { data } = await api_res.json();
-        if (data.player) profiles.push({ uuid: request.uuid, username: request.username, player: data.player });
+        if (data?.player) profiles.push({ uuid: request.uuid, username: request.username, player: data.player });
     }
     return { profiles };
 }
