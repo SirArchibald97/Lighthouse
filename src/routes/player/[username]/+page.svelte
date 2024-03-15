@@ -2,12 +2,12 @@
     import { getRankIcon, getStatusGame, getStatusIcon } from "$lib/utils.js";
     import { DateTime } from "luxon";
     import Star from "../../../svgs/Star.svelte";
+    import { badges, calculateBadgeCompletion } from "$lib/data.js";
     
     export let data;
 
     let infoTab = "stats";
     function switchInfoTab(newTab) { infoTab = newTab; }
-
     
     let lastJoin = "Unknown";
     let firstJoin = "Unknown";
@@ -18,9 +18,11 @@
         lastJoin = `${lastJoinDate.day < 10 ? `0${lastJoinDate.day}`: lastJoinDate.day}/${lastJoinDate.month < 10 ? `0${lastJoinDate.month}`: lastJoinDate.month}/${lastJoinDate.year} @ ${lastJoinDate.hour < 10 ? `0${lastJoinDate.hour}`: lastJoinDate.hour}:${lastJoinDate.minute < 10 ? `0${lastJoinDate.minute}` : lastJoinDate.minute}`;
         firstJoin = `${firstJoinDate.day < 10 ? `0${firstJoinDate.day}`: firstJoinDate.day}/${firstJoinDate.month < 10 ? `0${firstJoinDate.month}`: firstJoinDate.month}/${firstJoinDate.year} @ ${firstJoinDate.hour < 10 ? `0${firstJoinDate.hour}`: firstJoinDate.hour}:${firstJoinDate.minute < 10 ? `0${firstJoinDate.minute}` : firstJoinDate.minute}`;
     }
-    "Uknown";
 
     const averageSearches = Math.floor((data.searches?.current + data.searches?.one_month_ago + data.searches?.two_months_ago) / 3)
+
+    let expandedCategory = "sb";
+    function switchCategory(category) { expandedCategory = category; }
 
     let fullList = [];
     let friendIndex = 0;
@@ -47,7 +49,7 @@
     <title>{data.player.username ? `${data.player.username}'s Stats` : "Unknown Player"}</title>
     <link rel="icon" href={`https://crafatar.com/avatars/${data.uuid}.png`} type="image/png" />
 </head>
-<main class="py-4 mx-4 sm:mx-24 h-full sm:h-dvh">
+<main class="py-4 mx-4 sm:mx-24 h-full sm:h-full">
     {#if data.success === false}
         <div class="border-2 border-red-300 bg-red-100 rounded-lg py-2">
             <p class="text-center text-2xl font-semibold">I couldn't find that player!</p>
@@ -57,7 +59,7 @@
         <div class="flex flex-col sm:flex-row gap-4">
 
             <!-- player card -->
-            <div class="border-2 border-slate-400 bg-slate-50 rounded-lg p-4 grow-0">
+            <div class="bg-slate-50 border-l-4 border-l-red-500 rounded-sm p-4">
                 <!-- username & rank -->
                 <div class="flex flex-row">
                     <img src={`https://cdn.islandstats.xyz/ranks/${getRankIcon(data.player.ranks)}`} class="w-10 h-10 rounded-md bg-slate-400" alt="" />
@@ -73,20 +75,20 @@
                 <!-- STATUS -->
                 {#if data.player.status}
                     <div class="flex flex-col mt-2 text-lg">
-                        {#if data.player.status.server.category === "GAME"}
+                        {#if data.player.status.server?.category === "GAME"}
                             <p class="flex flex-row gap-x-2">
                                 Playing 
                                 <span class="flex flex-row gap-x-1 font-semibold">
-                                    <img class="w-6 h-6 self-center" src={`https://cdn.islandstats.xyz/games/${getStatusIcon(data.player.status.server.associatedGame)}/icon.png`} alt={``} />
-                                    {getStatusGame(data.player.status.server.associatedGame)}
+                                    <img class="w-6 h-6 self-center" src={`https://cdn.islandstats.xyz/games/${getStatusIcon(data.player.status.server?.associatedGame)}/icon.png`} alt={``} />
+                                    {getStatusGame(data.player.status.server?.associatedGame)}
                                 </span>
                             </p>
-                        {:else if data.player.status.server.category === "LOBBY"}
+                        {:else if data.player.status.server?.category === "LOBBY"}
                             <p class="flex flex-row gap-x-2">
                                 In the 
                                 <span class="flex flex-row gap-x-1 font-semibold">
-                                    <img class="w-6 h-6 self-center" src={`https://cdn.islandstats.xyz/games/${getStatusIcon(data.player.status.server.associatedGame) || "lobby"}/icon.png`} alt={``} />
-                                    {getStatusGame(data.player.status.server.associatedGame) || "Main"} Lobby
+                                    <img class="w-6 h-6 self-center" src={`https://cdn.islandstats.xyz/games/${getStatusIcon(data.player.status.server?.associatedGame) || "lobby"}/icon.png`} alt={``} />
+                                    {getStatusGame(data.player.status.server?.associatedGame) || "Main"} Lobby
                                 </span>
                             </p>
                         {/if}
@@ -143,7 +145,152 @@
                 {#if infoTab === "stats"}
                     <!-- stats -->
                     <div class="bg-slate-50 border-l-4 border-l-red-500 rounded-sm p-4">
-                        <p class="text-xl">Coming Soon!</p>
+                        {#if data.player.statistics}
+                            <p class="text-3xl font-bold mb-2">Statistics</p>
+                            <div class="flex flex-col gap-y-3">
+
+                                <!--  BATTLE BOX -->
+                                <div class="flex flex-col items-start bg-slate-100 rounded-md border-2 border-slate-200 p-3">
+                                    <button on:click={() => switchCategory(expandedCategory === "bb" ? null : "bb")} class="flex flex-row w-full">
+                                        <img class="w-8 h-8 mr-2" src="https://cdn.islandstats.xyz/games/battle_box/icon.png" alt="Battle Box Stats" />
+                                        <p class="text-xl font-semibold">Battle Box</p>
+                                    </button>
+                                    {#if expandedCategory === "bb"}
+                                        <div class="grid grid-cols-3 items-start gap-y-4 mt-2 text-md gap-x-24">
+                                            <div>
+                                                <p>Rounds Won: <span class="font-semibold">{data.player.statistics.battle_box_quads_team_rounds_won.value}</span></p>
+                                                <p>Rounds Lost: <span class="font-semibold">{(data.player.statistics.battle_box_quads_games_played.value * 3) - data.player.statistics.battle_box_quads_team_rounds_won.value}</span></p>
+                                                <p>WLR: <span class="font-semibold">{Math.floor((((data.player.statistics.battle_box_quads_games_played.value * 3) - data.player.statistics.battle_box_quads_team_rounds_won.value) / data.player.statistics.battle_box_quads_team_rounds_won.value) * 100) / 100}</span></p>
+                                            </div>
+                                            <div>
+                                                <p>Kills: <span class="font-semibold">{data.player.statistics.battle_box_quads_players_killed.value}</span></p>
+                                                <p>Deaths: <span class="font-semibold">{data.player.statistics.battle_box_quads_times_eliminated.value}</span></p>
+                                                <p>KDR: <span class="font-semibold">{Math.floor((data.player.statistics.battle_box_quads_players_killed.value / data.player.statistics.battle_box_quads_times_eliminated.value) * 100) / 100}</span></p>
+                                            </div>
+                                            <div>
+                                                <p>Melee Kills: <span class="font-semibold">{data.player.statistics.battle_box_quads_melee_kills.value}</span></p>
+                                                <p>Ranged Kills: <span class="font-semibold">{data.player.statistics.battle_box_quads_ranged_kills.value}</span></p>
+                                                <p>Explosive Kills: <span class="font-semibold">{data.player.statistics.battle_box_quads_explosive_kills.value}</span></p>
+                                            </div>
+                                            <div>
+                                                <p>Games Played: <span class="font-semibold">{data.player.statistics.battle_box_quads_games_played.value}</span></p>
+                                                <p>Team 1st Places: <span class="font-semibold">{data.player.statistics.battle_box_quads_team_first_place.value}</span></p>
+                                                <p>Team 2nd Places: <span class="font-semibold">{data.player.statistics.battle_box_quads_team_second_place.value}</span></p>
+                                                <p>Team 3rd Places: <span class="font-semibold">{data.player.statistics.battle_box_quads_team_third_place.value}</span></p>
+                                                <p>Team 4th Places: <span class="font-semibold">{data.player.statistics.battle_box_quads_team_fourth_place.value}</span></p>
+                                            </div>
+                                            <div>
+                                                <p>Individual 1st Places: <span class="font-semibold">{data.player.statistics.battle_box_quads_first_place_individual.value}</span> <span class="text-slate-500">({Math.round((data.player.statistics.battle_box_quads_first_place_individual.value / data.player.statistics.battle_box_quads_games_played.value) * 100)}%)</span></p>
+                                                <p>Individual Top 3: <span class="font-semibold">{data.player.statistics.battle_box_quads_top_three_individual.value}</span> <span class="text-slate-500">({Math.round((data.player.statistics.battle_box_quads_top_three_individual.value / data.player.statistics.battle_box_quads_games_played.value) * 100)}%)</span></p>
+                                                <p>Individual Top 5: <span class="font-semibold">{data.player.statistics.battle_box_quads_top_five_individual.value}</span> <span class="text-slate-500">({Math.round((data.player.statistics.battle_box_quads_top_five_individual.value / data.player.statistics.battle_box_quads_games_played.value) * 100)}%)</span></p>
+                                                <p>Concrete Broken: <span class="font-semibold">{data.player.statistics.battle_box_quads_enemy_wool_broken.value}</span> </p>
+                                                <p>Concrete Placed: <span class="font-semibold">{data.player.statistics.battle_box_quads_wool_placed.value}</span></p>
+                                            </div>
+                                        </div>
+
+                                        <p class="font-semibold mt-4 mb-2 text-xl">Badges <span class="text-slate-400">({calculateBadgeCompletion(data.player, badges.battle_box)}%)</span></p>
+                                        <div class="grid grid-cols-5 gap-5">
+                                            {#each badges.battle_box as badge}
+                                                <div class="flex flex-row gap-x-2">
+                                                    <img class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/battle_box/${badge.icon}.png`} alt={badge.name} />
+                                                    <div class="flex flex-col items-start">
+                                                        <p class={`font-semibold ${data.player.statistics[badge.stat].value > 0 ? "text-green-500" : "text-red-500"}`}>{badge.name}</p>
+                                                        <p>Completed <span class="font-semibold">{data.player.statistics[badge.stat].value}</span> time{data.player.statistics[badge.stat].value === 1 ? "" : "s"}</p>
+                                                    </div>
+                                                </div>
+                                            {/each}
+                                        </div>
+                                    {/if}
+                                    </div>
+
+                                <!--  SKY BATTLE -->
+                                <div class="bg-slate-100 rounded-md border-2 border-slate-200 p-3">
+                                    <button on:click={() => switchCategory(expandedCategory === "sb" ? null : "sb")} class="flex flex-row w-full">
+                                        <img class="w-8 h-8 mr-2" src="https://cdn.islandstats.xyz/games/sky_battle/icon.png" alt="Battle Box Stats" />
+                                        <p class="text-xl font-semibold">Sky Battle</p>
+                                    </button>
+                                    {#if expandedCategory === "sb"}
+                                        <div class="grid grid-cols-3 items-start gap-y-4 mt-2 text-md gap-x-24">
+                                            <div>
+                                                <p>Games Won: <span class="font-semibold">{data.player.statistics.sky_battle_quads_survival_first_place.value}</span></p>
+                                                <p>Games Lost: <span class="font-semibold">{data.player.statistics.sky_battle_quads_games_played.value - data.player.statistics.sky_battle_quads_survival_first_place.value}</span></p>
+                                                <p>WLR: <span class="font-semibold">{Math.floor((data.player.statistics.sky_battle_quads_survival_first_place.value / (data.player.statistics.sky_battle_quads_games_played.value - data.player.statistics.sky_battle_quads_survival_first_place.value)) * 100) / 100}</span></p>
+                                            </div>
+                                            <div>
+                                                <p>Kills: <span class="font-semibold">{data.player.statistics.sky_battle_quads_players_killed.value}</span></p>
+                                                <p>Deaths: <span class="font-semibold">{data.player.statistics.sky_battle_quads_games_played.value - data.player.statistics.sky_battle_quads_survival_first_place.value}</span></p>
+                                                <p>KDR: <span class="font-semibold">{Math.floor((data.player.statistics.sky_battle_quads_players_killed.value / (data.player.statistics.sky_battle_quads_games_played.value - data.player.statistics.sky_battle_quads_survival_first_place.value)) * 100) / 100}</span></p>
+                                            </div>
+                                            <div>
+                                                <p>Melee Kills: <span class="font-semibold">{data.player.statistics.sky_battle_quads_melee_kills.value}</span></p>
+                                                <p>Ranged Kills: <span class="font-semibold">{data.player.statistics.sky_battle_quads_ranged_kills.value}</span></p>
+                                                <p>Explosive Kills: <span class="font-semibold">{data.player.statistics.sky_battle_quads_explosive_kills.value}</span></p>
+                                            </div>
+                                            <div>
+                                                <p>Games Played: <span class="font-semibold">{data.player.statistics.sky_battle_quads_games_played.value}</span></p>
+                                                <p>Individual 1st Places: <span class="font-semibold">{data.player.statistics.sky_battle_quads_survival_first_place.value}</span></p>
+                                                <p>Individual Top 3: <span class="font-semibold">{data.player.statistics.sky_battle_quads_survival_top_three.value}</span></p>
+                                                <p>Individual Top 5: <span class="font-semibold">{data.player.statistics.sky_battle_quads_survival_top_five.value}</span></p>
+                                                <p>Individual Top 8: <span class="font-semibold">{data.player.statistics.sky_battle_quads_survival_top_eight.value}</span></p>
+                                            </div>
+                                            <div>
+                                                <p>Chests Looted: <span class="font-semibold">{data.player.statistics.sky_battle_quads_chests_looted.value}</span></p>
+                                                <p>Golden Chests Looted: <span class="font-semibold">{data.player.statistics.sky_battle_quads_golden_chests_looted.value}</span></p>
+                                                <p>Survived 1 minute: <span class="font-semibold">{data.player.statistics.sky_battle_quads_survived_minute.value}</span> time{data.player.statistics.sky_battle_quads_survived_minute.value !== 1 ? "s" : ""}</p>
+                                                <p>Survived 2 minutes: <span class="font-semibold">{data.player.statistics.sky_battle_quads_survived_two_minute.value}</span> time{data.player.statistics.sky_battle_quads_survived_two_minute.value !== 1 ? "s" : ""}</p>
+                                            </div>
+                                        </div>
+
+                                        <p class="font-semibold mt-4 mb-2 text-xl">Badges <span class="text-slate-400">({calculateBadgeCompletion(data.player, badges.sky_battle)}%)</span></p>
+                                        <div class="grid grid-cols-5 gap-5">
+                                            {#each badges.sky_battle as badge}
+                                                <div class="flex flex-row gap-x-2">
+                                                    <img class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/sky_battle/${badge.icon}.png`} alt={badge.name} />
+                                                    <div class="flex flex-col items-start">
+                                                        <p class={`font-semibold ${data.player.statistics[badge.stat].value > 0 ? "text-green-500" : "text-red-500"}`}>{badge.name}</p>
+                                                        <p>Completed <span class="font-semibold">{data.player.statistics[badge.stat].value}</span> time{data.player.statistics[badge.stat].value === 1 ? "" : "s"}</p>
+                                                    </div>
+                                                </div>
+                                            {/each}
+                                        </div>
+                                    {/if}
+                                </div>
+
+                                <!--  BATTLE BOX -->
+                                <button on:click={() => switchCategory(expandedCategory === "tgttos" ? null : "tgttos")} class="bg-slate-100 rounded-md border-2 border-slate-200 p-3">
+                                    <div class="flex flex-row">
+                                        <img class="w-8 h-8 mr-2" src="https://cdn.islandstats.xyz/games/tgttos/icon.png" alt="Battle Box Stats" />
+                                        <p class="text-xl font-semibold">To Get To The Other Side</p>
+                                    </div>
+                                </button>
+
+                                <!--  BATTLE BOX -->
+                                <button on:click={() => switchCategory(expandedCategory === "hitw" ? null : "hitw")} class="bg-slate-100 rounded-md border-2 border-slate-200 p-3">
+                                    <div class="flex flex-row">
+                                        <img class="w-8 h-8 mr-2" src="https://cdn.islandstats.xyz/games/hitw/icon.png" alt="Battle Box Stats" />
+                                        <p class="text-xl font-semibold">Hole in the Wall</p>
+                                    </div>
+                                </button>
+
+                                <!--  BATTLE BOX -->
+                                <button on:click={() => switchCategory(expandedCategory === "dynaball" ? null : "dynaball")} class="bg-slate-100 rounded-md border-2 border-slate-200 p-3">
+                                    <div class="flex flex-row">
+                                        <img class="w-8 h-8 mr-2" src="https://cdn.islandstats.xyz/games/dynaball/icon.png" alt="Battle Box Stats" />
+                                        <p class="text-xl font-semibold">Dynaball</p>
+                                    </div>
+                                </button>
+
+                                <!--  BATTLE BOX -->
+                                <button on:click={() => switchCategory(expandedCategory === "pkw" ? null : "pkw")} class="bg-slate-100 rounded-md border-2 border-slate-200 p-3">
+                                    <div class="flex flex-row">
+                                        <img class="w-8 h-8 mr-2" src="https://cdn.islandstats.xyz/games/pkw/icon.png" alt="Battle Box Stats" />
+                                        <p class="text-xl font-semibold">Parkour Warrior</p>
+                                    </div>
+                                </button>
+                            </div>
+                        {:else}
+                            <p class="text-xl font-semibol">Statistics are disabled!</p>
+                        {/if}
                     </div>
 
                 {:else if infoTab === "party"}

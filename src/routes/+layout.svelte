@@ -2,10 +2,10 @@
     import "../app.css";
 </script>
 
-<main>
+<main class="flex flex-col h-screen bg-slate-200">
     <slot />
 
-    <footer class="bg-red-500 p-4 mx-auto">
+    <footer class="w-full bg-red-500 p-4 bottom-0">
         <div>
             <p class="text-center text-slate-100">© 2024 <a href="https://sirarchibald.dev" class="underline hover:text-slate-200">SirArchibald</a> • Not affiliated with Minecraft or Noxcrew!</p>
         </div>
