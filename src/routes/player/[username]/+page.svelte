@@ -21,7 +21,7 @@
 
     const averageSearches = Math.floor((data.searches?.current + data.searches?.one_month_ago + data.searches?.two_months_ago) / 3)
 
-    let expandedCategory = "sb";
+    let expandedCategory = null;
     function switchCategory(category) { expandedCategory = category; }
 
     let fullList = [];
