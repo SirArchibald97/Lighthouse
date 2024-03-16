@@ -297,7 +297,7 @@
                     <!-- party -->
                     <div class="bg-slate-50 border-l-4 border-l-red-500 rounded-sm p-4">
                         {#if data.player.social}
-                            {#if data.player.social.party.members?.length > 0}
+                            {#if data.player.social.party.active}
                                 <p class="text-3xl font-bold mb-2">Party ({data.player.social.party.members?.length} members)</p>
                                 {#each data.player.social.party.members || [] as member}
                                     <div class="flex flex-row mb-2">
