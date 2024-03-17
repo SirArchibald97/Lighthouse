@@ -1,8 +1,8 @@
 <script>
     import { getRankIcon, getStatusGame, getStatusIcon } from "$lib/utils.js";
+    import { badges, calculateBadgeCompletion, calculateBadgeTier } from "$lib/data.js";
     import { DateTime } from "luxon";
     import Star from "../../../svgs/Star.svelte";
-    import { badges, calculateBadgeCompletion, calculateBadgeTier, convertTicks, getFastestTime } from "$lib/data.js";
     
     export let data;
 
@@ -18,8 +18,6 @@
         lastJoin = `${lastJoinDate.day < 10 ? `0${lastJoinDate.day}`: lastJoinDate.day}/${lastJoinDate.month < 10 ? `0${lastJoinDate.month}`: lastJoinDate.month}/${lastJoinDate.year} @ ${lastJoinDate.hour < 10 ? `0${lastJoinDate.hour}`: lastJoinDate.hour}:${lastJoinDate.minute < 10 ? `0${lastJoinDate.minute}` : lastJoinDate.minute}`;
         firstJoin = `${firstJoinDate.day < 10 ? `0${firstJoinDate.day}`: firstJoinDate.day}/${firstJoinDate.month < 10 ? `0${firstJoinDate.month}`: firstJoinDate.month}/${firstJoinDate.year} @ ${firstJoinDate.hour < 10 ? `0${firstJoinDate.hour}`: firstJoinDate.hour}:${firstJoinDate.minute < 10 ? `0${firstJoinDate.minute}` : firstJoinDate.minute}`;
     }
-
-    const averageSearches = Math.floor((data.searches?.current + data.searches?.one_month_ago + data.searches?.two_months_ago) / 3)
 
     let expandedCategory = null;
     function switchCategory(category) { expandedCategory = category; }
@@ -49,7 +47,7 @@
     <title>{data.player.username ? `${data.player.username}'s Stats` : "Unknown Player"}</title>
     <link rel="icon" href={`https://crafatar.com/avatars/${data.uuid}.png`} type="image/png" />
 </head>
-<main class="py-4 mx-4 sm:mx-24 h-full sm:h-full">
+<main class="py-4 mx-4 sm:mx-24">
     {#if data.success === false}
         <div class="border-2 border-red-300 bg-red-100 rounded-lg py-2">
             <p class="text-center text-2xl font-semibold">I couldn't find that player!</p>
@@ -57,81 +55,85 @@
     {:else}
         <!-- page container -->
         <div class="flex flex-col sm:flex-row gap-4">
-
-            <!-- player card -->
-            <div class="bg-slate-50 border-l-4 border-l-red-500 rounded-sm p-4 self-center sm:self-start">
-                <!-- username & rank -->
-                <div class="flex flex-row">
-                    <img src={`https://cdn.islandstats.xyz/ranks/${getRankIcon(data.player.ranks)}`} class="w-10 h-10 rounded-md bg-slate-400" alt="" />
-                    <p class="text-3xl font-bold p-1 pl-2">{data.name}</p>
-                    {#if data.player.status}
-                        <span class={`ml-2 self-center w-4 h-4 rounded-full ${data.player.status?.online ? "bg-green-500" : "bg-red-500"}`}></span>
-                    {:else}
-                        <span class={`ml-2 self-center w-4 h-4 rounded-full bg-slate-50`}></span>
-                    {/if}
-                </div>
-
-
-                <!-- STATUS -->
-                {#if data.player.status}
-                    <div class="flex flex-col mt-2 text-lg">
-                        {#if data.player.status.server?.category === "GAME"}
-                            <p class="flex flex-row gap-x-2">
-                                Playing 
-                                <span class="flex flex-row gap-x-1 font-semibold">
-                                    <img class="w-6 h-6 self-center" src={`https://cdn.islandstats.xyz/games/${getStatusIcon(data.player.status.server?.associatedGame)}/icon.png`} alt={``} />
-                                    {getStatusGame(data.player.status.server?.associatedGame)}
-                                </span>
-                            </p>
-                        {:else if data.player.status.server?.category === "LOBBY"}
-                            <p class="flex flex-row gap-x-2">
-                                In the 
-                                <span class="flex flex-row gap-x-1 font-semibold">
-                                    <img class="w-6 h-6 self-center" src={`https://cdn.islandstats.xyz/games/${getStatusIcon(data.player.status.server?.associatedGame) || "lobby"}/icon.png`} alt={``} />
-                                    {getStatusGame(data.player.status.server?.associatedGame) || "Main"} Lobby
-                                </span>
-                            </p>
+            <div class="basis-1/5 flex flex-col gap-y-4 mb-8">
+                <!-- player card -->
+                <div class="bg-slate-50 border-l-4 border-l-red-500 rounded-sm p-4 sm:self-start w-full">
+                    <!-- username & rank -->
+                    <div class="flex flex-row items-center">
+                        <img src={`https://cdn.islandstats.xyz/ranks/${getRankIcon(data.player.ranks)}`} class="w-10 h-10 rounded-[8px] bg-slate-400" alt="" />
+                        <p class="text-3xl font-bold pl-2">{data.name}</p>
+                        {#if data.player.status}
+                            <span class={`ml-2 w-4 h-4 rounded-full ${data.player.status?.online ? "bg-green-500" : "bg-red-500"}`}></span>
+                        {:else}
+                            <span class={`ml-2 w-4 h-4 rounded-full bg-slate-50`}></span>
                         {/if}
                     </div>
-
-                    <!-- dates -->
-                    <div class="flex flex-col mt-4 text-lg">
-                        <p>Last joined: <span class="font-semibold">{lastJoin}</span></p>
-                        <p>First joined: <span class="font-semibold">{firstJoin}</span></p>
+    
+    
+                    <!-- STATUS -->
+                    {#if data.player.status}
+                        <div class="flex flex-col mt-2 text-lg">
+                            {#if data.player.status.server?.category === "GAME"}
+                                <p class="flex flex-row gap-x-2">
+                                    Playing 
+                                    <span class="flex flex-row gap-x-1 font-semibold">
+                                        <img class="w-6 h-6 self-center" src={`https://cdn.islandstats.xyz/games/${getStatusIcon(data.player.status.server?.associatedGame)}/icon.png`} alt={``} />
+                                        {getStatusGame(data.player.status.server?.associatedGame)}
+                                    </span>
+                                </p>
+                            {:else if data.player.status.server?.category === "LOBBY"}
+                                <p class="flex flex-row gap-x-2">
+                                    In the 
+                                    <span class="flex flex-row gap-x-1 font-semibold">
+                                        <img class="w-6 h-6 self-center" src={`https://cdn.islandstats.xyz/games/${getStatusIcon(data.player.status.server?.associatedGame) || "lobby"}/icon.png`} alt={``} />
+                                        {getStatusGame(data.player.status.server?.associatedGame) || "Main"} Lobby
+                                    </span>
+                                </p>
+                            {/if}
+                        </div>
+    
+                        <!-- dates -->
+                        <div class="flex flex-col mt-4 text-lg">
+                            <p>Last joined: <span class="font-semibold">{lastJoin}</span></p>
+                            <p>First joined: <span class="font-semibold">{firstJoin}</span></p>
+                        </div>
+                    {/if}
+    
+    
+                    <!-- WALLET -->
+                    <div class="flex flex-col mt-4">
+                        <p class="text-xl font-semibold">Wallet</p>
+                        <div class="flex flex-row gap-2 my-1">
+                            <img src="https://cdn.islandstats.xyz/icons/coin.png" class="w-8 h-8" alt="Coins" />
+                            <p class="text-lg">{data.player.collections?.currency.coins.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') || "Unknown"}</p>
+                        </div>
+                        <div class="flex flex-row gap-2 my-1">
+                            <img src="https://cdn.islandstats.xyz/icons/gem.png" class="w-8 h-8" alt="Coins" />
+                            <p class="text-lg">{data.player.collections?.currency.gems.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') || "Unknown"}</p>
+                        </div>
+                        <div class="flex flex-row gap-2 my-1">
+                            <img src="https://cdn.islandstats.xyz/icons/silver.png" class="w-8 h-8" alt="Coins" />
+                            <p class="text-lg">{data.player.collections?.currency.silver.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') || "Unknown"}</p>
+                        </div>
+                        <div class="flex flex-row gap-2 my-1">
+                            <img src="https://cdn.islandstats.xyz/icons/material_dust.png" class="w-8 h-8" alt="Coins" />
+                            <p class="text-lg">{data.player.collections?.currency.materialDust.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') || "Unknown"}</p>
+                        </div>
+                        <div class="flex flex-row gap-2 my-1">
+                            <img src="https://cdn.islandstats.xyz/icons/royal_reputation.png" class="w-8 h-8" alt="Coins" />
+                            <p class="text-lg">{data.player.collections?.currency.royalReputation.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') || "Unknown"}</p>
+                        </div>
+    
                     </div>
-                {/if}
-
-
-                <!-- WALLET -->
-                <div class="flex flex-col mt-4">
-                    <p class="text-xl font-semibold">Wallet</p>
-                    <div class="flex flex-row gap-2 my-1">
-                        <img src="https://cdn.islandstats.xyz/icons/coin.png" class="w-8 h-8" alt="Coins" />
-                        <p class="text-lg">{data.player.collections?.currency.coins.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') || "Unknown"}</p>
-                    </div>
-                    <div class="flex flex-row gap-2 my-1">
-                        <img src="https://cdn.islandstats.xyz/icons/gem.png" class="w-8 h-8" alt="Coins" />
-                        <p class="text-lg">{data.player.collections?.currency.gems.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') || "Unknown"}</p>
-                    </div>
-                    <div class="flex flex-row gap-2 my-1">
-                        <img src="https://cdn.islandstats.xyz/icons/silver.png" class="w-8 h-8" alt="Coins" />
-                        <p class="text-lg">{data.player.collections?.currency.silver.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') || "Unknown"}</p>
-                    </div>
-                    <div class="flex flex-row gap-2 my-1">
-                        <img src="https://cdn.islandstats.xyz/icons/material_dust.png" class="w-8 h-8" alt="Coins" />
-                        <p class="text-lg">{data.player.collections?.currency.materialDust.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') || "Unknown"}</p>
-                    </div>
-                    <div class="flex flex-row gap-2 my-1">
-                        <img src="https://cdn.islandstats.xyz/icons/royal_reputation.png" class="w-8 h-8" alt="Coins" />
-                        <p class="text-lg">{data.player.collections?.currency.royalReputation.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') || "Unknown"}</p>
-                    </div>
-
+    
+                    <!-- searches -->
+                    <p class="mt-4 text-slate-500">Views: <span>{data.views}</span></p>
                 </div>
 
-                <!-- searches -->
-                <p class="mt-4 text-slate-500">Views: <span>{averageSearches} / month</span></p>
+                <div class="bg-slate-50 border-l-4 border-l-red-500 rounded-sm p-4 self-center sm:self-start w-full">
+                    <p><span class="font-semibold">Not seeing your stats?</span> Make sure to set your API preferences in your in-game settings!</p>
+                </div>
             </div>
-
 
             <!-- info card -->
             <div class="flex flex-col col-span-4 grow">

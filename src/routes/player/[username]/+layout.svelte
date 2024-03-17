@@ -3,11 +3,11 @@
     import Home from "../../../svgs/Home.svelte";
 </script>
 
-<main class="mb-auto">
+<main>
     <header class="flex flex-row bg-red-500">
-        <a href="/" class="self-center ml-4 flex flex-row gap-x-2 px-3 py-1 rounded-md bg-slate-100 text-slate-800 hover:bg-slate-300 duration-100">
+        <a href="/" class="self-center flex flex-row items-center ml-4 gap-x-2 px-3 py-2 rounded-md bg-red-950 text-neutral-100 duration-100 hover:scale-105 shadow-xl">
             <Home />
-            <p class="self-center font-semibold hidden sm:block">Home</p>
+            Home
         </a>
 
         <!-- search -->
