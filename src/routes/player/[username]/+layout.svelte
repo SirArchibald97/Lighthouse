@@ -5,7 +5,7 @@
 
 <main>
     <header class="flex flex-row bg-red-500">
-        <a href="/" class="self-center flex flex-row items-center ml-4 gap-x-2 px-3 py-2 rounded-md bg-red-950 text-neutral-100 duration-100 hover:scale-105 shadow-xl">
+        <a href="/" class="self-center flex flex-row items-center ml-2 gap-x-2 px-3 py-1 rounded-md bg-red-900 text-neutral-100 duration-100 hover:scale-105 shadow-xl">
             <Home />
             Home
         </a>
