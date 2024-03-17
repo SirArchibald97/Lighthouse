@@ -415,8 +415,8 @@
                                                 <p>WLR: <span class="font-semibold">{Math.floor((data.player.statistics.dynaball_wins.value / (data.player.statistics.dynaball_games_played.value - data.player.statistics.dynaball_wins.value)) * 100) / 100}</span></p>
                                             </div>
                                             <div>
-                                                <p>Kills: <span class="font-semibold">{data.player.statistics.dynaball_wins.value}</span></p>
-                                                <p>Players Stuck: <span class="font-semibold">{data.player.statistics.dynaball_games_played.value - data.player.statistics.dynaball_wins.value}</span></p>
+                                                <p>Kills: <span class="font-semibold">{data.player.statistics.dynaball_players_eliminated.value}</span></p>
+                                                <p>Players Stuck: <span class="font-semibold">{data.player.statistics.dynaball_players_stuck.value}</span></p>
                                                 <p>Spawners Broken: <span class="font-semibold">{data.player.statistics.dynaball_spawners_destroyed.value}</span></p>
                                             </div>
                                             <div>
