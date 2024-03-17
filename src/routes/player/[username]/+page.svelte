@@ -2,7 +2,7 @@
     import { getRankIcon, getStatusGame, getStatusIcon } from "$lib/utils.js";
     import { DateTime } from "luxon";
     import Star from "../../../svgs/Star.svelte";
-    import { badges, calculateBadgeCompletion } from "$lib/data.js";
+    import { badges, calculateBadgeCompletion, calculateBadgeTier, convertTicks, getFastestTime } from "$lib/data.js";
     
     export let data;
 
@@ -59,7 +59,7 @@
         <div class="flex flex-col sm:flex-row gap-4">
 
             <!-- player card -->
-            <div class="bg-slate-50 border-l-4 border-l-red-500 rounded-sm p-4">
+            <div class="bg-slate-50 border-l-4 border-l-red-500 rounded-sm p-4 self-start">
                 <!-- username & rank -->
                 <div class="flex flex-row">
                     <img src={`https://cdn.islandstats.xyz/ranks/${getRankIcon(data.player.ranks)}`} class="w-10 h-10 rounded-md bg-slate-400" alt="" />
@@ -160,7 +160,7 @@
                                             <div>
                                                 <p>Rounds Won: <span class="font-semibold">{data.player.statistics.battle_box_quads_team_rounds_won.value}</span></p>
                                                 <p>Rounds Lost: <span class="font-semibold">{(data.player.statistics.battle_box_quads_games_played.value * 3) - data.player.statistics.battle_box_quads_team_rounds_won.value}</span></p>
-                                                <p>WLR: <span class="font-semibold">{Math.floor((((data.player.statistics.battle_box_quads_games_played.value * 3) - data.player.statistics.battle_box_quads_team_rounds_won.value) / data.player.statistics.battle_box_quads_team_rounds_won.value) * 100) / 100}</span></p>
+                                                <p>WLR: <span class="font-semibold">{Math.floor((data.player.statistics.battle_box_quads_team_rounds_won.value / ((data.player.statistics.battle_box_quads_games_played.value * 3) - data.player.statistics.battle_box_quads_team_rounds_won.value)) * 100) / 100}</span></p>
                                             </div>
                                             <div>
                                                 <p>Kills: <span class="font-semibold">{data.player.statistics.battle_box_quads_players_killed.value}</span></p>
@@ -200,11 +200,24 @@
                                                 </div>
                                             {/each}
                                         </div>
+
+                                        <p class="font-semibold mt-4 mb-2 text-xl">Tiered Badges</p>
+                                        <div class="grid grid-cols-5 gap-5">
+                                            {#each badges.battle_box_tiered as badge}
+                                                <div class="flex flex-row gap-x-2">
+                                                    <img class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/battle_box/${badge.icon}.png`} alt={badge.name} />
+                                                    <div class="flex flex-col items-start">
+                                                        <p class="font-semibold">{badge.name} {calculateBadgeTier(data.player.statistics[badge.stat].value, badge.tiers).tier.name}</p>
+                                                        <p><span class="font-semibold">{data.player.statistics[badge.stat].value}</span>/{calculateBadgeTier(data.player.statistics[badge.stat].value, badge.tiers).next.amount}</p>
+                                                    </div>
+                                                </div>
+                                            {/each}
+                                        </div>
                                     {/if}
-                                    </div>
+                                </div>
 
                                 <!--  SKY BATTLE -->
-                                <div class="bg-slate-100 rounded-md border-2 border-slate-200 p-3">
+                                <div class="flex flex-col items-start bg-slate-100 rounded-md border-2 border-slate-200 p-3">
                                     <button on:click={() => switchCategory(expandedCategory === "sb" ? null : "sb")} class="flex flex-row w-full">
                                         <img class="w-8 h-8 mr-2" src="https://cdn.islandstats.xyz/games/sky_battle/icon.png" alt="Battle Box Stats" />
                                         <p class="text-xl font-semibold">Sky Battle</p>
@@ -231,7 +244,6 @@
                                                 <p>Individual 1st Places: <span class="font-semibold">{data.player.statistics.sky_battle_quads_survival_first_place.value}</span></p>
                                                 <p>Individual Top 3: <span class="font-semibold">{data.player.statistics.sky_battle_quads_survival_top_three.value}</span></p>
                                                 <p>Individual Top 5: <span class="font-semibold">{data.player.statistics.sky_battle_quads_survival_top_five.value}</span></p>
-                                                <p>Individual Top 8: <span class="font-semibold">{data.player.statistics.sky_battle_quads_survival_top_eight.value}</span></p>
                                             </div>
                                             <div>
                                                 <p>Chests Looted: <span class="font-semibold">{data.player.statistics.sky_battle_quads_chests_looted.value}</span></p>
@@ -253,40 +265,250 @@
                                                 </div>
                                             {/each}
                                         </div>
+
+                                        <p class="font-semibold mt-4 mb-2 text-xl">Tiered Badges</p>
+                                        <div class="grid grid-cols-5 gap-5">
+                                            {#each badges.sky_battle_tiered as badge}
+                                                <div class="flex flex-row gap-x-2">
+                                                    <img class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/sky_battle/${badge.icon}.png`} alt={badge.name} />
+                                                    <div class="flex flex-col items-start">
+                                                        <p class="font-semibold">{badge.name} {calculateBadgeTier(data.player.statistics[badge.stat].value, badge.tiers).tier.name}</p>
+                                                        <p><span class="font-semibold">{data.player.statistics[badge.stat].value}</span>/{calculateBadgeTier(data.player.statistics[badge.stat].value, badge.tiers).next.amount}</p>
+                                                    </div>
+                                                </div>
+                                            {/each}
+                                        </div>
                                     {/if}
                                 </div>
 
-                                <!--  BATTLE BOX -->
-                                <button on:click={() => switchCategory(expandedCategory === "tgttos" ? null : "tgttos")} class="bg-slate-100 rounded-md border-2 border-slate-200 p-3">
-                                    <div class="flex flex-row">
+                                <!-- TGTTOS -->
+                                <div class="flex flex-col items-start bg-slate-100 rounded-md border-2 border-slate-200 p-3">
+                                    <button on:click={() => switchCategory(expandedCategory === "tgttos" ? null : "tgttos")} class="flex flex-row w-full">
                                         <img class="w-8 h-8 mr-2" src="https://cdn.islandstats.xyz/games/tgttos/icon.png" alt="Battle Box Stats" />
                                         <p class="text-xl font-semibold">To Get To The Other Side</p>
-                                    </div>
-                                </button>
+                                    </button>
+                                    {#if expandedCategory === "tgttos"}
+                                        <div class="grid grid-cols-3 items-start gap-y-4 mt-2 text-md gap-x-24">
+                                            <div>
+                                                <p>Games Won: <span class="font-semibold">{data.player.statistics.tgttos_first_place.value}</span></p>
+                                                <p>Games Lost: <span class="font-semibold">{data.player.statistics.tgttos_games_played.value - data.player.statistics.tgttos_first_place.value}</span></p>
+                                                <p>WLR: <span class="font-semibold">{Math.floor((data.player.statistics.tgttos_first_place.value / (data.player.statistics.tgttos_games_played.value - data.player.statistics.tgttos_first_place.value)) * 100) / 100}</span></p>
+                                            </div>
+                                            <div>
+                                                <p>Kills: <span class="font-semibold">{data.player.statistics.tgttos_players_punched_into_void.value}</span></p>
+                                                <p>Deaths: <span class="font-semibold">{data.player.statistics.tgttos_times_died.value}</span></p>
+                                                <p>KDR: <span class="font-semibold">{Math.floor((data.player.statistics.tgttos_players_punched_into_void.value / data.player.statistics.tgttos_times_died.value) * 100) / 100}</span></p>
+                                            </div>
+                                            <div>
+                                                <p>Blocks Placed: <span class="font-semibold">{data.player.statistics.tgttos_blocks_placed.value}</span></p>
+                                                <p>Blocks Broken: <span class="font-semibold">{data.player.statistics.tgttos_blocks_broken.value}</span></p>
+                                                <p>Chickens Punched: <span class="font-semibold">{data.player.statistics.tgttos_chickens_punched.value}</span></p>
+                                            </div>
+                                            <div>
+                                                <p>Games Played: <span class="font-semibold">{data.player.statistics.tgttos_games_played.value}</span></p>
+                                                <p>Game 1st Places: <span class="font-semibold">{data.player.statistics.tgttos_first_place.value}</span> <span class="text-slate-500">({Math.round((data.player.statistics.tgttos_first_place.value / data.player.statistics.tgttos_games_played.value) * 100)}%)</span></p>
+                                                <p>Game Top 3: <span class="font-semibold">{data.player.statistics.tgttos_top_three.value}</span> <span class="text-slate-500">({Math.round((data.player.statistics.tgttos_top_three.value / data.player.statistics.tgttos_games_played.value) * 100)}%)</span></p>
+                                                <p>Game Top 5: <span class="font-semibold">{data.player.statistics.tgttos_top_five.value}</span> <span class="text-slate-500">({Math.round((data.player.statistics.tgttos_top_five.value / data.player.statistics.tgttos_games_played.value) * 100)}%)</span></p>
+                                            </div>
+                                            <div>
+                                                <p>Round 1st Places: <span class="font-semibold">{data.player.statistics.tgttos_round_first_place.value}</span> <span class="text-slate-500">({Math.round((data.player.statistics.tgttos_round_first_place.value / (data.player.statistics.tgttos_games_played.value * 3)) * 100)}%)</span></p>
+                                                <p>Round Top 3: <span class="font-semibold">{data.player.statistics.tgttos_round_top_three.value}</span> <span class="text-slate-500">({Math.round((data.player.statistics.tgttos_round_top_three.value / (data.player.statistics.tgttos_games_played.value * 3)) * 100)}%)</span></p>
+                                                <p>Round Top 5: <span class="font-semibold">{data.player.statistics.tgttos_round_top_five.value}</span> <span class="text-slate-500">({Math.round((data.player.statistics.tgttos_round_top_five.value / (data.player.statistics.tgttos_games_played.value * 3)) * 100)}%)</span></p>
+                                                <p>Round Top 8: <span class="font-semibold">{data.player.statistics.tgttos_round_top_eight.value}</span> <span class="text-slate-500">({Math.round((data.player.statistics.tgttos_round_top_eight.value / (data.player.statistics.tgttos_games_played.value * 3)) * 100)}%)</span></p>
+                                            </div>
+                                        </div>
 
-                                <!--  BATTLE BOX -->
-                                <button on:click={() => switchCategory(expandedCategory === "hitw" ? null : "hitw")} class="bg-slate-100 rounded-md border-2 border-slate-200 p-3">
-                                    <div class="flex flex-row">
-                                        <img class="w-8 h-8 mr-2" src="https://cdn.islandstats.xyz/games/hitw/icon.png" alt="Battle Box Stats" />
+                                        <p class="font-semibold mt-4 mb-2 text-xl">Badges <span class="text-slate-400">({calculateBadgeCompletion(data.player, badges.sky_battle)}%)</span></p>
+                                        <div class="grid grid-cols-5 gap-5">
+                                            {#each badges.tgttos as badge}
+                                                <div class="flex flex-row gap-x-2">
+                                                    <img class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/tgttos/${badge.icon}.png`} alt={badge.name} />
+                                                    <div class="flex flex-col items-start">
+                                                        <p class={`font-semibold ${data.player.statistics[badge.stat].value > 0 ? "text-green-500" : "text-red-500"}`}>{badge.name}</p>
+                                                        <p>Completed <span class="font-semibold">{data.player.statistics[badge.stat].value}</span> time{data.player.statistics[badge.stat].value === 1 ? "" : "s"}</p>
+                                                    </div>
+                                                </div>
+                                            {/each}
+                                        </div>
+
+                                        <p class="font-semibold mt-4 mb-2 text-xl">Tiered Badges</p>
+                                        <div class="grid grid-cols-5 gap-5">
+                                            {#each badges.tgttos_tiered as badge}
+                                                <div class="flex flex-row gap-x-2">
+                                                    <img class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/tgttos/${badge.icon}.png`} alt={badge.name} />
+                                                    <div class="flex flex-col items-start">
+                                                        <p class="font-semibold">{badge.name} {calculateBadgeTier(data.player.statistics[badge.stat].value, badge.tiers).tier.name}</p>
+                                                        <p><span class="font-semibold">{data.player.statistics[badge.stat].value}</span>/{calculateBadgeTier(data.player.statistics[badge.stat].value, badge.tiers).next.amount}</p>
+                                                    </div>
+                                                </div>
+                                            {/each}
+                                        </div>
+                                    {/if}
+                                </div>
+
+                                <!--  HITW -->
+                                <div class="flex flex-col items-start bg-slate-100 rounded-md border-2 border-slate-200 p-3">
+                                    <button on:click={() => switchCategory(expandedCategory === "hitw" ? null : "hitw")} class="flex flex-row w-full">
+                                        <img class="w-8 h-8 mr-2" src="https://cdn.islandstats.xyz/games/hitw/icon.png" alt="HITW Stats" />
                                         <p class="text-xl font-semibold">Hole in the Wall</p>
-                                    </div>
-                                </button>
+                                    </button>
+                                    {#if expandedCategory === "hitw"}
+                                        <div class="grid grid-cols-3 items-start gap-y-4 mt-2 text-md gap-x-24">
+                                            <div>
+                                                <p>Games Won: <span class="font-semibold">{data.player.statistics.hole_in_the_wall_first_place.value}</span></p>
+                                                <p>Games Lost: <span class="font-semibold">{data.player.statistics.hole_in_the_wall_games_played.value - data.player.statistics.hole_in_the_wall_first_place.value}</span></p>
+                                                <p>WLR: <span class="font-semibold">{Math.floor((data.player.statistics.hole_in_the_wall_first_place.value / (data.player.statistics.hole_in_the_wall_games_played.value - data.player.statistics.hole_in_the_wall_first_place.value)) * 100) / 100}</span></p>
+                                            </div>
+                                            <div>
+                                                <p>Players Outlived: <span class="font-semibold">{data.player.statistics.hole_in_the_wall_players_outlived.value}</span></p>
+                                                <p>Walls Dodged: <span class="font-semibold">{data.player.statistics.hole_in_the_wall_players_outlived.value}</span></p>
+                                                <p>Survived 1 minute: <span class="font-semibold">{data.player.statistics.hole_in_the_wall_survived_minute.value}</span> time{data.player.statistics.hole_in_the_wall_survived_minute.value === 1 ? "" : "s"}</p>
+                                                <p>Survived 2 minutes: <span class="font-semibold">{data.player.statistics.hole_in_the_wall_survived_two_minute.value}</span> time{data.player.statistics.hole_in_the_wall_survived_two_minute.value === 1 ? "" : "s"}</p>
+                                            </div>
+                                            <div>
+                                                <p>Games Played: <span class="font-semibold">{data.player.statistics.hole_in_the_wall_games_played.value}</span></p>
+                                                <p>1st Places: <span class="font-semibold">{data.player.statistics.hole_in_the_wall_first_place.value}</span> <span class="text-slate-500">({Math.round((data.player.statistics.hole_in_the_wall_first_place.value / data.player.statistics.hole_in_the_wall_games_played.value) * 100)}%)</span></p>
+                                                <p>Top 3: <span class="font-semibold">{data.player.statistics.hole_in_the_wall_top_three.value}</span> <span class="text-slate-500">({Math.round((data.player.statistics.hole_in_the_wall_top_three.value / data.player.statistics.hole_in_the_wall_games_played.value) * 100)}%)</span></p>
+                                                <p>Top 5: <span class="font-semibold">{data.player.statistics.hole_in_the_wall_top_five.value}</span> <span class="text-slate-500">({Math.round((data.player.statistics.hole_in_the_wall_top_five.value / data.player.statistics.hole_in_the_wall_games_played.value) * 100)}%)</span></p>
+                                            </div>
+                                        </div>
 
-                                <!--  BATTLE BOX -->
-                                <button on:click={() => switchCategory(expandedCategory === "dynaball" ? null : "dynaball")} class="bg-slate-100 rounded-md border-2 border-slate-200 p-3">
-                                    <div class="flex flex-row">
-                                        <img class="w-8 h-8 mr-2" src="https://cdn.islandstats.xyz/games/dynaball/icon.png" alt="Battle Box Stats" />
+                                        <p class="font-semibold mt-4 mb-2 text-xl">Badges <span class="text-slate-400">({calculateBadgeCompletion(data.player, badges.sky_battle)}%)</span></p>
+                                        <div class="grid grid-cols-5 gap-5">
+                                            {#each badges.hitw as badge}
+                                                <div class="flex flex-row gap-x-2">
+                                                    <img class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/hitw/${badge.icon}.png`} alt={badge.name} />
+                                                    <div class="flex flex-col items-start">
+                                                        <p class={`font-semibold ${data.player.statistics[badge.stat].value > 0 ? "text-green-500" : "text-red-500"}`}>{badge.name}</p>
+                                                        <p>Completed <span class="font-semibold">{data.player.statistics[badge.stat].value}</span> time{data.player.statistics[badge.stat].value === 1 ? "" : "s"}</p>
+                                                    </div>
+                                                </div>
+                                            {/each}
+                                        </div>
+
+                                        <p class="font-semibold mt-4 mb-2 text-xl">Tiered Badges</p>
+                                        <div class="grid grid-cols-5 gap-5">
+                                            {#each badges.hitw_tiered as badge}
+                                                <div class="flex flex-row gap-x-2">
+                                                    <img class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/hitw/${badge.icon}.png`} alt={badge.name} />
+                                                    <div class="flex flex-col items-start">
+                                                        <p class="font-semibold">{badge.name} {calculateBadgeTier(data.player.statistics[badge.stat].value, badge.tiers).tier.name}</p>
+                                                        <p><span class="font-semibold">{data.player.statistics[badge.stat].value}</span>/{calculateBadgeTier(data.player.statistics[badge.stat].value, badge.tiers).next.amount}</p>
+                                                    </div>
+                                                </div>
+                                            {/each}
+                                        </div>
+                                    {/if}
+                                </div>
+
+                                <!-- DYNABALL -->
+                                <div class="flex flex-col items-start bg-slate-100 rounded-md border-2 border-slate-200 p-3">
+                                    <button on:click={() => switchCategory(expandedCategory === "db" ? null : "db")} class="flex flex-row w-full">
+                                        <img class="w-8 h-8 mr-2" src="https://cdn.islandstats.xyz/games/dynaball/icon.png" alt="HITW Stats" />
                                         <p class="text-xl font-semibold">Dynaball</p>
-                                    </div>
-                                </button>
+                                    </button>
+                                    {#if expandedCategory === "db"}
+                                        <div class="grid grid-cols-3 items-start gap-y-4 mt-2 text-md gap-x-24">
+                                            <div>
+                                                <p>Games Won: <span class="font-semibold">{data.player.statistics.dynaball_wins.value}</span></p>
+                                                <p>Games Lost: <span class="font-semibold">{data.player.statistics.dynaball_games_played.value - data.player.statistics.dynaball_wins.value}</span></p>
+                                                <p>WLR: <span class="font-semibold">{Math.floor((data.player.statistics.dynaball_wins.value / (data.player.statistics.dynaball_games_played.value - data.player.statistics.dynaball_wins.value)) * 100) / 100}</span></p>
+                                            </div>
+                                            <div>
+                                                <p>Kills: <span class="font-semibold">{data.player.statistics.dynaball_wins.value}</span></p>
+                                                <p>Players Stuck: <span class="font-semibold">{data.player.statistics.dynaball_games_played.value - data.player.statistics.dynaball_wins.value}</span></p>
+                                                <p>Spawners Broken: <span class="font-semibold">{data.player.statistics.dynaball_spawners_destroyed.value}</span></p>
+                                            </div>
+                                            <div>
+                                                <p>Blocks Destroyed: <span class="font-semibold">{data.player.statistics.dynaball_blocks_destroyed.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></p>
+                                                <p>Blocks Placed: <span class="font-semibold">{data.player.statistics.dynaball_blocks_placed.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></p>
+                                            </div>
+                                            <div>
+                                                <p>Survived 1 Minute: <span class="font-semibold">{data.player.statistics.dynaball_survive_1m.value}</span> <span class="text-slate-500">({Math.round((data.player.statistics.dynaball_survive_1m.value / data.player.statistics.dynaball_games_played.value) * 100)}%)</span></p>
+                                                <p>Survived 2 Minutes: <span class="font-semibold">{data.player.statistics.dynaball_survive_2m.value}</span> <span class="text-slate-500">({Math.round((data.player.statistics.dynaball_survive_2m.value / data.player.statistics.dynaball_games_played.value) * 100)}%)</span></p>
+                                                <p>Survived 3 Minutes: <span class="font-semibold">{data.player.statistics.dynaball_survive_3m.value}</span> <span class="text-slate-500">({Math.round((data.player.statistics.dynaball_survive_3m.value / data.player.statistics.dynaball_games_played.value) * 100)}%)</span></p>
+                                                <p>Survived 4 Minutes: <span class="font-semibold">{data.player.statistics.dynaball_survive_4m.value}</span> <span class="text-slate-500">({Math.round((data.player.statistics.dynaball_survive_4m.value / data.player.statistics.dynaball_games_played.value) * 100)}%)</span></p>
+                                            </div>
+                                        </div>
 
-                                <!--  BATTLE BOX -->
-                                <button on:click={() => switchCategory(expandedCategory === "pkw" ? null : "pkw")} class="bg-slate-100 rounded-md border-2 border-slate-200 p-3">
-                                    <div class="flex flex-row">
-                                        <img class="w-8 h-8 mr-2" src="https://cdn.islandstats.xyz/games/pkw/icon.png" alt="Battle Box Stats" />
+                                        <p class="font-semibold mt-4 mb-2 text-xl">Badges <span class="text-slate-400">({calculateBadgeCompletion(data.player, badges.sky_battle)}%)</span></p>
+                                        <div class="grid grid-cols-5 gap-5">
+                                            {#each badges.dynaball as badge}
+                                                <div class="flex flex-row gap-x-2">
+                                                    <img class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/dynaball/${badge.icon}.png`} alt={badge.name} />
+                                                    <div class="flex flex-col items-start">
+                                                        <p class={`font-semibold ${data.player.statistics[badge.stat].value > 0 ? "text-green-500" : "text-red-500"}`}>{badge.name}</p>
+                                                        <p>Completed <span class="font-semibold">{data.player.statistics[badge.stat].value}</span> time{data.player.statistics[badge.stat].value === 1 ? "" : "s"}</p>
+                                                    </div>
+                                                </div>
+                                            {/each}
+                                        </div>
+
+                                        <p class="font-semibold mt-4 mb-2 text-xl">Tiered Badges</p>
+                                        <div class="grid grid-cols-4 gap-5">
+                                            {#each badges.dynaball_tiered as badge}
+                                                <div class="flex flex-row gap-x-2">
+                                                    <img class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/dynaball/${badge.icon}.png`} alt={badge.name} />
+                                                    <div class="flex flex-col items-start">
+                                                        <p class="font-semibold">{badge.name} {calculateBadgeTier(data.player.statistics[badge.stat].value, badge.tiers).tier.name}</p>
+                                                        <p><span class="font-semibold">{data.player.statistics[badge.stat].value}</span>/{calculateBadgeTier(data.player.statistics[badge.stat].value, badge.tiers).next.amount}</p>
+                                                    </div>
+                                                </div>
+                                            {/each}
+                                        </div>
+                                    {/if}
+                                </div>
+
+                                <!--  PKW -->
+                                <div class="flex flex-col items-start bg-slate-100 rounded-md border-2 border-slate-200 p-3">
+                                    <button on:click={() => switchCategory(expandedCategory === "pkw" ? null : "pkw")} class="flex flex-row w-full">
+                                        <img class="w-8 h-8 mr-2" src="https://cdn.islandstats.xyz/games/pkw/icon.png" alt="PKW Stats" />
                                         <p class="text-xl font-semibold">Parkour Warrior</p>
-                                    </div>
-                                </button>
+                                    </button>
+                                    {#if expandedCategory === "pkw"}
+                                        <div class="grid grid-cols-3 items-start gap-y-4 mt-2 text-md gap-x-24">
+                                            <div>
+                                                <p>Total Medals: <span class="font-semibold">{data.player.statistics.pw_solo_total_medals_banked.value}</span></p>
+                                                <p>Total Standard Completions: <span class="font-semibold">{data.player.statistics.pw_solo_total_standard_cmpls.value}</span></p>
+                                                <p>Total Advanced Completions: <span class="font-semibold">{data.player.statistics.pw_solo_total_advanced_cmpls.value}</span></p>
+                                                <p>Total Expert Completions: <span class="font-semibold">{data.player.statistics.pw_solo_total_expert_cmpls.value}</span></p>
+                                            </div>
+                                            <div>
+                                                <p>Unique Standard Completions: <span class="font-semibold">{data.player.statistics.pw_solo_unique_standard_cmpl.value}</span></p>
+                                                <p>Unique Advanced Completions: <span class="font-semibold">{data.player.statistics.pw_solo_unique_advanced_cmpl.value}</span></p>
+                                                <p>Unique Expert Completions: <span class="font-semibold">{data.player.statistics.pw_solo_unique_expert_cmpl.value}</span></p>
+                                            </div>
+                                            <div>
+                                                <p>Unique Daily Standard Completions: <span class="font-semibold">{data.player.statistics.pw_solo_unique_daily_standard_cmpl.value}</span></p>
+                                                <p>Unique Daily Advanced Completions: <span class="font-semibold">{data.player.statistics.pw_solo_unique_daily_advanced_cmpl.value}</span></p>
+                                                <p>Unique Daily Expert Completions: <span class="font-semibold">{data.player.statistics.pw_solo_unique_daily_expert_cmpl.value}</span></p>
+                                            </div>
+                                            <div>
+                                                <p>Survivor Wins: <span class="font-semibold">{data.player.statistics.pw_survival_final_duel_wins.value}</span></p>
+                                                <p>Survivor Losses: <span class="font-semibold">{data.player.statistics.pw_survival_games_played.value - data.player.statistics.pw_survival_final_duel_wins.value}</span></p>
+                                                <p>Survivor WLR: <span class="font-semibold">{Math.floor((data.player.statistics.pw_survival_final_duel_wins.value / (data.player.statistics.pw_survival_games_played.value - data.player.statistics.pw_survival_final_duel_wins.value)) * 100) / 100}</span></p>
+                                            </div>
+                                            <div>
+                                                <p>Survivor Games Played: <span class="font-semibold">{data.player.statistics.pw_survival_games_played.value}</span></p>
+                                                <p>Survivor Players Eliminated: <span class="font-semibold">{data.player.statistics.pw_survival_players_eliminated.value}</span></p>
+                                                <p>Survivor Obstacles Completed: <span class="font-semibold">{data.player.statistics.pw_survival_obstacles_completed.value}</span></p>
+                                            </div>
+                                        </div>
+
+                                        <p class="font-semibold mt-4 mb-2 text-xl">Tiered Badges</p>
+                                        <div class="grid grid-cols-4 gap-5">
+                                            {#each badges.pkw_tiered as badge}
+                                                <div class="flex flex-row gap-x-2">
+                                                    <img class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/pkw/${badge.icon}.png`} alt={badge.name} />
+                                                    <div class="flex flex-col items-start">
+                                                        <p class="font-semibold">{badge.name} {calculateBadgeTier(data.player.statistics[badge.stat].value, badge.tiers).tier.name}</p>
+                                                        <p><span class="font-semibold">{data.player.statistics[badge.stat].value}</span>/{calculateBadgeTier(data.player.statistics[badge.stat].value, badge.tiers).next.amount}</p>
+                                                    </div>
+                                                </div>
+                                            {/each}
+                                        </div>
+                                    {/if}
+                                </div>
                             </div>
                         {:else}
                             <p class="text-xl font-semibol">Statistics are disabled!</p>
