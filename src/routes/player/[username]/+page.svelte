@@ -420,6 +420,7 @@
                                                 <p>Spawners Broken: <span class="font-semibold">{data.player.statistics.dynaball_spawners_destroyed.value}</span></p>
                                             </div>
                                             <div>
+                                                <p>Games Played: <span class="font-semibold">{data.player.statistics.dynaball_games_played.value}</span></p>
                                                 <p>Blocks Destroyed: <span class="font-semibold">{data.player.statistics.dynaball_blocks_destroyed.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></p>
                                                 <p>Blocks Placed: <span class="font-semibold">{data.player.statistics.dynaball_blocks_placed.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></p>
                                             </div>
