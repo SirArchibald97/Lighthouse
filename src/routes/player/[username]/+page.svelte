@@ -361,7 +361,7 @@
                                             </div>
                                             <div>
                                                 <p>Players Outlived: <span class="font-semibold">{data.player.statistics.hole_in_the_wall_players_outlived.value}</span></p>
-                                                <p>Walls Dodged: <span class="font-semibold">{data.player.statistics.hole_in_the_wall_players_outlived.value}</span></p>
+                                                <p>Walls Dodged: <span class="font-semibold">{data.player.statistics.hole_in_the_wall_walls_dodged.value}</span></p>
                                                 <p>Survived 1 minute: <span class="font-semibold">{data.player.statistics.hole_in_the_wall_survived_minute.value}</span> time{data.player.statistics.hole_in_the_wall_survived_minute.value === 1 ? "" : "s"}</p>
                                                 <p>Survived 2 minutes: <span class="font-semibold">{data.player.statistics.hole_in_the_wall_survived_two_minute.value}</span> time{data.player.statistics.hole_in_the_wall_survived_two_minute.value === 1 ? "" : "s"}</p>
                                             </div>
