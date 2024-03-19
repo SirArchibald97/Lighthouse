@@ -47,7 +47,7 @@
     <title>{data.player.username ? `${data.player.username}'s Stats` : "Unknown Player"}</title>
     <link rel="icon" href={`https://crafatar.com/avatars/${data.uuid}.png`} type="image/png" />
 </head>
-<main class="py-4 mx-4 sm:mx-24">
+<main class="py-4 mx-4 2xl:mx-24">
     {#if data.success === false}
         <div class="border-2 border-red-300 bg-red-100 rounded-lg py-2">
             <p class="text-center text-2xl font-semibold">I couldn't find that player!</p>
@@ -60,8 +60,8 @@
                 <div class="bg-slate-50 border-l-4 border-l-red-500 rounded-sm p-4 sm:self-start w-full">
                     <!-- username & rank -->
                     <div class="flex flex-row items-center">
-                        <img src={`https://cdn.islandstats.xyz/ranks/${getRankIcon(data.player.ranks)}`} class="w-10 h-10 rounded-[8px] bg-slate-400" alt="" />
-                        <p class="text-3xl font-bold pl-2">{data.name}</p>
+                        <img src={`https://cdn.islandstats.xyz/ranks/${getRankIcon(data.player.ranks)}`} class="w-8 h-8 2xl:w-10 2xl:h-10 rounded-[8px] bg-slate-400" alt="" />
+                        <p class="text-xl 2xl:text-3xl font-bold pl-2">{data.name}</p>
                         {#if data.player.status}
                             <span class={`ml-2 w-4 h-4 rounded-full ${data.player.status?.online ? "bg-green-500" : "bg-red-500"}`}></span>
                         {:else}
@@ -72,7 +72,7 @@
     
                     <!-- STATUS -->
                     {#if data.player.status}
-                        <div class="flex flex-col mt-2 text-lg">
+                        <div class="flex flex-col mt-2 text-md 2xl:text-lg">
                             {#if data.player.status.server?.category === "GAME"}
                                 <p class="flex flex-row gap-x-2">
                                     Playing 
@@ -93,7 +93,7 @@
                         </div>
     
                         <!-- dates -->
-                        <div class="flex flex-col mt-4 text-lg">
+                        <div class="flex flex-col mt-4 text-sm 2xl:text-lg">
                             <p>Last joined: <span class="font-semibold">{lastJoin}</span></p>
                             <p>First joined: <span class="font-semibold">{firstJoin}</span></p>
                         </div>
@@ -102,35 +102,34 @@
     
                     <!-- WALLET -->
                     <div class="flex flex-col mt-4">
-                        <p class="text-xl font-semibold">Wallet</p>
-                        <div class="flex flex-row gap-2 my-1">
-                            <img src="https://cdn.islandstats.xyz/icons/coin.png" class="w-8 h-8" alt="Coins" />
-                            <p class="text-lg">{data.player.collections?.currency.coins.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') || "Unknown"}</p>
+                        <p class="text-md 2xl:text-xl font-semibold">Wallet</p>
+                        <div class="flex flex-row sm:gap-1 2xl:gap-2 my-1">
+                            <img src="https://cdn.islandstats.xyz/icons/coin.png" class="w-6 h-6 2xl:w-8 2xl:h-8" alt="Coins" />
+                            <p class="text-md 2xl:text-lg">{data.player.collections?.currency.coins.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') || "Unknown"}</p>
                         </div>
-                        <div class="flex flex-row gap-2 my-1">
-                            <img src="https://cdn.islandstats.xyz/icons/gem.png" class="w-8 h-8" alt="Coins" />
-                            <p class="text-lg">{data.player.collections?.currency.gems.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') || "Unknown"}</p>
+                        <div class="flex flex-row sm:gap-1 2xl:gap-2 my-1">
+                            <img src="https://cdn.islandstats.xyz/icons/gem.png" class="w-6 h-6 2xl:w-8 2xl:h-8" alt="Coins" />
+                            <p class="text-md 2xl:text-lg">{data.player.collections?.currency.gems.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') || "Unknown"}</p>
                         </div>
-                        <div class="flex flex-row gap-2 my-1">
-                            <img src="https://cdn.islandstats.xyz/icons/silver.png" class="w-8 h-8" alt="Coins" />
-                            <p class="text-lg">{data.player.collections?.currency.silver.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') || "Unknown"}</p>
+                        <div class="flex flex-row sm:gap-1 2xl:gap-2 my-1">
+                            <img src="https://cdn.islandstats.xyz/icons/silver.png" class="w-6 h-6 2xl:w-8 2xl:h-8" alt="Coins" />
+                            <p class="text-md 2xl:text-lg">{data.player.collections?.currency.silver.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') || "Unknown"}</p>
                         </div>
-                        <div class="flex flex-row gap-2 my-1">
-                            <img src="https://cdn.islandstats.xyz/icons/material_dust.png" class="w-8 h-8" alt="Coins" />
-                            <p class="text-lg">{data.player.collections?.currency.materialDust.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') || "Unknown"}</p>
+                        <div class="flex flex-row sm:gap-1 2xl:gap-2 my-1">
+                            <img src="https://cdn.islandstats.xyz/icons/material_dust.png" class="w-6 h-6 2xl:w-8 2xl:h-8" alt="Coins" />
+                            <p class="text-md 2xl:text-lg">{data.player.collections?.currency.materialDust.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') || "Unknown"}</p>
                         </div>
-                        <div class="flex flex-row gap-2 my-1">
-                            <img src="https://cdn.islandstats.xyz/icons/royal_reputation.png" class="w-8 h-8" alt="Coins" />
-                            <p class="text-lg">{data.player.collections?.currency.royalReputation.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') || "Unknown"}</p>
+                        <div class="flex flex-row sm:gap-1 2xl:gap-2 my-1">
+                            <img src="https://cdn.islandstats.xyz/icons/royal_reputation.png" class="w-6 h-6 2xl:w-8 2xl:h-8" alt="Coins" />
+                            <p class="text-md 2xl:text-lg">{data.player.collections?.currency.royalReputation.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') || "Unknown"}</p>
                         </div>
-    
                     </div>
     
                     <!-- searches -->
-                    <p class="mt-4 text-slate-500">Views: <span>{data.views}</span></p>
+                    <p class="mt-4 text-slate-500 text-sm 2xl:text-lg">Views: <span>{data.views.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></p>
                 </div>
 
-                <div class="bg-slate-50 border-l-4 border-l-red-500 rounded-sm p-4 self-center sm:self-start w-full">
+                <div class="bg-slate-50 border-l-4 border-l-red-500 rounded-sm p-4 self-center sm:self-start w-full text-sm 2xl:text-lg">
                     <p><span class="font-semibold">Not seeing your stats?</span> Make sure to set your API preferences in your in-game settings!</p>
                 </div>
             </div>
@@ -191,7 +190,7 @@
                                         </div>
 
                                         <p class="font-semibold mt-4 mb-2 text-xl">Badges <span class="text-slate-400">({calculateBadgeCompletion(data.player, badges.battle_box)}%)</span></p>
-                                        <div class="grid grid-cols-2 sm:grid-cols-5 gap-5">
+                                        <div class="grid grid-cols-2 sm:grid-cols-3 2xl:grid-cols-5 gap-5">
                                             {#each badges.battle_box as badge}
                                                 <div class="flex flex-col sm:flex-row gap-x-2">
                                                     <img class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/battle_box/${badge.icon}.png`} alt={badge.name} />
@@ -204,7 +203,7 @@
                                         </div>
 
                                         <p class="font-semibold mt-4 mb-2 text-xl">Tiered Badges</p>
-                                        <div class="grid grid-cols-2 sm:grid-cols-5 gap-5">
+                                        <div class="grid grid-cols-2 sm:grid-cols-3 2xl:grid-cols-5 gap-5">
                                             {#each badges.battle_box_tiered as badge}
                                                 <div class="flex flex-col sm:flex-row gap-x-2">
                                                     <img class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/battle_box/${badge.icon}.png`} alt={badge.name} />
@@ -256,7 +255,7 @@
                                         </div>
 
                                         <p class="font-semibold mt-4 mb-2 text-xl">Badges <span class="text-slate-400">({calculateBadgeCompletion(data.player, badges.sky_battle)}%)</span></p>
-                                        <div class="grid grid-cols-2 sm:grid-cols-5 gap-5">
+                                        <div class="grid grid-cols-2 sm:grid-cols-3 2xl:grid-cols-5 gap-5">
                                             {#each badges.sky_battle as badge}
                                                 <div class="flex flex-col sm:flex-row gap-x-2">
                                                     <img class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/sky_battle/${badge.icon}.png`} alt={badge.name} />
@@ -269,7 +268,7 @@
                                         </div>
 
                                         <p class="font-semibold mt-4 mb-2 text-xl">Tiered Badges</p>
-                                        <div class="grid grid-cols-2 sm:grid-cols-5 gap-5">
+                                        <div class="grid grid-cols-2 sm:grid-cols-3 2xl:grid-cols-5 gap-5">
                                             {#each badges.sky_battle_tiered as badge}
                                                 <div class="flex flex-col sm:flex-row gap-x-2">
                                                     <img class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/sky_battle/${badge.icon}.png`} alt={badge.name} />
@@ -321,7 +320,7 @@
                                         </div>
 
                                         <p class="font-semibold mt-4 mb-2 text-xl">Badges <span class="text-slate-400">({calculateBadgeCompletion(data.player, badges.tgttos)}%)</span></p>
-                                        <div class="grid grid-cols-2 sm:grid-cols-5 gap-5">
+                                        <div class="grid grid-cols-2 sm:grid-cols-3 2xl:grid-cols-5 gap-5">
                                             {#each badges.tgttos as badge}
                                                 <div class="flex flex-col sm:flex-row gap-x-2">
                                                     <img class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/tgttos/${badge.icon}.png`} alt={badge.name} />
@@ -334,7 +333,7 @@
                                         </div>
 
                                         <p class="font-semibold mt-4 mb-2 text-xl">Tiered Badges</p>
-                                        <div class="grid grid-cols-2 sm:grid-cols-5 gap-5">
+                                        <div class="grid grid-cols-2 sm:grid-cols-3 2xl:grid-cols-5 gap-5">
                                             {#each badges.tgttos_tiered as badge}
                                                 <div class="flex flex-col sm:flex-row gap-x-2">
                                                     <img class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/tgttos/${badge.icon}.png`} alt={badge.name} />
@@ -376,7 +375,7 @@
                                         </div>
 
                                         <p class="font-semibold mt-4 mb-2 text-xl">Badges <span class="text-slate-400">({calculateBadgeCompletion(data.player, badges.hitw)}%)</span></p>
-                                        <div class="grid grid-cols-2 sm:grid-cols-5 gap-5">
+                                        <div class="grid grid-cols-2 sm:grid-cols-3 2xl:grid-cols-5 gap-5">
                                             {#each badges.hitw as badge}
                                                 <div class="flex flex-col sm:flex-row gap-x-2">
                                                     <img class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/hitw/${badge.icon}.png`} alt={badge.name} />
@@ -389,7 +388,7 @@
                                         </div>
 
                                         <p class="font-semibold mt-4 mb-2 text-xl">Tiered Badges</p>
-                                        <div class="grid grid-cols-2 sm:grid-cols-5 gap-5">
+                                        <div class="grid grid-cols-2 sm:grid-cols-3 2xl:grid-cols-5 gap-5">
                                             {#each badges.hitw_tiered as badge}
                                                 <div class="flex flex-col sm:flex-row gap-x-2">
                                                     <img class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/hitw/${badge.icon}.png`} alt={badge.name} />
@@ -435,7 +434,7 @@
                                         </div>
 
                                         <p class="font-semibold mt-4 mb-2 text-xl">Badges <span class="text-slate-400">({calculateBadgeCompletion(data.player, badges.dynaball)}%)</span></p>
-                                        <div class="grid grid-cols-2 sm:grid-cols-5 gap-5">
+                                        <div class="grid grid-cols-2 sm:grid-cols-3 2xl:grid-cols-5 gap-5">
                                             {#each badges.dynaball as badge}
                                                 <div class="flex flex-col sm:flex-row gap-x-2">
                                                     <img class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/dynaball/${badge.icon}.png`} alt={badge.name} />
@@ -448,7 +447,7 @@
                                         </div>
 
                                         <p class="font-semibold mt-4 mb-2 text-xl">Tiered Badges</p>
-                                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-5">
+                                        <div class="grid grid-cols-2 sm:grid-cols-3 2xl:grid-cols-5 gap-5">
                                             {#each badges.dynaball_tiered as badge}
                                                 <div class="flex flex-col sm:flex-row gap-x-2">
                                                     <img class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/dynaball/${badge.icon}.png`} alt={badge.name} />
@@ -469,7 +468,7 @@
                                         <p class="text-xl font-semibold">Parkour Warrior</p>
                                     </button>
                                     {#if expandedCategory === "pkw"}
-                                        <div class="grid grid-cols-1 sm:grid-cols-3 items-start gap-y-4 mt-2 text-md gap-x-24">
+                                        <div class="grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-3 items-start gap-y-4 mt-2 text-md gap-x-24">
                                             <div>
                                                 <p>Total Medals: <span class="font-semibold">{data.player.statistics.pw_solo_total_medals_banked.value}</span></p>
                                                 <p>Total Standard Completions: <span class="font-semibold">{data.player.statistics.pw_solo_total_standard_cmpls.value}</span></p>
@@ -499,7 +498,7 @@
                                         </div>
 
                                         <p class="font-semibold mt-4 mb-2 text-xl">Tiered Badges</p>
-                                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-5">
+                                        <div class="grid grid-cols-2 sm:grid-cols-3 2xl:grid-cols-4 gap-5">
                                             {#each badges.pkw_tiered as badge}
                                                 <div class="flex flex-col sm:flex-row gap-x-2">
                                                     <img class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/pkw/${badge.icon}.png`} alt={badge.name} />
@@ -586,7 +585,7 @@
     {/if}
 </main>
 
-<footer class={`w-full bg-red-500 p-4 ${expandedCategory === null ? "absolute" : "relative"} bottom-0`}>
+<footer class={`w-full bg-red-500 p-4 ${(expandedCategory === null || infoTab === "friends") ? "absolute bottom-0" : "relative"}`}>
     <div>
         <p class="text-center text-slate-100">© 2024 <a href="https://sirarchibald.dev" class="underline hover:text-slate-200">SirArchibald</a> • Not affiliated with Minecraft or Noxcrew!</p>
     </div>

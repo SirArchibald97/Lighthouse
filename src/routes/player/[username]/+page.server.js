@@ -3,7 +3,7 @@ import { SAD_API_KEY, DEV } from "$env/static/private";
 import { formatUUID, getRankIcon } from "$lib/utils.js";
 import db from "$lib/db.js";
 
-export async function load({ params }) {
+export async function load({ params, request }) {
     // check username is an existing Minecraft account
     const mj_res = await fetch(`https://api.mojang.com/users/profiles/minecraft/${params.username}`);
     const { id, name } = await mj_res.json();
@@ -16,13 +16,7 @@ export async function load({ params }) {
     // if the player exists, update requests in the database and return data to client
     if (player) {
         const result = await db.collection("requests").findOne({ username: name });
-        if (result) {
-            await db.collection("requests").updateOne({ username: name }, { $inc: { requests_current: 1 } });
-        } else {
-            await db.collection("requests").insertOne({ username: name, uuid: await formatUUID(id), requests_current: 1 });
-        }
-
-        return { uuid: await formatUUID(id), name: name, player, rank: getRankIcon(player.ranks), views: result.requests_current };
+        return { uuid: await formatUUID(id), name: name, player, rank: getRankIcon(player.ranks), views: result.requests_current || 0 };
     } else return { success: false, player: {} };
 }
 

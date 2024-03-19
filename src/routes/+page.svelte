@@ -27,7 +27,7 @@
     </div>
 
     <!-- main -->
-    <div class="px-4 sm:px-96 py-12 bg-slate-100">
+    <div class="px-4 sm:px-24 2xl:px-96 py-12 bg-slate-100">
 
         <!-- featured profiles -->
         <p class="text-slate-700 dark:text-slate-200 text-3xl text-center mb-8 font-semibold">Featured Profiles</p>
