@@ -43,10 +43,10 @@
     if (intList.length > 0) fullList.push(intList);
 </script>
 
-<head>
+<svelte:head>
     <title>{data.player.username ? `${data.player.username}'s Stats` : "Unknown Player"}</title>
-    <link rel="icon" href={`https://crafatar.com/avatars/${data.uuid}.png`} type="image/png" />
-</head>
+    <meta name="description" content={`View ${data.player.username}'s stats on MCC Island Stats by SirArchibald, including game stats, currency, socials and more!`} />
+</svelte:head>
 <main class="py-4 mx-4 2xl:mx-24">
     {#if data.success === false}
         <div class="border-2 border-red-300 bg-red-100 rounded-lg py-2">

@@ -6,10 +6,11 @@
     export let data;
 </script>
 
-<head>
+<svelte:head>
     <title>MCC Island Stats by SirArchibald</title>
     <link rel="icon" href="%sveltekit.assets%/favicon.png" type="image/png" />
-</head>
+    <meta name="description" content="MCC Island Stats by SirArchibald! Lookup any player to view their game stats, currency, socials and more!" />
+</svelte:head>
 <main>
     <div class="flex flex-col items-center px-4 sm:px-24 py-32 bg-red-500">
         <p class="text-slate-100 text-5xl sm:text-6xl font-bold text-center">MCC Island Stats</p>
