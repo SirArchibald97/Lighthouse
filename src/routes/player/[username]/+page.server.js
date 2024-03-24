@@ -16,7 +16,7 @@ export async function load({ params, request }) {
     // if the player exists, update requests in the database and return data to client
     if (player) {
         const result = await db.collection("requests").findOne({ username: name });
-        return { uuid: await formatUUID(id), name: name, player, rank: getRankIcon(player.ranks), views: result.requests_current || 0 };
+        return { uuid: await formatUUID(id), name: name, player, rank: getRankIcon(player.ranks), views: result?.requests_current || 0 };
     } else return { success: false, player: {} };
 }
 

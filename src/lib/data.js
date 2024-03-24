@@ -4,7 +4,7 @@ export const badges = {
         { name: "Ace From Afar", description: "Eliminate all 4 members of the opposing team using ranged weapons", icon: "ace_from_afar", stat: "battle_box_quads_ace_from_afar" },
         { name: "Aerial Assault", description: "Eliminate a player using a ranged weapon whilst levitating", icon: "aerial_assault", stat: "battle_box_quads_aerial_assault" },
         { name: "Blind Brawl", description: "Eliminate a player whilst blind", icon: "blind_brawl", stat: "battle_box_quads_blind_brawl" },
-        { name: "Demolitions Expert", description: "Elimiate 3 enemies with explosives in a single round", icon: "demolitions_expert", stat: "battle_box_quads_demolitions_expert" },
+        { name: "Demolitions Expert", description: "Eliminate 3 enemies with explosives in a single round", icon: "demolitions_expert", stat: "battle_box_quads_demolitions_expert" },
         { name: "Flawless Battle", description: "Place 1st as a team without any member of your team dying", icon: "flawless_battle", stat: "battle_box_quads_flawless_battle" },
         { name: "Savior Ace", description: "Eliminate all 4 enemies as the last player standing", icon: "savior_ace", stat: "battle_box_quads_leave_it_to_me" },
         { name: "Stealthy Takedown", description: "Eliminate an enemy whilst invisible", icon: "stealthy_takedown", stat: "battle_box_quads_stealthy_takedown" },
@@ -12,7 +12,7 @@ export const badges = {
         { name: "Untouchable Assassin", description: "Place 1st as a team whilst taking no damage and getting at least 4 eliminations", icon: "untouchable_assassin", stat: "battle_box_quads_untouchable_assassin" },
     ],
     battle_box_tiered: [
-        { name: "Battle Box Player", description: "Play all rounds of Battle Box in a game", icon: "battle_box_player", stat: "battle_box_quads_games_played", tiers: [
+        { name: "Battle Box Player", description: "Play all 3 rounds of games of Battle Box", icon: "battle_box_player", stat: "battle_box_quads_games_played", tiers: [
             { name: "I", amount: 15 }, { name: "II", amount: 50 }, { name: "III", amount: 125 }, { name: "IV", amount: 250 },
             { name: "V", amount: 475 }, { name: "VI", amount: 800 }, { name: "VII", amount: 1300 },
         ]},
@@ -20,11 +20,11 @@ export const badges = {
             { name: "I", amount: 25 }, { name: "II", amount: 75 }, { name: "III", amount: 175 }, { name: "IV", amount: 400 },
             { name: "V", amount: 700 }, { name: "VI", amount: 1200 }, { name: "VII", amount: 2000 },    
         ]},
-        { name: "Battle Box Champion", description: "Eliminate players in Battle Box", icon: "battle_box_champion", stat: "battle_box_quads_team_first_place", tiers: [
+        { name: "Battle Box Champion", description: "Finish games of Battle Box with your team in 1st place", icon: "battle_box_champion", stat: "battle_box_quads_team_first_place", tiers: [
             { name: "I", amount: 5 }, { name: "II", amount: 15 }, { name: "III", amount: 35 }, { name: "IV", amount: 75 },
             { name: "V", amount: 155 }, { name: "VI", amount: 250 }, { name: "VII", amount: 400 },    
         ]},
-        { name: "Battle Box Expert", description: "Eliminate players in Battle Box", icon: "battle_box_expert", stat: "battle_box_quads_team_rounds_won", tiers: [
+        { name: "Battle Box Expert", description: "Win rounds of Battle Box", icon: "battle_box_expert", stat: "battle_box_quads_team_rounds_won", tiers: [
             { name: "I", amount: 25 }, { name: "II", amount: 75 }, { name: "III", amount: 175 }, { name: "IV", amount: 375 },
             { name: "V", amount: 600 }, { name: "VI", amount: 1200 }, { name: "VII", amount: 2000 },    
         ]}
@@ -182,12 +182,15 @@ export const badges = {
     ]
 }
 
-export function calculateBadgeCompletion(player, badges) {
+export function calculateBadgeCompletion(player, badges, tiered_badges) {
     let completed = 0;
     for (let badge of badges) {
         if (player.statistics[badge.stat].value > 0) completed++;
     }
-    return Math.round((completed / badges.length) * 100);
+    for (let badge of tiered_badges) {
+        if (player.statistics[badge.stat].value >= badge.tiers[badge.tiers.length - 1].amount) completed++;
+    }
+    return Math.round((completed / (badges.length + tiered_badges.length)) * 100);
 }
 
 export function calculateBadgeTier(stat, tiers) {
