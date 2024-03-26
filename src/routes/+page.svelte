@@ -53,10 +53,10 @@
                     {#each data?.favourites as favourite}
                         <a href={`/player/${favourite.username}`} class="bg-white rounded-lg p-4 hover:bg-slate-200 hover:scale-105 duration-100 shadow-md">
                             <div class="flex flex-col justify-center items-center gap-y-3">
-                                <img class="rounded-md" src={`https://crafatar.com/avatars/19f9fd28-558c-4959-98c2-fb1a18bed0a1?overlay`} alt={`SirArchibald97's Profile'`} />
+                                <img class="rounded-md" src={`https://crafatar.com/avatars/${favourite.uuid}?overlay`} alt={`SirArchibald97's Profile'`} />
                                 <div class="flex flex-row gap-x-2">
-                                    <img class="h-8 w-8 rounded-md hidden sm:block" src={`https://cdn.islandstats.xyz/ranks/moderator.png`} alt={`SirArchibald97's rank`} />
-                                    <p class="text-slate-700 text-center text-lg font-semibold self-center">SirArchibald97</p>
+                                    <img class="h-8 w-8 rounded-md hidden sm:block" src={`https://cdn.islandstats.xyz/ranks/${getRankIcon(favourite.ranks)}`} alt={`SirArchibald97's rank`} />
+                                    <p class="text-slate-700 text-center text-lg font-semibold self-center">{favourite.username}</p>
                                 </div>
                             </div>
                         </a>
