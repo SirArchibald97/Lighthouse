@@ -55,7 +55,7 @@
                             <div class="flex flex-col justify-center items-center gap-y-3">
                                 <img class="rounded-md" src={`https://crafatar.com/avatars/${favourite.uuid}?overlay`} alt={`SirArchibald97's Profile'`} />
                                 <div class="flex flex-row gap-x-2">
-                                    <img class="h-8 w-8 rounded-md hidden sm:block" src={`https://cdn.islandstats.xyz/ranks/${getRankIcon(favourite.ranks)}`} alt={`SirArchibald97's rank`} />
+                                    <img class="h-8 w-8 bg-slate-400 rounded-md hidden sm:block" src={`https://cdn.islandstats.xyz/ranks/${getRankIcon(favourite.ranks)}`} alt={`SirArchibald97's rank`} />
                                     <p class="text-slate-700 text-center text-lg font-semibold self-center">{favourite.username}</p>
                                 </div>
                             </div>
