@@ -1,8 +1,7 @@
 <script>
     import "../app.css";
     import { inject } from '@vercel/analytics';
-    import { DEV } from "$env/static/public";
-    inject({ mode: DEV ? "development" : "production" });
+    inject();
 </script>
 
 <main class="bg-slate-200">
