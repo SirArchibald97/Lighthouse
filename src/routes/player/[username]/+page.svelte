@@ -3,8 +3,10 @@
     import { badges, calculateBadgeCompletion, calculateBadgeTier } from "$lib/data.js";
     import { DateTime } from "luxon";
     import Star from "../../../svgs/Star.svelte";
+    import Check from "../../../svgs/Check.svelte";
     
     export let data;
+    export let form;
 
     let infoTab = "stats";
     function switchInfoTab(newTab) { infoTab = newTab; }
@@ -27,19 +29,24 @@
     let intList = [];
     let counter = 0;
     let friendsOnline = 0;
+    // loop through all friends
     for (let friend of data.player.social?.friends || []) {
+        // if they are online, add one to online counter
         if (friend.status?.online) friendsOnline++;
 
+        // if counter reaches is less than 10, add friend to sublist
         if (counter < 10) {
             intList.push(friend);
             counter++;
         }
+        // when counter hits 10, add sublist to full list and reset both
         if (counter === 10) {
             fullList.push(intList);
             intList = [];
             counter = 0;
         }
     }
+    // push any remaining friends to full list
     if (intList.length > 0) fullList.push(intList);
 </script>
 
@@ -127,6 +134,24 @@
     
                     <!-- searches -->
                     <p class="mt-4 text-slate-500 text-sm 2xl:text-lg">Views: <span>{data.views.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></p>
+                </div>
+
+                <div class="bg-slate-50 border-l-4 border-l-red-500 rounded-sm p-4 self-center sm:self-start w-full text-sm 2xl:text-lg">
+                    <form method="POST" action="?/favourite">
+                        <input type="text" name="username" class="hidden" bind:value={data.player.username} />
+                        <input type="text" name="uuid" class="hidden" bind:value={data.uuid} />
+                        <input type="text" name="ranks" class="hidden" bind:value={data.player.ranks} />
+
+                        <button type="submit" class="flex flex-row place-items-center font-semibold hover:bg-slate-100 hover:scale-105 py-1 px-3 rounded-md">
+                            {#if !form?.favourites.find(f => f?.username === data.player.username) && !data.favourite}
+                                <span class="w-6 h-6 mr-2 text-black"><Star /></span>
+                                <span>Add to favourites</span>
+                            {:else}
+                                <span class="w-6 h-6 mr-2"><Check /></span>
+                                <span>Added to favourites!</span>
+                            {/if}
+                        </button>
+                    </form>
                 </div>
 
                 <div class="bg-slate-50 border-l-4 border-l-red-500 rounded-sm p-4 self-center sm:self-start w-full text-sm 2xl:text-lg">
@@ -640,7 +665,7 @@
                                         <a class="flex flex-row gap-1" href={`/player/${member.username}`} data-sveltekit-reload>
                                             <p class="text-lg ml-2 hover:underline">{member.username}</p>
                                             {#if member.username === data.player.social.party.leader?.username}
-                                                <Star />
+                                                <span class="w-6 h-6 pt-1 pl-1"><Star /></span>
                                             {/if}
                                         </a>
                                     </div>

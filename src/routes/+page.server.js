@@ -2,7 +2,7 @@ import { SAD_API_KEY, DEV } from "$env/static/private";
 import { redirect } from '@sveltejs/kit';
 import db from "$lib/db.js";
 
-export async function load() {
+export async function load({ cookies }) {
     // fetch top 4 most searched username's from the database
     const topRequests = await db.collection("requests").find({ username: { $ne: "SirArchibald97" } }).sort({ requests_current: -1 }).limit(4).toArray();
 
@@ -14,17 +14,30 @@ export async function load() {
         const { player } = await res.json();
         if (player) profiles.push({ uuid: request.uuid, username: request.username, player: player });
     }
-    return { profiles };
+
+    const favourites = cookies.get("favourites") ? JSON.parse(cookies.get("favourites")) : [];
+
+    return { profiles, favourites };
 }
 
 export const actions = {
     // redirects to the provided player's profile page
-    default: async ({ request }) => {
+    lookup: async ({ request }) => {
         const data = await request.formData();
         const username = await data.get("username");
 
         const mj_res = await fetch(`https://api.mojang.com/users/profiles/minecraft/${username}`);
         const { name } = await mj_res.json();
         throw redirect(301, `/player/${name || username}`);
+    },
+
+    me: async () => {
+        throw redirect(301, "/player/SirArchibald97");
+    },
+
+    player: async ({ request }) => {
+        const data = await request.formData();
+        const username = await data.get("username");
+        throw redirect(301, `/player/${username}`);
     }
 }
