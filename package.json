@@ -19,6 +19,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@vercel/analytics": "^1.2.2",
 		"luxon": "^3.4.4",
 		"mongodb": "^6.5.0"
 	}
