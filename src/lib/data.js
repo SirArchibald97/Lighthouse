@@ -54,7 +54,7 @@ export const badges = {
         ]},
         { name: "Sky Battle Expert", description: "Reach survival placement of 8 or better in games of Sky Battle", icon: "sky_battle_expert", stat: "solo_top_eight", tiers: [
             { name: "I", amount: 20 }, { name: "II", amount: 65 }, { name: "III", amount: 150 }, { name: "IV", amount: 325 },
-            { name: "V", amount: 575 }, { name: "VI", amount: 1000 }, { name: "VII", amount: 1600 },    
+            { name: "V", amount: 575 }, { name: "VI", amount: 1000 }, { name: "VII", amount: 1600 },
         ]}
     ],
     tgttos: [
@@ -105,7 +105,11 @@ export const badges = {
         { name: "HITW Expert", description: "Finish games of HITW in 5th place or better", icon: "hitw_expert", stat: "top_five", tiers: [
             { name: "I", amount: 10 }, { name: "II", amount: 25 }, { name: "III", amount: 75 }, { name: "IV", amount: 125 },
             { name: "V", amount: 250 }, { name: "VI", amount: 425 }, { name: "VII", amount: 700 },
-        ]}
+        ]},
+        { name: "Bring on the Wall", description: "Dodge walls in games of HITW", icon: "bring_on_the_wall", stat: "walls_dodged", tiers: [
+            { name: "I", amount: 350 }, { name: "II", amount: 1100 }, { name: "III", amount: 2500 }, { name: "IV", amount: 5500 },
+            { name: "V", amount: 10000 }, { name: "VI", amount: 15000 }, { name: "VII", amount: 30000 },
+        ]},
     ],
     dynaball: [
         { name: "Airstrike Assassin", description: "Eliminate 2 players within 15 seconds of using an airstrike", icon: "airstrike_assassin", stat: "airstrike_eliminate_2" },
