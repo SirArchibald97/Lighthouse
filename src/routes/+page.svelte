@@ -1,7 +1,7 @@
 <script>
-    import Search from "../svgs/Search.svelte";
-    import Star from "../svgs/Star.svelte";
-    import LeftArrow from "../svgs/LeftArrow.svelte";
+    import Search from "$lib/svgs/Search.svelte";
+    import Star from "$lib/svgs/Star.svelte";
+    import LeftArrow from "$lib/svgs/LeftArrow.svelte";
     import { getRankIcon } from "$lib/utils.js";
 
     export let data;
@@ -11,6 +11,9 @@
     function toggleFavourites() { showFavourites = !showFavourites; }
 
     if (form) toggleFavourites();
+
+    let selectedProfile = null;
+    function selectProfile(username) { selectedProfile = username; }
 </script>
 
 <svelte:head>
@@ -39,7 +42,9 @@
 
         <!-- featured profiles -->
         <p class="text-slate-700 dark:text-slate-200 text-3xl text-center mb-8 font-semibold">Featured Profiles</p>
-        <div class={`${showFavourites && data?.favourites.length === 0 ? "flex flex-row justify-center" : "grid grid-cols-2 sm:grid-cols-3 gap-6"}`}>
+        <form method="POST" action="?/lookup" class={`${showFavourites && data?.favourites.length === 0 ? "flex flex-row justify-center" : "grid grid-cols-2 sm:grid-cols-3 gap-6"}`}>
+            <input type="text" name="username" bind:value={selectedProfile} class="hidden" />
+
             <!-- favourites -->
             {#if showFavourites}
                 {#if data?.favourites.length > 0}
@@ -51,7 +56,7 @@
                     </button>
 
                     {#each data?.favourites as favourite}
-                        <a href={`/player/${favourite.username}`} class="bg-white rounded-lg p-4 hover:bg-slate-200 hover:scale-105 duration-100 shadow-md">
+                        <button type="submit" on:click={() => selectProfile(favourite.username)} class="bg-white rounded-lg p-4 hover:bg-slate-200 hover:scale-105 duration-100 shadow-md">
                             <div class="flex flex-col justify-center items-center gap-y-3">
                                 <img class="rounded-md" src={`https://crafatar.com/avatars/${favourite.uuid}?overlay`} alt={`SirArchibald97's Profile'`} />
                                 <div class="flex flex-row gap-x-2">
@@ -59,7 +64,7 @@
                                     <p class="text-slate-700 text-center text-lg font-semibold self-center">{favourite.username}</p>
                                 </div>
                             </div>
-                        </a>
+                        </button>
                     {/each}
                 {:else}
                     <button on:click={toggleFavourites} class="flex flex-col justify-center items-center bg-white rounded-lg px-24 py-20 hover:bg-slate-200 hover:scale-105 duration-100 shadow-md">
@@ -79,7 +84,7 @@
                 </button>
 
                 <!-- SirArchibald97 -->
-                <a href={`/player/SirArchibald97`} class="bg-white rounded-lg p-4 hover:bg-slate-200 hover:scale-105 duration-100 shadow-md">
+                <button type="submit" on:click={() => selectProfile("SirArchibald97")} class="bg-white rounded-lg p-4 hover:bg-slate-200 hover:scale-105 duration-100 shadow-md">
                     <div class="flex flex-col justify-center items-center gap-y-3">
                         <img class="rounded-md" src={`https://crafatar.com/avatars/19f9fd28-558c-4959-98c2-fb1a18bed0a1?overlay`} alt={`SirArchibald97's Profile'`} />
                         <div class="flex flex-row gap-x-2">
@@ -87,11 +92,11 @@
                             <p class="text-slate-700 text-center text-lg font-semibold self-center">SirArchibald97</p>
                         </div>
                     </div>
-                </a>
+                </button>
 
                 <!-- most searched usernames -->
                 {#each data.profiles as profile}
-                    <a href={`/player/${profile.username}`} class="bg-white rounded-lg p-4 hover:bg-slate-200 hover:scale-105 duration-100 shadow-md">
+                    <button type="submit" on:click={() => selectProfile(profile.username)} class="bg-white rounded-lg p-4 hover:bg-slate-200 hover:scale-105 duration-100 shadow-md">
                         <div class="flex flex-col justify-center items-center gap-y-3">
                             <img class="rounded-md" src={`https://crafatar.com/avatars/${profile.uuid}?overlay`} alt={`${profile.username}'s Profile'`} />
                             <div class="flex flex-row gap-x-2">
@@ -99,10 +104,10 @@
                                 <p class="text-slate-700 text-center text-lg font-semibold self-center">{profile.username}</p>
                             </div>
                         </div>
-                    </a>
+                    </button>
                 {/each}
             {/if}
-        </div>
+        </form>
     </div>
 
     <footer class={`w-full bg-red-500 p-4 relative bottom-0`}>

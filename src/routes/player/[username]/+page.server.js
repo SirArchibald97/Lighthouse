@@ -8,6 +8,7 @@ export async function load({ params, cookies }) {
     const mj_res = await fetch(`https://api.mojang.com/users/profiles/minecraft/${params.username}`);
     const { id, name } = await mj_res.json();
     if (!id) return { success: false, player: {} };
+    if (params.username !== name) throw redirect(301, `/player/${name}`);
     
     // fetch player data from the MCC Island API
     const res = await fetch(`${DEV === "true" ? "http://localhost:3000" : "https://api.sirarchibald.dev"}/islandstats/${await formatUUID(id)}`, { headers: { "auth": `${SAD_API_KEY}` } });
@@ -18,7 +19,7 @@ export async function load({ params, cookies }) {
         const result = await db.collection("requests").findOne({ username: name });
         const isFavourite = cookies.get("favourites") ? JSON.parse(cookies.get("favourites")).find(f => f.username === name) : false;
 
-        return { uuid: await formatUUID(id), name: name, player, rank: getRankIcon(player.ranks), views: result?.requests_current || 0, favourite: isFavourite };
+        return { uuid: await formatUUID(id), name: name, player, rank: getRankIcon(player.ranks), views: result?.requests || 0, favourite: isFavourite };
     } else return { success: false, player: {} };
 }
 
@@ -27,7 +28,10 @@ export const actions = {
     lookup: async ({ request }) => {
         const data = await request.formData();
         const username = await data.get("username");
-        throw redirect(301, `/player/${username}`);
+
+        const mj_res = await fetch(`https://api.mojang.com/users/profiles/minecraft/${username}`);
+        const { name } = await mj_res.json();
+        throw redirect(301, `/player/${name || username}`);
     },
 
     favourite: async ({ request, cookies }) => {
@@ -49,5 +53,9 @@ export const actions = {
 
     home: async () => {
         throw redirect(301, "/");
+    },
+
+    compare: async () => {
+        throw redirect(301, "/compare");
     }
 }

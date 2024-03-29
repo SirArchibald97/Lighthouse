@@ -30,14 +30,4 @@ export const actions = {
         const { name } = await mj_res.json();
         throw redirect(301, `/player/${name || username}`);
     },
-
-    me: async () => {
-        throw redirect(301, "/player/SirArchibald97");
-    },
-
-    player: async ({ request }) => {
-        const data = await request.formData();
-        const username = await data.get("username");
-        throw redirect(301, `/player/${username}`);
-    }
 }

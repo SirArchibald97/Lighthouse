@@ -2,8 +2,8 @@
     import { getRankIcon, getStatusGame, getStatusIcon } from "$lib/utils.js";
     import { badges, calculateBadgeCompletion, calculateBadgeTier } from "$lib/data.js";
     import { DateTime } from "luxon";
-    import Star from "../../../svgs/Star.svelte";
-    import Check from "../../../svgs/Check.svelte";
+    import Star from "$lib/svgs/Star.svelte";
+    import Check from "$lib/svgs/Check.svelte";
     
     export let data;
     export let form;
@@ -13,9 +13,9 @@
     
     let lastJoin = "Unknown";
     let firstJoin = "Unknown";
-    if (data.player.status) {
-        const lastJoinDate = DateTime.fromISO(data.player.status.lastJoin);
-        const firstJoinDate = DateTime.fromISO(data.player.status.firstJoin);
+    if (data.player?.status) {
+        const lastJoinDate = DateTime.fromISO(data.player.status.lastJoin.toLocaleString());
+        const firstJoinDate = DateTime.fromISO(data.player.status.firstJoin.toLocaleString());
 
         lastJoin = `${lastJoinDate.day < 10 ? `0${lastJoinDate.day}`: lastJoinDate.day}/${lastJoinDate.month < 10 ? `0${lastJoinDate.month}`: lastJoinDate.month}/${lastJoinDate.year} @ ${lastJoinDate.hour < 10 ? `0${lastJoinDate.hour}`: lastJoinDate.hour}:${lastJoinDate.minute < 10 ? `0${lastJoinDate.minute}` : lastJoinDate.minute}`;
         firstJoin = `${firstJoinDate.day < 10 ? `0${firstJoinDate.day}`: firstJoinDate.day}/${firstJoinDate.month < 10 ? `0${firstJoinDate.month}`: firstJoinDate.month}/${firstJoinDate.year} @ ${firstJoinDate.hour < 10 ? `0${firstJoinDate.hour}`: firstJoinDate.hour}:${firstJoinDate.minute < 10 ? `0${firstJoinDate.minute}` : firstJoinDate.minute}`;
@@ -23,6 +23,9 @@
 
     let expandedCategory = null;
     function switchCategory(category) { expandedCategory = category; }
+
+    let sbCategory = "quads";
+    function switchSBCategory(category) { sbCategory = category; }
 
     let fullList = [];
     let friendIndex = 0;
@@ -184,37 +187,37 @@
                                     {#if expandedCategory === "bb"}
                                         <div class="grid grid-cols-1 sm:grid-cols-3 items-start gap-y-4 mt-2 text-md gap-x-24">
                                             <div>
-                                                <p>Rounds Won: <span class="font-semibold">{data.player.statistics.battle_box_quads_team_rounds_won.value}</span></p>
-                                                <p>Rounds Lost: <span class="font-semibold">{(data.player.statistics.battle_box_quads_games_played.value * 3) - data.player.statistics.battle_box_quads_team_rounds_won.value}</span></p>
-                                                <p>WLR: <span class="font-semibold">{Math.floor((data.player.statistics.battle_box_quads_team_rounds_won.value / ((data.player.statistics.battle_box_quads_games_played.value * 3) - data.player.statistics.battle_box_quads_team_rounds_won.value)) * 100) / 100}</span></p>
+                                                <p>Rounds Won: <span class="font-semibold">{data.player.statistics.battle_box.rounds_won.toLocaleString()}</span></p>
+                                                <p>Rounds Lost: <span class="font-semibold">{((data.player.statistics.battle_box.games_played * 3) - data.player.statistics.battle_box.rounds_won).toLocaleString()}</span></p>
+                                                <p>WLR: <span class="font-semibold">{(Math.floor((data.player.statistics.battle_box.rounds_won / ((data.player.statistics.battle_box.games_played * 3) - data.player.statistics.battle_box.rounds_won)) * 100) / 100 || 0).toLocaleString()}</span></p>
                                             </div>
                                             <div>
-                                                <p>Kills: <span class="font-semibold">{data.player.statistics.battle_box_quads_players_killed.value}</span></p>
-                                                <p>Deaths: <span class="font-semibold">{data.player.statistics.battle_box_quads_times_eliminated.value}</span></p>
-                                                <p>KDR: <span class="font-semibold">{Math.floor((data.player.statistics.battle_box_quads_players_killed.value / data.player.statistics.battle_box_quads_times_eliminated.value) * 100) / 100}</span></p>
+                                                <p>Kills: <span class="font-semibold">{data.player.statistics.battle_box.kills.toLocaleString()}</span></p>
+                                                <p>Deaths: <span class="font-semibold">{data.player.statistics.battle_box.deaths.toLocaleString()}</span></p>
+                                                <p>KDR: <span class="font-semibold">{(Math.floor((data.player.statistics.battle_box.kills / data.player.statistics.battle_box.deaths) * 100) / 100 || 0).toLocaleString()}</span></p>
                                             </div>
                                             <div>
-                                                <p>Melee Kills: <span class="font-semibold">{data.player.statistics.battle_box_quads_melee_kills.value}</span></p>
-                                                <p>Ranged Kills: <span class="font-semibold">{data.player.statistics.battle_box_quads_ranged_kills.value}</span></p>
-                                                <p>Explosive Kills: <span class="font-semibold">{data.player.statistics.battle_box_quads_explosive_kills.value}</span></p>
+                                                <p>Melee Kills: <span class="font-semibold">{data.player.statistics.battle_box.melee_kills.toLocaleString()}</span></p>
+                                                <p>Ranged Kills: <span class="font-semibold">{data.player.statistics.battle_box.ranged_kills.toLocaleString()}</span></p>
+                                                <p>Explosive Kills: <span class="font-semibold">{data.player.statistics.battle_box.explosive_kills.toLocaleString()}</span></p>
                                             </div>
                                             <div>
-                                                <p>Games Played: <span class="font-semibold">{data.player.statistics.battle_box_quads_games_played.value}</span></p>
-                                                <p>Team 1st Places: <span class="font-semibold">{data.player.statistics.battle_box_quads_team_first_place.value}</span></p>
-                                                <p>Team 2nd Places: <span class="font-semibold">{data.player.statistics.battle_box_quads_team_second_place.value}</span></p>
-                                                <p>Team 3rd Places: <span class="font-semibold">{data.player.statistics.battle_box_quads_team_third_place.value}</span></p>
-                                                <p>Team 4th Places: <span class="font-semibold">{data.player.statistics.battle_box_quads_team_fourth_place.value}</span></p>
+                                                <p>Games Played: <span class="font-semibold">{data.player.statistics.battle_box.games_played.toLocaleString()}</span></p>
+                                                <p>Team 1st Places: <span class="font-semibold">{data.player.statistics.battle_box.team_first_place.toLocaleString()}</span> <span class="text-slate-500">({Math.round((data.player.statistics.battle_box.team_first_place / data.player.statistics.battle_box.games_played) * 100)}%)</span></p>
+                                                <p>Team 2nd Places: <span class="font-semibold">{data.player.statistics.battle_box.team_second_place.toLocaleString()}</span> <span class="text-slate-500">({Math.round((data.player.statistics.battle_box.team_second_place / data.player.statistics.battle_box.games_played) * 100)}%)</span></p>
+                                                <p>Team 3rd Places: <span class="font-semibold">{data.player.statistics.battle_box.team_third_place.toLocaleString()}</span> <span class="text-slate-500">({Math.round((data.player.statistics.battle_box.team_third_place / data.player.statistics.battle_box.games_played) * 100)}%)</span></p>
+                                                <p>Team 4th Places: <span class="font-semibold">{data.player.statistics.battle_box.team_fourth_place.toLocaleString()}</span> <span class="text-slate-500">({Math.round((data.player.statistics.battle_box.team_fourth_place / data.player.statistics.battle_box.games_played) * 100)}%)</span></p>
                                             </div>
                                             <div>
-                                                <p>Individual 1st Places: <span class="font-semibold">{data.player.statistics.battle_box_quads_first_place_individual.value}</span> <span class="text-slate-500">({Math.round((data.player.statistics.battle_box_quads_first_place_individual.value / data.player.statistics.battle_box_quads_games_played.value) * 100)}%)</span></p>
-                                                <p>Individual Top 3: <span class="font-semibold">{data.player.statistics.battle_box_quads_top_three_individual.value}</span> <span class="text-slate-500">({Math.round((data.player.statistics.battle_box_quads_top_three_individual.value / data.player.statistics.battle_box_quads_games_played.value) * 100)}%)</span></p>
-                                                <p>Individual Top 5: <span class="font-semibold">{data.player.statistics.battle_box_quads_top_five_individual.value}</span> <span class="text-slate-500">({Math.round((data.player.statistics.battle_box_quads_top_five_individual.value / data.player.statistics.battle_box_quads_games_played.value) * 100)}%)</span></p>
-                                                <p>Concrete Broken: <span class="font-semibold">{data.player.statistics.battle_box_quads_enemy_wool_broken.value}</span> </p>
-                                                <p>Concrete Placed: <span class="font-semibold">{data.player.statistics.battle_box_quads_wool_placed.value}</span></p>
+                                                <p>Individual 1st Places: <span class="font-semibold">{data.player.statistics.battle_box.solo_first_place.toLocaleString()}</span> <span class="text-slate-500">({Math.round((data.player.statistics.battle_box.solo_first_place / data.player.statistics.battle_box.games_played) * 100)}%)</span></p>
+                                                <p>Individual Top 3: <span class="font-semibold">{data.player.statistics.battle_box.solo_top_three.toLocaleString()}</span> <span class="text-slate-500">({Math.round((data.player.statistics.battle_box.solo_top_three / data.player.statistics.battle_box.games_played) * 100)}%)</span></p>
+                                                <p>Individual Top 5: <span class="font-semibold">{data.player.statistics.battle_box.solo_top_five.toLocaleString()}</span> <span class="text-slate-500">({Math.round((data.player.statistics.battle_box.solo_top_five / data.player.statistics.battle_box.games_played) * 100)}%)</span></p>
+                                                <p>Concrete Broken: <span class="font-semibold">{data.player.statistics.battle_box.blocks_broken.toLocaleString()}</span> </p>
+                                                <p>Concrete Placed: <span class="font-semibold">{data.player.statistics.battle_box.blocks_placed.toLocaleString()}</span></p>
                                             </div>
                                         </div>
 
-                                        <p class="font-semibold mt-4 mb-2 text-xl">Badges <span class="text-slate-400">({calculateBadgeCompletion(data.player, badges.battle_box, badges.battle_box_tiered)}%)</span></p>
+                                        <p class="font-semibold mt-4 mb-2 text-xl">Badges <span class="text-slate-400">({calculateBadgeCompletion(data.player, "battle_box", badges.battle_box, badges.battle_box_tiered)}%)</span></p>
                                         <div class="grid grid-cols-2 sm:grid-cols-3 2xl:grid-cols-5 gap-5">
                                             {#each badges.battle_box as badge}
                                                 <div class="flex flex-col sm:flex-row gap-x-2">
@@ -223,8 +226,8 @@
                                                         <p class="absolute invisible xl:group-hover:visible opacity-0 group-hover:opacity-100 z-10 bg-slate-500 text-slate-200 rounded-md py-1 px-2 text-wrap duration-100">{badge.description}</p>
                                                     </div>
                                                     <div class="flex flex-col items-start mt-2 sm:mt-0">
-                                                        <p class={`font-semibold ${data.player.statistics[badge.stat].value > 0 ? "text-green-500" : "text-red-500"}`}>{badge.name}</p>
-                                                        <p>Completed <span class="font-semibold">{data.player.statistics[badge.stat].value}</span> time{data.player.statistics[badge.stat].value === 1 ? "" : "s"}</p>
+                                                        <p class={`font-semibold ${data.player.statistics.battle_box.badges[badge.stat] > 0 ? "text-green-500" : "text-red-500"}`}>{badge.name}</p>
+                                                        <p>Completed <span class="font-semibold">{data.player.statistics.battle_box.badges[badge.stat].toLocaleString()}</span> time{data.player.statistics.battle_box[badge.stat] === 1 ? "" : "s"}</p>
                                                     </div>
                                                 </div>
                                             {/each}
@@ -238,16 +241,16 @@
                                                         <p class="absolute invisible xl:group-hover:visible opacity-0 group-hover:opacity-100 z-10 bg-slate-500 text-slate-200 rounded-md py-1 px-2 text-wrap duration-100">{badge.description}</p>
                                                     </div>
                                                     <div class="flex flex-col items-start mt-2 sm:mt-0">
-                                                        <p class="font-semibold">{badge.name} {calculateBadgeTier(data.player.statistics[badge.stat].value, badge.tiers).tier.name}</p>
+                                                        <p class="font-semibold">{badge.name} {calculateBadgeTier(data.player.statistics.battle_box[badge.stat], badge.tiers).tier.name}</p>
                                                         <p>
                                                             {#each badge.tiers as tier}
-                                                                {#if data.player.statistics[badge.stat].value >= tier.amount}
-                                                                    <span class="text-green-500">{tier.amount}</span>
+                                                                {#if data.player.statistics.battle_box[badge.stat] >= tier.amount}
+                                                                    <span class="text-green-500">{tier.amount.toLocaleString()}</span>
                                                                 {:else}
-                                                                    {#if calculateBadgeTier(data.player.statistics[badge.stat].value, badge.tiers).next.name === tier.name}
-                                                                        <span class="text-red-500">{data.player.statistics[badge.stat].value}</span><span class="text-slate-400">/{tier.amount}</span>
+                                                                    {#if calculateBadgeTier(data.player.statistics.battle_box[badge.stat], badge.tiers).next.name === tier.name}
+                                                                        <span class="text-red-500">{data.player.statistics.battle_box[badge.stat].toLocaleString()}</span><span class="text-slate-400">/{tier.amount.toLocaleString()}</span>
                                                                     {:else}
-                                                                        <span class="text-red-500">{tier.amount}</span>
+                                                                        <span class="text-red-500">{tier.amount.toLocaleString()}</span>
                                                                     {/if}
                                                                 {/if}
                                                             
@@ -268,46 +271,51 @@
                                         <p class="text-xl font-semibold">Sky Battle</p>
                                     </button>
                                     {#if expandedCategory === "sb"}
+                                        <div class="flex flex-row mt-4 mb-2">
+                                            <button on:click={() => switchSBCategory("quads")} class={`bg-slate-200 hover:bg-slate-300 px-2 py-1 rounded-l-sm ${sbCategory === "quads" ? "border-b-4 border-red-400" : ""}`}>Quads</button>
+                                            <button on:click={() => switchSBCategory("summer")} class={`bg-slate-200 hover:bg-slate-300 px-2 py-1 rounded-r-sm ${sbCategory === "summer" ? "border-b-4 border-red-400" : ""}`}>Water Fight</button>
+                                        </div>    
                                         <div class="grid grid-cols-1 sm:grid-cols-3 items-start gap-y-4 mt-2 text-md gap-x-24">
                                             <div>
-                                                <p>Games Won: <span class="font-semibold">{data.player.statistics.sky_battle_quads_survival_first_place.value}</span></p>
-                                                <p>Games Lost: <span class="font-semibold">{data.player.statistics.sky_battle_quads_games_played.value - data.player.statistics.sky_battle_quads_survival_first_place.value}</span></p>
-                                                <p>WLR: <span class="font-semibold">{Math.floor((data.player.statistics.sky_battle_quads_survival_first_place.value / (data.player.statistics.sky_battle_quads_games_played.value - data.player.statistics.sky_battle_quads_survival_first_place.value)) * 100) / 100}</span></p>
+                                                <p>Games Won: <span class="font-semibold">{data.player.statistics.sky_battle[sbCategory].solo_first_place.toLocaleString()}</span></p>
+                                                <p>Games Lost: <span class="font-semibold">{(data.player.statistics.sky_battle[sbCategory].games_played - data.player.statistics.sky_battle[sbCategory].solo_first_place).toLocaleString()}</span></p>
+                                                <p>WLR: <span class="font-semibold">{(Math.floor((data.player.statistics.sky_battle[sbCategory].solo_first_place / (data.player.statistics.sky_battle[sbCategory].games_played - data.player.statistics.sky_battle[sbCategory].solo_first_place)) * 100) / 100 || 0).toLocaleString()}</span></p>
                                             </div>
                                             <div>
-                                                <p>Kills: <span class="font-semibold">{data.player.statistics.sky_battle_quads_players_killed.value}</span></p>
-                                                <p>Deaths: <span class="font-semibold">{data.player.statistics.sky_battle_quads_games_played.value - data.player.statistics.sky_battle_quads_survival_first_place.value}</span></p>
-                                                <p>KDR: <span class="font-semibold">{Math.floor((data.player.statistics.sky_battle_quads_players_killed.value / (data.player.statistics.sky_battle_quads_games_played.value - data.player.statistics.sky_battle_quads_survival_first_place.value)) * 100) / 100}</span></p>
+                                                <p>Kills: <span class="font-semibold">{data.player.statistics.sky_battle[sbCategory].kills.toLocaleString()}</span></p>
+                                                <p>Deaths: <span class="font-semibold">{data.player.statistics.sky_battle[sbCategory].deaths.toLocaleString()}</span></p>
+                                                <p>KDR: <span class="font-semibold">{(Math.floor((data.player.statistics.sky_battle[sbCategory].kills / data.player.statistics.sky_battle[sbCategory].deaths) * 100) / 100 || 0).toLocaleString()}</span></p>
                                             </div>
                                             <div>
-                                                <p>Melee Kills: <span class="font-semibold">{data.player.statistics.sky_battle_quads_melee_kills.value}</span></p>
-                                                <p>Ranged Kills: <span class="font-semibold">{data.player.statistics.sky_battle_quads_ranged_kills.value}</span></p>
-                                                <p>Explosive Kills: <span class="font-semibold">{data.player.statistics.sky_battle_quads_explosive_kills.value}</span></p>
+                                                <p>Melee Kills: <span class="font-semibold">{data.player.statistics.sky_battle[sbCategory].melee_kills.toLocaleString()}</span></p>
+                                                <p>Ranged Kills: <span class="font-semibold">{data.player.statistics.sky_battle[sbCategory].ranged_kills.toLocaleString()}</span></p>
+                                                <p>Explosive Kills: <span class="font-semibold">{data.player.statistics.sky_battle[sbCategory].explosive_kills.toLocaleString()}</span></p>
                                             </div>
                                             <div>
-                                                <p>Games Played: <span class="font-semibold">{data.player.statistics.sky_battle_quads_games_played.value}</span></p>
-                                                <p>Individual 1st Places: <span class="font-semibold">{data.player.statistics.sky_battle_quads_survival_first_place.value}</span></p>
-                                                <p>Individual Top 3: <span class="font-semibold">{data.player.statistics.sky_battle_quads_survival_top_three.value}</span></p>
-                                                <p>Individual Top 5: <span class="font-semibold">{data.player.statistics.sky_battle_quads_survival_top_five.value}</span></p>
+                                                <p>Games Played: <span class="font-semibold">{data.player.statistics.sky_battle[sbCategory].games_played.toLocaleString()}</span></p>
+                                                <p>Individual 1st Places: <span class="font-semibold">{data.player.statistics.sky_battle[sbCategory].solo_first_place.toLocaleString()}</span></p>
+                                                <p>Individual Top 3: <span class="font-semibold">{data.player.statistics.sky_battle[sbCategory].solo_top_three.toLocaleString()}</span></p>
+                                                <p>Individual Top 5: <span class="font-semibold">{data.player.statistics.sky_battle[sbCategory].solo_top_five.toLocaleString()}</span></p>
                                             </div>
                                             <div>
-                                                <p>Chests Looted: <span class="font-semibold">{data.player.statistics.sky_battle_quads_chests_looted.value}</span></p>
-                                                <p>Golden Chests Looted: <span class="font-semibold">{data.player.statistics.sky_battle_quads_golden_chests_looted.value}</span></p>
-                                                <p>Survived 1 minute: <span class="font-semibold">{data.player.statistics.sky_battle_quads_survived_minute.value}</span> time{data.player.statistics.sky_battle_quads_survived_minute.value !== 1 ? "s" : ""}</p>
-                                                <p>Survived 2 minutes: <span class="font-semibold">{data.player.statistics.sky_battle_quads_survived_two_minute.value}</span> time{data.player.statistics.sky_battle_quads_survived_two_minute.value !== 1 ? "s" : ""}</p>
+                                                <p>Chests Looted: <span class="font-semibold">{data.player.statistics.sky_battle[sbCategory].chests_looted.toLocaleString()}</span></p>
+                                                <p>Golden Chests Looted: <span class="font-semibold">{data.player.statistics.sky_battle[sbCategory].golden_chests_looted.toLocaleString()}</span></p>
+                                                <p>Survived 1 minute: <span class="font-semibold">{data.player.statistics.sky_battle[sbCategory].survived_minute.toLocaleString()}</span> time{data.player.statistics.sky_battle[sbCategory].survived_minute !== 1 ? "s" : ""}</p>
+                                                <p>Survived 2 minutes: <span class="font-semibold">{data.player.statistics.sky_battle[sbCategory].survived_two_minute.toLocaleString()}</span> time{data.player.statistics.sky_battle[sbCategory].survived_two_minute !== 1 ? "s" : ""}</p>
                                             </div>
                                         </div>
 
-                                        <p class="font-semibold mt-4 mb-2 text-xl">Badges <span class="text-slate-400">({calculateBadgeCompletion(data.player, badges.sky_battle, badges.sky_battle_tiered)}%)</span></p>
+                                        <p class="font-semibold mt-4 mb-2 text-xl">Badges <span class="text-slate-400">({calculateBadgeCompletion(data.player, `sky_battle.${sbCategory}`, badges.sky_battle, badges.sky_battle_tiered)}%)</span></p>
                                         <div class="grid grid-cols-2 sm:grid-cols-3 2xl:grid-cols-5 gap-5">
                                             {#each badges.sky_battle as badge}
                                                 <div class="flex flex-col sm:flex-row gap-x-2">
                                                     <div class="group duration-100">
                                                         <img class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/sky_battle/${badge.icon}.png`} alt={badge.name} />
                                                         <p class="absolute invisible xl:group-hover:visible opacity-0 group-hover:opacity-100 z-10 bg-slate-500 text-slate-200 rounded-md py-1 px-2 text-wrap duration-100">{badge.description}</p>
-                                                    </div>                                                    <div class="flex flex-col items-start mt-2 sm:mt-0">
-                                                        <p class={`font-semibold ${data.player.statistics[badge.stat].value > 0 ? "text-green-500" : "text-red-500"}`}>{badge.name}</p>
-                                                        <p>Completed <span class="font-semibold">{data.player.statistics[badge.stat].value}</span> time{data.player.statistics[badge.stat].value === 1 ? "" : "s"}</p>
+                                                    </div>                                                    
+                                                    <div class="flex flex-col items-start mt-2 sm:mt-0">
+                                                        <p class={`font-semibold ${data.player.statistics.sky_battle[sbCategory].badges[badge.stat] > 0 ? "text-green-500" : "text-red-500"}`}>{badge.name}</p>
+                                                        <p>Completed <span class="font-semibold">{data.player.statistics.sky_battle[sbCategory].badges[badge.stat].toLocaleString()}</span> time{data.player.statistics.sky_battle[sbCategory].badges[badge.stat] === 1 ? "" : "s"}</p>
                                                     </div>
                                                 </div>
                                             {/each}
@@ -321,22 +329,22 @@
                                                         <p class="absolute invisible xl:group-hover:visible opacity-0 group-hover:opacity-100 z-10 bg-slate-500 text-slate-200 rounded-md py-1 px-2 text-wrap duration-100">{badge.description}</p>
                                                     </div>
                                                     <div class="flex flex-col items-start mt-2 sm:mt-0">
-                                                        <p class="font-semibold">{badge.name} {calculateBadgeTier(data.player.statistics[badge.stat].value, badge.tiers).tier.name}</p>
+                                                        <p class="font-semibold">{badge.name} {calculateBadgeTier(data.player.statistics.sky_battle[sbCategory][badge.stat], badge.tiers).tier.name}</p>
                                                         <p>
                                                             {#each badge.tiers as tier}
-                                                                {#if data.player.statistics[badge.stat].value >= tier.amount}
-                                                                    <span class="text-green-500">{tier.amount}</span>
+                                                                {#if data.player.statistics.sky_battle[sbCategory][badge.stat] >= tier.amount}
+                                                                    <span class="text-green-500">{tier.amount.toLocaleString()}</span>
                                                                 {:else}
-                                                                    {#if calculateBadgeTier(data.player.statistics[badge.stat].value, badge.tiers).next.name === tier.name}
-                                                                        <span class="text-red-500">{data.player.statistics[badge.stat].value}</span><span class="text-slate-400">/{tier.amount}</span>
+                                                                    {#if calculateBadgeTier(data.player.statistics.sky_battle[sbCategory][badge.stat], badge.tiers).next.name === tier.name}
+                                                                        <span class="text-red-500">{data.player.statistics.sky_battle[sbCategory][badge.stat].toLocaleString()}</span><span class="text-slate-400">/{tier.amount.toLocaleString()}</span>
                                                                     {:else}
-                                                                        <span class="text-red-500">{tier.amount}</span>
+                                                                        <span class="text-red-500">{tier.amount.toLocaleString()}</span>
                                                                     {/if}
                                                                 {/if}
                                                             
                                                                 {#if badge.tiers.indexOf(tier) !== badge.tiers.length - 1}<span class="text-slate-400">• </span>{/if}
                                                             {/each}
-                                                        </p>                                                  
+                                                        </p>       
                                                     </div>
                                                 </div>
                                             {/each}
@@ -353,35 +361,35 @@
                                     {#if expandedCategory === "tgttos"}
                                         <div class="grid grid-cols-1 sm:grid-cols-3 items-start gap-y-4 mt-2 text-md gap-x-24">
                                             <div>
-                                                <p>Games Won: <span class="font-semibold">{data.player.statistics.tgttos_first_place.value}</span></p>
-                                                <p>Games Lost: <span class="font-semibold">{data.player.statistics.tgttos_games_played.value - data.player.statistics.tgttos_first_place.value}</span></p>
-                                                <p>WLR: <span class="font-semibold">{Math.floor((data.player.statistics.tgttos_first_place.value / (data.player.statistics.tgttos_games_played.value - data.player.statistics.tgttos_first_place.value)) * 100) / 100}</span></p>
+                                                <p>Games Won: <span class="font-semibold">{data.player.statistics.tgttos.first_place.toLocaleString()}</span></p>
+                                                <p>Games Lost: <span class="font-semibold">{(data.player.statistics.tgttos.games_played - data.player.statistics.tgttos.first_place).toLocaleString()}</span></p>
+                                                <p>WLR: <span class="font-semibold">{(Math.floor((data.player.statistics.tgttos.first_place / (data.player.statistics.tgttos.games_played - data.player.statistics.tgttos.first_place)) * 100) / 100 || 0).toLocaleString()}</span></p>
                                             </div>
                                             <div>
-                                                <p>Kills: <span class="font-semibold">{data.player.statistics.tgttos_players_punched_into_void.value}</span></p>
-                                                <p>Deaths: <span class="font-semibold">{data.player.statistics.tgttos_times_died.value}</span></p>
-                                                <p>KDR: <span class="font-semibold">{Math.floor((data.player.statistics.tgttos_players_punched_into_void.value / data.player.statistics.tgttos_times_died.value) * 100) / 100}</span></p>
+                                                <p>Kills: <span class="font-semibold">{data.player.statistics.tgttos.kills.toLocaleString()}</span></p>
+                                                <p>Deaths: <span class="font-semibold">{data.player.statistics.tgttos.deaths.toLocaleString()}</span></p>
+                                                <p>KDR: <span class="font-semibold">{(Math.floor((data.player.statistics.tgttos.kills / data.player.statistics.tgttos.deaths) * 100) / 100 || 0).toLocaleString()}</span></p>
                                             </div>
                                             <div>
-                                                <p>Blocks Placed: <span class="font-semibold">{data.player.statistics.tgttos_blocks_placed.value}</span></p>
-                                                <p>Blocks Broken: <span class="font-semibold">{data.player.statistics.tgttos_blocks_broken.value}</span></p>
-                                                <p>Chickens Punched: <span class="font-semibold">{data.player.statistics.tgttos_chickens_punched.value}</span></p>
+                                                <p>Blocks Placed: <span class="font-semibold">{data.player.statistics.tgttos.blocks_placed.toLocaleString()}</span></p>
+                                                <p>Blocks Broken: <span class="font-semibold">{data.player.statistics.tgttos.blocks_broken.toLocaleString()}</span></p>
+                                                <p>Chickens Punched: <span class="font-semibold">{data.player.statistics.tgttos.chickens_punched.toLocaleString()}</span></p>
                                             </div>
                                             <div>
-                                                <p>Games Played: <span class="font-semibold">{data.player.statistics.tgttos_games_played.value}</span></p>
-                                                <p>Game 1st Places: <span class="font-semibold">{data.player.statistics.tgttos_first_place.value}</span> <span class="text-slate-500">({Math.round((data.player.statistics.tgttos_first_place.value / data.player.statistics.tgttos_games_played.value) * 100)}%)</span></p>
-                                                <p>Game Top 3: <span class="font-semibold">{data.player.statistics.tgttos_top_three.value}</span> <span class="text-slate-500">({Math.round((data.player.statistics.tgttos_top_three.value / data.player.statistics.tgttos_games_played.value) * 100)}%)</span></p>
-                                                <p>Game Top 5: <span class="font-semibold">{data.player.statistics.tgttos_top_five.value}</span> <span class="text-slate-500">({Math.round((data.player.statistics.tgttos_top_five.value / data.player.statistics.tgttos_games_played.value) * 100)}%)</span></p>
+                                                <p>Games Played: <span class="font-semibold">{data.player.statistics.tgttos.games_played.toLocaleString()}</span></p>
+                                                <p>Game 1st Places: <span class="font-semibold">{data.player.statistics.tgttos.first_place.toLocaleString()}</span> <span class="text-slate-500">({Math.round((data.player.statistics.tgttos.first_place / data.player.statistics.tgttos.games_played) * 100)}%)</span></p>
+                                                <p>Game Top 3: <span class="font-semibold">{data.player.statistics.tgttos.top_three.toLocaleString()}</span> <span class="text-slate-500">({Math.round((data.player.statistics.tgttos.top_three / data.player.statistics.tgttos.games_played) * 100)}%)</span></p>
+                                                <p>Game Top 5: <span class="font-semibold">{data.player.statistics.tgttos.top_five.toLocaleString()}</span> <span class="text-slate-500">({Math.round((data.player.statistics.tgttos.top_five / data.player.statistics.tgttos.games_played) * 100)}%)</span></p>
                                             </div>
                                             <div>
-                                                <p>Round 1st Places: <span class="font-semibold">{data.player.statistics.tgttos_round_first_place.value}</span> <span class="text-slate-500">({Math.round((data.player.statistics.tgttos_round_first_place.value / (data.player.statistics.tgttos_games_played.value * 3)) * 100)}%)</span></p>
-                                                <p>Round Top 3: <span class="font-semibold">{data.player.statistics.tgttos_round_top_three.value}</span> <span class="text-slate-500">({Math.round((data.player.statistics.tgttos_round_top_three.value / (data.player.statistics.tgttos_games_played.value * 3)) * 100)}%)</span></p>
-                                                <p>Round Top 5: <span class="font-semibold">{data.player.statistics.tgttos_round_top_five.value}</span> <span class="text-slate-500">({Math.round((data.player.statistics.tgttos_round_top_five.value / (data.player.statistics.tgttos_games_played.value * 3)) * 100)}%)</span></p>
-                                                <p>Round Top 8: <span class="font-semibold">{data.player.statistics.tgttos_round_top_eight.value}</span> <span class="text-slate-500">({Math.round((data.player.statistics.tgttos_round_top_eight.value / (data.player.statistics.tgttos_games_played.value * 3)) * 100)}%)</span></p>
+                                                <p>Round 1st Places: <span class="font-semibold">{data.player.statistics.tgttos.round_first_place.toLocaleString()}</span> <span class="text-slate-500">({Math.round((data.player.statistics.tgttos.round_first_place / (data.player.statistics.tgttos.games_played * 3)) * 100)}%)</span></p>
+                                                <p>Round Top 3: <span class="font-semibold">{data.player.statistics.tgttos.round_top_three.toLocaleString()}</span> <span class="text-slate-500">({Math.round((data.player.statistics.tgttos.round_top_three / (data.player.statistics.tgttos.games_played * 3)) * 100)}%)</span></p>
+                                                <p>Round Top 5: <span class="font-semibold">{data.player.statistics.tgttos.round_top_five.toLocaleString()}</span> <span class="text-slate-500">({Math.round((data.player.statistics.tgttos.round_top_five / (data.player.statistics.tgttos.games_played * 3)) * 100)}%)</span></p>
+                                                <p>Round Top 8: <span class="font-semibold">{data.player.statistics.tgttos.round_top_eight.toLocaleString()}</span> <span class="text-slate-500">({Math.round((data.player.statistics.tgttos.round_top_eight / (data.player.statistics.tgttos.games_played * 3)) * 100)}%)</span></p>
                                             </div>
                                         </div>
 
-                                        <p class="font-semibold mt-4 mb-2 text-xl">Badges <span class="text-slate-400">({calculateBadgeCompletion(data.player, badges.tgttos, badges.tgttos_tiered)}%)</span></p>
+                                        <p class="font-semibold mt-4 mb-2 text-xl">Badges <span class="text-slate-400">({calculateBadgeCompletion(data.player, "tgttos", badges.tgttos, badges.tgttos_tiered)}%)</span></p>
                                         <div class="grid grid-cols-2 sm:grid-cols-3 2xl:grid-cols-5 gap-5">
                                             {#each badges.tgttos as badge}
                                                 <div class="flex flex-col sm:flex-row gap-x-2">
@@ -390,8 +398,8 @@
                                                         <p class="absolute invisible xl:group-hover:visible opacity-0 group-hover:opacity-100 z-10 bg-slate-500 text-slate-200 rounded-md py-1 px-2 text-wrap duration-100">{badge.description}</p>
                                                     </div>
                                                     <div class="flex flex-col items-start mt-2 sm:mt-0">
-                                                        <p class={`font-semibold ${data.player.statistics[badge.stat].value > 0 ? "text-green-500" : "text-red-500"}`}>{badge.name}</p>
-                                                        <p>Completed <span class="font-semibold">{data.player.statistics[badge.stat].value}</span> time{data.player.statistics[badge.stat].value === 1 ? "" : "s"}</p>
+                                                        <p class={`font-semibold ${data.player.statistics.tgttos.badges[badge.stat] > 0 ? "text-green-500" : "text-red-500"}`}>{badge.name}</p>
+                                                        <p>Completed <span class="font-semibold">{data.player.statistics.tgttos.badges[badge.stat].toLocaleString()}</span> time{data.player.statistics.tgttos.badges[badge.stat] === 1 ? "" : "s"}</p>
                                                     </div>
                                                 </div>
                                             {/each}
@@ -405,16 +413,16 @@
                                                         <p class="absolute invisible xl:group-hover:visible opacity-0 group-hover:opacity-100 z-10 bg-slate-500 text-slate-200 rounded-md py-1 px-2 text-wrap duration-100">{badge.description}</p>
                                                     </div>
                                                     <div class="flex flex-col items-start mt-2 sm:mt-0">
-                                                        <p class="font-semibold">{badge.name} {calculateBadgeTier(data.player.statistics[badge.stat].value, badge.tiers).tier.name}</p>
+                                                        <p class="font-semibold">{badge.name} {calculateBadgeTier(data.player.statistics.tgttos[badge.stat], badge.tiers).tier.name}</p>
                                                         <p>
                                                             {#each badge.tiers as tier}
-                                                                {#if data.player.statistics[badge.stat].value >= tier.amount}
-                                                                    <span class="text-green-500">{tier.amount}</span>
+                                                                {#if data.player.statistics.tgttos[badge.stat] >= tier.amount}
+                                                                    <span class="text-green-500">{tier.amount.toLocaleString()}</span>
                                                                 {:else}
-                                                                    {#if calculateBadgeTier(data.player.statistics[badge.stat].value, badge.tiers).next.name === tier.name}
-                                                                        <span class="text-red-500">{data.player.statistics[badge.stat].value}</span><span class="text-slate-400">/{tier.amount}</span>
+                                                                    {#if calculateBadgeTier(data.player.statistics.tgttos[badge.stat], badge.tiers).next.name === tier.name}
+                                                                        <span class="text-red-500">{data.player.statistics.tgttos[badge.stat].toLocaleString()}</span><span class="text-slate-400">/{tier.amount.toLocaleString()}</span>
                                                                     {:else}
-                                                                        <span class="text-red-500">{tier.amount}</span>
+                                                                        <span class="text-red-500">{tier.amount.toLocaleString()}</span>
                                                                     {/if}
                                                                 {/if}
                                                             
@@ -437,25 +445,25 @@
                                     {#if expandedCategory === "hitw"}
                                         <div class="grid grid-cols-1 sm:grid-cols-3 items-start gap-y-4 mt-2 text-md gap-x-24">
                                             <div>
-                                                <p>Games Won: <span class="font-semibold">{data.player.statistics.hole_in_the_wall_first_place.value}</span></p>
-                                                <p>Games Lost: <span class="font-semibold">{data.player.statistics.hole_in_the_wall_games_played.value - data.player.statistics.hole_in_the_wall_first_place.value}</span></p>
-                                                <p>WLR: <span class="font-semibold">{Math.floor((data.player.statistics.hole_in_the_wall_first_place.value / (data.player.statistics.hole_in_the_wall_games_played.value - data.player.statistics.hole_in_the_wall_first_place.value)) * 100) / 100}</span></p>
+                                                <p>Games Won: <span class="font-semibold">{data.player.statistics.hitw.first_place.toLocaleString()}</span></p>
+                                                <p>Games Lost: <span class="font-semibold">{(data.player.statistics.hitw.games_played - data.player.statistics.hitw.first_place).toLocaleString()}</span></p>
+                                                <p>WLR: <span class="font-semibold">{(Math.floor((data.player.statistics.hitw.first_place / (data.player.statistics.hitw.games_played - data.player.statistics.hitw.first_place)) * 100) / 100 || 0).toLocaleString()}</span></p>
                                             </div>
                                             <div>
-                                                <p>Players Outlived: <span class="font-semibold">{data.player.statistics.hole_in_the_wall_players_outlived.value}</span></p>
-                                                <p>Walls Dodged: <span class="font-semibold">{data.player.statistics.hole_in_the_wall_walls_dodged.value}</span></p>
-                                                <p>Survived 1 minute: <span class="font-semibold">{data.player.statistics.hole_in_the_wall_survived_minute.value}</span> time{data.player.statistics.hole_in_the_wall_survived_minute.value === 1 ? "" : "s"}</p>
-                                                <p>Survived 2 minutes: <span class="font-semibold">{data.player.statistics.hole_in_the_wall_survived_two_minute.value}</span> time{data.player.statistics.hole_in_the_wall_survived_two_minute.value === 1 ? "" : "s"}</p>
+                                                <p>Games Played: <span class="font-semibold">{data.player.statistics.hitw.games_played.toLocaleString()}</span></p>
+                                                <p>1st Places: <span class="font-semibold">{data.player.statistics.hitw.first_place.toLocaleString()}</span> <span class="text-slate-500">({Math.round((data.player.statistics.hitw.first_place / data.player.statistics.hitw.games_played) * 100)}%)</span></p>
+                                                <p>Top 3: <span class="font-semibold">{data.player.statistics.hitw.top_three.toLocaleString()}</span> <span class="text-slate-500">({Math.round((data.player.statistics.hitw.top_three / data.player.statistics.hitw.games_played) * 100)}%)</span></p>
+                                                <p>Top 5: <span class="font-semibold">{data.player.statistics.hitw.top_five.toLocaleString()}</span> <span class="text-slate-500">({Math.round((data.player.statistics.hitw.top_five / data.player.statistics.hitw.games_played) * 100)}%)</span></p>
                                             </div>
                                             <div>
-                                                <p>Games Played: <span class="font-semibold">{data.player.statistics.hole_in_the_wall_games_played.value}</span></p>
-                                                <p>1st Places: <span class="font-semibold">{data.player.statistics.hole_in_the_wall_first_place.value}</span> <span class="text-slate-500">({Math.round((data.player.statistics.hole_in_the_wall_first_place.value / data.player.statistics.hole_in_the_wall_games_played.value) * 100)}%)</span></p>
-                                                <p>Top 3: <span class="font-semibold">{data.player.statistics.hole_in_the_wall_top_three.value}</span> <span class="text-slate-500">({Math.round((data.player.statistics.hole_in_the_wall_top_three.value / data.player.statistics.hole_in_the_wall_games_played.value) * 100)}%)</span></p>
-                                                <p>Top 5: <span class="font-semibold">{data.player.statistics.hole_in_the_wall_top_five.value}</span> <span class="text-slate-500">({Math.round((data.player.statistics.hole_in_the_wall_top_five.value / data.player.statistics.hole_in_the_wall_games_played.value) * 100)}%)</span></p>
+                                                <p>Players Outlived: <span class="font-semibold">{data.player.statistics.hitw.players_outlived.toLocaleString()}</span></p>
+                                                <p>Walls Dodged: <span class="font-semibold">{data.player.statistics.hitw.walls_dodged.toLocaleString()}</span></p>
+                                                <p>Survived 1 minute: <span class="font-semibold">{data.player.statistics.hitw.survived_minute.toLocaleString()}</span> time{data.player.statistics.hitw.survived_minute === 1 ? "" : "s"}</p>
+                                                <p>Survived 2 minutes: <span class="font-semibold">{data.player.statistics.hitw.survived_two_minute.toLocaleString()}</span> time{data.player.statistics.hitw.survived_two_minute === 1 ? "" : "s"}</p>
                                             </div>
                                         </div>
 
-                                        <p class="font-semibold mt-4 mb-2 text-xl">Badges <span class="text-slate-400">({calculateBadgeCompletion(data.player, badges.hitw, badges.hitw_tiered)}%)</span></p>
+                                        <p class="font-semibold mt-4 mb-2 text-xl">Badges <span class="text-slate-400">({calculateBadgeCompletion(data.player, "hitw", badges.hitw, badges.hitw_tiered)}%)</span></p>
                                         <div class="grid grid-cols-2 sm:grid-cols-3 2xl:grid-cols-5 gap-5">
                                             {#each badges.hitw as badge}
                                                 <div class="flex flex-col sm:flex-row gap-x-2">
@@ -464,8 +472,8 @@
                                                         <p class="absolute invisible xl:group-hover:visible opacity-0 group-hover:opacity-100 z-10 bg-slate-500 text-slate-200 rounded-md py-1 px-2 text-wrap duration-100">{badge.description}</p>
                                                     </div>
                                                     <div class="flex flex-col items-start mt-2 sm:mt-0">
-                                                        <p class={`font-semibold ${data.player.statistics[badge.stat].value > 0 ? "text-green-500" : "text-red-500"}`}>{badge.name}</p>
-                                                        <p>Completed <span class="font-semibold">{data.player.statistics[badge.stat].value}</span> time{data.player.statistics[badge.stat].value === 1 ? "" : "s"}</p>
+                                                        <p class={`font-semibold ${data.player.statistics.hitw.badges[badge.stat] > 0 ? "text-green-500" : "text-red-500"}`}>{badge.name}</p>
+                                                        <p>Completed <span class="font-semibold">{data.player.statistics.hitw.badges[badge.stat].toLocaleString()}</span> time{data.player.statistics.hitw.badges[badge.stat] === 1 ? "" : "s"}</p>
                                                     </div>
                                                 </div>
                                             {/each}
@@ -479,16 +487,16 @@
                                                         <p class="absolute invisible xl:group-hover:visible opacity-0 group-hover:opacity-100 z-10 bg-slate-500 text-slate-200 rounded-md py-1 px-2 text-wrap duration-100">{badge.description}</p>
                                                     </div>
                                                     <div class="flex flex-col items-start mt-2 sm:mt-0">
-                                                        <p class="font-semibold">{badge.name} {calculateBadgeTier(data.player.statistics[badge.stat].value, badge.tiers).tier.name}</p>
+                                                        <p class="font-semibold">{badge.name} {calculateBadgeTier(data.player.statistics.hitw[badge.stat], badge.tiers).tier.name}</p>
                                                         <p>
                                                             {#each badge.tiers as tier}
-                                                                {#if data.player.statistics[badge.stat].value >= tier.amount}
-                                                                    <span class="text-green-500">{tier.amount}</span>
+                                                                {#if data.player.statistics.hitw[badge.stat] >= tier.amount}
+                                                                    <span class="text-green-500">{tier.amount.toLocaleString()}</span>
                                                                 {:else}
-                                                                    {#if calculateBadgeTier(data.player.statistics[badge.stat].value, badge.tiers).next.name === tier.name}
-                                                                        <span class="text-red-500">{data.player.statistics[badge.stat].value}</span><span class="text-slate-400">/{tier.amount}</span>
+                                                                    {#if calculateBadgeTier(data.player.statistics.hitw[badge.stat], badge.tiers).next.name === tier.name}
+                                                                        <span class="text-red-500">{data.player.statistics.hitw[badge.stat].toLocaleString()}</span><span class="text-slate-400">/{tier.amount.toLocaleString()}</span>
                                                                     {:else}
-                                                                        <span class="text-red-500">{tier.amount}</span>
+                                                                        <span class="text-red-500">{tier.amount.toLocaleString()}</span>
                                                                     {/if}
                                                                 {/if}
                                                             
@@ -511,29 +519,29 @@
                                     {#if expandedCategory === "db"}
                                         <div class="grid grid-cols-1 sm:grid-cols-3 items-start gap-y-4 mt-2 text-md gap-x-24">
                                             <div>
-                                                <p>Games Won: <span class="font-semibold">{data.player.statistics.dynaball_wins.value}</span></p>
-                                                <p>Games Lost: <span class="font-semibold">{data.player.statistics.dynaball_games_played.value - data.player.statistics.dynaball_wins.value}</span></p>
-                                                <p>WLR: <span class="font-semibold">{Math.floor((data.player.statistics.dynaball_wins.value / (data.player.statistics.dynaball_games_played.value - data.player.statistics.dynaball_wins.value)) * 100) / 100}</span></p>
+                                                <p>Games Won: <span class="font-semibold">{data.player.statistics.dynaball.wins.toLocaleString()}</span></p>
+                                                <p>Games Lost: <span class="font-semibold">{data.player.statistics.dynaball.games_played - data.player.statistics.dynaball.wins.toLocaleString()}</span></p>
+                                                <p>WLR: <span class="font-semibold">{(Math.floor((data.player.statistics.dynaball.wins / (data.player.statistics.dynaball.games_played - data.player.statistics.dynaball.wins)) * 100) / 100 || 0).toLocaleString()}</span></p>
                                             </div>
                                             <div>
-                                                <p>Kills: <span class="font-semibold">{data.player.statistics.dynaball_players_eliminated.value}</span></p>
-                                                <p>Players Stuck: <span class="font-semibold">{data.player.statistics.dynaball_players_stuck.value}</span></p>
-                                                <p>Spawners Broken: <span class="font-semibold">{data.player.statistics.dynaball_spawners_destroyed.value}</span></p>
+                                                <p>Kills: <span class="font-semibold">{data.player.statistics.dynaball.kills.toLocaleString()}</span></p>
+                                                <p>Players Stuck: <span class="font-semibold">{data.player.statistics.dynaball.players_stuck.toLocaleString()}</span></p>
+                                                <p>Spawners Broken: <span class="font-semibold">{data.player.statistics.dynaball.spawners_destroyed.toLocaleString()}</span></p>
                                             </div>
                                             <div>
-                                                <p>Games Played: <span class="font-semibold">{data.player.statistics.dynaball_games_played.value}</span></p>
-                                                <p>Blocks Destroyed: <span class="font-semibold">{data.player.statistics.dynaball_blocks_destroyed.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></p>
-                                                <p>Blocks Placed: <span class="font-semibold">{data.player.statistics.dynaball_blocks_placed.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></p>
+                                                <p>Games Played: <span class="font-semibold">{data.player.statistics.dynaball.games_played.toLocaleString()}</span></p>
+                                                <p>Blocks Destroyed: <span class="font-semibold">{data.player.statistics.dynaball.blocks_destroyed.toLocaleString()}</span></p>
+                                                <p>Blocks Placed: <span class="font-semibold">{data.player.statistics.dynaball.blocks_placed.toLocaleString()}</span></p>
                                             </div>
                                             <div>
-                                                <p>Survived 1 Minute: <span class="font-semibold">{data.player.statistics.dynaball_survive_1m.value}</span> <span class="text-slate-500">({Math.round((data.player.statistics.dynaball_survive_1m.value / data.player.statistics.dynaball_games_played.value) * 100)}%)</span></p>
-                                                <p>Survived 2 Minutes: <span class="font-semibold">{data.player.statistics.dynaball_survive_2m.value}</span> <span class="text-slate-500">({Math.round((data.player.statistics.dynaball_survive_2m.value / data.player.statistics.dynaball_games_played.value) * 100)}%)</span></p>
-                                                <p>Survived 3 Minutes: <span class="font-semibold">{data.player.statistics.dynaball_survive_3m.value}</span> <span class="text-slate-500">({Math.round((data.player.statistics.dynaball_survive_3m.value / data.player.statistics.dynaball_games_played.value) * 100)}%)</span></p>
-                                                <p>Survived 4 Minutes: <span class="font-semibold">{data.player.statistics.dynaball_survive_4m.value}</span> <span class="text-slate-500">({Math.round((data.player.statistics.dynaball_survive_4m.value / data.player.statistics.dynaball_games_played.value) * 100)}%)</span></p>
+                                                <p>Survived 1 Minute: <span class="font-semibold">{data.player.statistics.dynaball.survive_1m.toLocaleString()}</span> <span class="text-slate-500">({Math.round((data.player.statistics.dynaball.survive_1m / data.player.statistics.dynaball.games_played) * 100)}%)</span></p>
+                                                <p>Survived 2 Minutes: <span class="font-semibold">{data.player.statistics.dynaball.survive_2m.toLocaleString()}</span> <span class="text-slate-500">({Math.round((data.player.statistics.dynaball.survive_2m / data.player.statistics.dynaball.games_played) * 100)}%)</span></p>
+                                                <p>Survived 3 Minutes: <span class="font-semibold">{data.player.statistics.dynaball.survive_3m.toLocaleString()}</span> <span class="text-slate-500">({Math.round((data.player.statistics.dynaball.survive_3m / data.player.statistics.dynaball.games_played) * 100)}%)</span></p>
+                                                <p>Survived 4 Minutes: <span class="font-semibold">{data.player.statistics.dynaball.survive_4m.toLocaleString()}</span> <span class="text-slate-500">({Math.round((data.player.statistics.dynaball.survive_4m / data.player.statistics.dynaball.games_played) * 100)}%)</span></p>
                                             </div>
                                         </div>
 
-                                        <p class="font-semibold mt-4 mb-2 text-xl">Badges <span class="text-slate-400">({calculateBadgeCompletion(data.player, badges.dynaball, badges.dynaball_tiered)}%)</span></p>
+                                        <p class="font-semibold mt-4 mb-2 text-xl">Badges <span class="text-slate-400">({calculateBadgeCompletion(data.player, "dynaball", badges.dynaball, badges.dynaball_tiered)}%)</span></p>
                                         <div class="grid grid-cols-2 sm:grid-cols-3 2xl:grid-cols-5 gap-5">
                                             {#each badges.dynaball as badge}
                                                 <div class="flex flex-col sm:flex-row gap-x-2">
@@ -542,8 +550,8 @@
                                                         <p class="absolute invisible xl:group-hover:visible opacity-0 group-hover:opacity-100 z-10 bg-slate-500 text-slate-200 rounded-md py-1 px-2 text-wrap duration-100">{badge.description}</p>
                                                     </div>
                                                     <div class="flex flex-col items-start mt-2 sm:mt-0">
-                                                        <p class={`font-semibold ${data.player.statistics[badge.stat].value > 0 ? "text-green-500" : "text-red-500"}`}>{badge.name}</p>
-                                                        <p>Completed <span class="font-semibold">{data.player.statistics[badge.stat].value}</span> time{data.player.statistics[badge.stat].value === 1 ? "" : "s"}</p>
+                                                        <p class={`font-semibold ${data.player.statistics.dynaball.badges[badge.stat] > 0 ? "text-green-500" : "text-red-500"}`}>{badge.name}</p>
+                                                        <p>Completed <span class="font-semibold">{data.player.statistics.dynaball.badges[badge.stat].toLocaleString()}</span> time{data.player.statistics.dynaball.badges[badge.stat] === 1 ? "" : "s"}</p>
                                                     </div>
                                                 </div>
                                             {/each}
@@ -557,16 +565,16 @@
                                                         <p class="absolute invisible xl:group-hover:visible opacity-0 group-hover:opacity-100 z-10 bg-slate-500 text-slate-200 rounded-md py-1 px-2 text-wrap duration-100">{badge.description}</p>
                                                     </div>
                                                     <div class="flex flex-col items-start mt-2 sm:mt-0">
-                                                        <p class="font-semibold">{badge.name} {calculateBadgeTier(data.player.statistics[badge.stat].value, badge.tiers).tier.name}</p>
+                                                        <p class="font-semibold">{badge.name} {calculateBadgeTier(data.player.statistics.dynaball[badge.stat], badge.tiers).tier.name}</p>
                                                         <p>
                                                             {#each badge.tiers as tier}
-                                                                {#if data.player.statistics[badge.stat].value >= tier.amount}
-                                                                    <span class="text-green-500">{tier.amount}</span>
+                                                                {#if data.player.statistics.dynaball[badge.stat] >= tier.amount}
+                                                                    <span class="text-green-500">{tier.amount.toLocaleString()}</span>
                                                                 {:else}
-                                                                    {#if calculateBadgeTier(data.player.statistics[badge.stat].value, badge.tiers).next.name === tier.name}
-                                                                        <span class="text-red-500">{data.player.statistics[badge.stat].value}</span><span class="text-slate-400">/{tier.amount}</span>
+                                                                    {#if calculateBadgeTier(data.player.statistics.dynaball[badge.stat], badge.tiers).next.name === tier.name}
+                                                                        <span class="text-red-500">{data.player.statistics.dynaball[badge.stat].toLocaleString()}</span><span class="text-slate-400">/{tier.amount.toLocaleString()}</span>
                                                                     {:else}
-                                                                        <span class="text-red-500">{tier.amount}</span>
+                                                                        <span class="text-red-500">{tier.amount.toLocaleString()}</span>
                                                                     {/if}
                                                                 {/if}
                                                             
@@ -580,61 +588,101 @@
                                     {/if}
                                 </div>
 
-                                <!--  PKW -->
+                                <!-- DOJO -->
                                 <div class="flex flex-col items-start bg-slate-100 rounded-md border-2 border-slate-200 p-3">
-                                    <button on:click={() => switchCategory(expandedCategory === "pkw" ? null : "pkw")} class="flex flex-row w-full">
+                                    <button on:click={() => switchCategory(expandedCategory === "dojo" ? null : "dojo")} class="flex flex-row w-full">
                                         <img class="w-8 h-8 mr-2" src="https://cdn.islandstats.xyz/games/pkw/icon.png" alt="PKW Stats" />
-                                        <p class="text-xl font-semibold">Parkour Warrior</p>
+                                        <p class="text-xl font-semibold">Parkour Warrior Dojo</p>
                                     </button>
-                                    {#if expandedCategory === "pkw"}
-                                        <div class="grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-3 items-start gap-y-4 mt-2 text-md gap-x-24">
+                                    {#if expandedCategory === "dojo"}
+                                        <div class="grid grid-cols-1 sm:grid-cols-3 2xl:grid-cols-3 items-start gap-y-4 mt-2 text-md gap-x-24">
                                             <div>
-                                                <p>Total Medals: <span class="font-semibold">{data.player.statistics.pw_solo_total_medals_banked.value}</span></p>
-                                                <p>Total Standard Completions: <span class="font-semibold">{data.player.statistics.pw_solo_total_standard_cmpls.value}</span></p>
-                                                <p>Total Advanced Completions: <span class="font-semibold">{data.player.statistics.pw_solo_total_advanced_cmpls.value}</span></p>
-                                                <p>Total Expert Completions: <span class="font-semibold">{data.player.statistics.pw_solo_total_expert_cmpls.value}</span></p>
+                                                <p>Unique Medals: <span class="font-semibold">{data.player.statistics.pkw.dojo.unique_medals.toLocaleString()}</span></p>
+                                                <p>Total Medals: <span class="font-semibold">{data.player.statistics.pkw.dojo.total_medals.toLocaleString()}</span></p>
                                             </div>
                                             <div>
-                                                <p>Unique Standard Completions: <span class="font-semibold">{data.player.statistics.pw_solo_unique_standard_cmpl.value}</span></p>
-                                                <p>Unique Advanced Completions: <span class="font-semibold">{data.player.statistics.pw_solo_unique_advanced_cmpl.value}</span></p>
-                                                <p>Unique Expert Completions: <span class="font-semibold">{data.player.statistics.pw_solo_unique_expert_cmpl.value}</span></p>
+                                                <p>Unique Standard Completions: <span class="font-semibold">{data.player.statistics.pkw.dojo.unique_standard.toLocaleString()}</span></p>
+                                                <p>Unique Advanced Completions: <span class="font-semibold">{data.player.statistics.pkw.dojo.unique_advanced.toLocaleString()}</span></p>
+                                                <p>Unique Expert Completions: <span class="font-semibold">{data.player.statistics.pkw.dojo.unique_expert.toLocaleString()}</span></p>
                                             </div>
                                             <div>
-                                                <p>Unique Daily Standard Completions: <span class="font-semibold">{data.player.statistics.pw_solo_unique_daily_standard_cmpl.value}</span></p>
-                                                <p>Unique Daily Advanced Completions: <span class="font-semibold">{data.player.statistics.pw_solo_unique_daily_advanced_cmpl.value}</span></p>
-                                                <p>Unique Daily Expert Completions: <span class="font-semibold">{data.player.statistics.pw_solo_unique_daily_expert_cmpl.value}</span></p>
-                                            </div>
-                                            <div>
-                                                <p>Survivor Wins: <span class="font-semibold">{data.player.statistics.pw_survival_final_duel_wins.value}</span></p>
-                                                <p>Survivor Losses: <span class="font-semibold">{data.player.statistics.pw_survival_games_played.value - data.player.statistics.pw_survival_final_duel_wins.value}</span></p>
-                                                <p>Survivor WLR: <span class="font-semibold">{Math.floor((data.player.statistics.pw_survival_final_duel_wins.value / (data.player.statistics.pw_survival_games_played.value - data.player.statistics.pw_survival_final_duel_wins.value)) * 100) / 100}</span></p>
-                                            </div>
-                                            <div>
-                                                <p>Survivor Games Played: <span class="font-semibold">{data.player.statistics.pw_survival_games_played.value}</span></p>
-                                                <p>Survivor Players Eliminated: <span class="font-semibold">{data.player.statistics.pw_survival_players_eliminated.value}</span></p>
-                                                <p>Survivor Obstacles Completed: <span class="font-semibold">{data.player.statistics.pw_survival_obstacles_completed.value}</span></p>
+                                                <p>Total Standard Completions: <span class="font-semibold">{data.player.statistics.pkw.dojo.total_standard.toLocaleString()}</span></p>
+                                                <p>Total Advanced Completions: <span class="font-semibold">{data.player.statistics.pkw.dojo.total_standard.toLocaleString()}</span></p>
+                                                <p>Total Expert Completions: <span class="font-semibold">{data.player.statistics.pkw.dojo.total_standard.toLocaleString()}</span></p>
                                             </div>
                                         </div>
 
-                                        <p class="font-semibold mt-4 mb-2 text-xl">Badges <span class="text-slate-400">({calculateBadgeCompletion(data.player, [], badges.pkw_tiered)}%)</span></p>
+                                        <p class="font-semibold mt-4 mb-2 text-xl">Badges <span class="text-slate-400">({calculateBadgeCompletion(data.player, "pkw.dojo", [], badges.dojo_tiered)}%)</span></p>
                                         <div class="grid grid-cols-2 sm:grid-cols-2 2xl:grid-cols-3 gap-5">
-                                            {#each badges.pkw_tiered as badge}
+                                            {#each badges.dojo_tiered as badge}
                                                 <div class="flex flex-col sm:flex-row gap-x-2">
                                                     <div class="group duration-100">
                                                         <img class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/pkw/${badge.icon}.png`} alt={badge.name} />
                                                         <p class="absolute invisible xl:group-hover:visible opacity-0 group-hover:opacity-100 z-10 bg-slate-500 text-slate-200 rounded-md py-1 px-2 text-wrap duration-100">{badge.description}</p>
                                                     </div>
                                                     <div class="flex flex-col items-start mt-2 sm:mt-0">
-                                                        <p class="font-semibold">{badge.name} {calculateBadgeTier(data.player.statistics[badge.stat].value, badge.tiers).tier.name}</p>
+                                                        <p class="font-semibold">{badge.name} {calculateBadgeTier(data.player.statistics.pkw.dojo[badge.stat], badge.tiers).tier.name}</p>
                                                         <p>
                                                             {#each badge.tiers as tier}
-                                                                {#if data.player.statistics[badge.stat].value >= tier.amount}
-                                                                    <span class="text-green-500">{tier.amount}</span>
+                                                                {#if data.player.statistics.pkw.dojo[badge.stat] >= tier.amount}
+                                                                    <span class="text-green-500">{tier.amount.toLocaleString()}</span>
                                                                 {:else}
-                                                                    {#if calculateBadgeTier(data.player.statistics[badge.stat].value, badge.tiers).next.name === tier.name}
-                                                                        <span class="text-red-500">{data.player.statistics[badge.stat].value}</span><span class="text-slate-400">/{tier.amount}</span>
+                                                                    {#if calculateBadgeTier(data.player.statistics.pkw.dojo[badge.stat], badge.tiers).next.name === tier.name}
+                                                                        <span class="text-red-500">{data.player.statistics.pkw.dojo[badge.stat].toLocaleString()}</span><span class="text-slate-400">/{tier.amount.toLocaleString()}</span>
                                                                     {:else}
-                                                                        <span class="text-red-500">{tier.amount}</span>
+                                                                        <span class="text-red-500">{tier.amount.toLocaleString()}</span>
+                                                                    {/if}
+                                                                {/if}
+                                                            
+                                                                {#if badge.tiers.indexOf(tier) !== badge.tiers.length - 1}<span class="text-slate-400">• </span>{/if}
+                                                            {/each}
+                                                        </p>  
+                                                    </div>
+                                                </div>
+                                            {/each}
+                                        </div>
+                                    {/if}
+                                </div>
+
+                                <!-- SURVIVOR -->
+                                <div class="flex flex-col items-start bg-slate-100 rounded-md border-2 border-slate-200 p-3">
+                                    <button on:click={() => switchCategory(expandedCategory === "survivor" ? null : "survivor")} class="flex flex-row w-full">
+                                        <img class="w-8 h-8 mr-2" src="https://cdn.islandstats.xyz/games/pkw/icon.png" alt="PKW Stats" />
+                                        <p class="text-xl font-semibold">Parkour Warrior Survivor</p>
+                                    </button>
+                                    {#if expandedCategory === "survivor"}
+                                        <div class="grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-3 items-start gap-y-4 mt-2 text-md gap-x-24">
+                                            <div>
+                                                <p>Survivor Wins: <span class="font-semibold">{data.player.statistics.pkw.survivor.wins.toLocaleString()}</span></p>
+                                                <p>Survivor Losses: <span class="font-semibold">{(data.player.statistics.pkw.survivor.games_played - data.player.statistics.pkw.survivor.wins).toLocaleString()}</span></p>
+                                                <p>Survivor WLR: <span class="font-semibold">{(Math.floor((data.player.statistics.pkw.survivor.wins / (data.player.statistics.pkw.survivor.games_played - data.player.statistics.pkw.survivor.wins)) * 100) / 100 || 0).toLocaleString()}</span></p>
+                                            </div>
+                                            <div>
+                                                <p>Survivor Games Played: <span class="font-semibold">{data.player.statistics.pkw.survivor.games_played.toLocaleString()}</span></p>
+                                                <p>Survivor Players Eliminated: <span class="font-semibold">{data.player.statistics.pkw.survivor.kills.toLocaleString()}</span></p>
+                                                <p>Survivor Obstacles Completed: <span class="font-semibold">{data.player.statistics.pkw.survivor.obstacles.toLocaleString()}</span></p>
+                                            </div>
+                                        </div>
+
+                                        <p class="font-semibold mt-4 mb-2 text-xl">Badges <span class="text-slate-400">({calculateBadgeCompletion(data.player, "pkw.survivor", [], badges.survivor_tiered)}%)</span></p>
+                                        <div class="grid grid-cols-2 sm:grid-cols-2 2xl:grid-cols-3 gap-5">
+                                            {#each badges.survivor_tiered as badge}
+                                                <div class="flex flex-col sm:flex-row gap-x-2">
+                                                    <div class="group duration-100">
+                                                        <img class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/pkw/${badge.icon}.png`} alt={badge.name} />
+                                                        <p class="absolute invisible xl:group-hover:visible opacity-0 group-hover:opacity-100 z-10 bg-slate-500 text-slate-200 rounded-md py-1 px-2 text-wrap duration-100">{badge.description}</p>
+                                                    </div>
+                                                    <div class="flex flex-col items-start mt-2 sm:mt-0">
+                                                        <p class="font-semibold">{badge.name} {calculateBadgeTier(data.player.statistics.pkw.survivor[badge.stat], badge.tiers).tier.name}</p>
+                                                        <p>
+                                                            {#each badge.tiers as tier}
+                                                                {#if data.player.statistics.pkw.survivor[badge.stat] >= tier.amount}
+                                                                    <span class="text-green-500">{tier.amount.toLocaleString()}</span>
+                                                                {:else}
+                                                                    {#if calculateBadgeTier(data.player.statistics.pkw.survivor[badge.stat], badge.tiers).next.name === tier.name}
+                                                                        <span class="text-red-500">{data.player.statistics.pkw.survivor[badge.stat].toLocaleString()}</span><span class="text-slate-400">/{tier.amount.toLocaleString()}</span>
+                                                                    {:else}
+                                                                        <span class="text-red-500">{tier.amount.toLocaleString()}</span>
                                                                     {/if}
                                                                 {/if}
                                                             
