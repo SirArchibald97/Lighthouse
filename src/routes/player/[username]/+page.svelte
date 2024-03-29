@@ -520,7 +520,7 @@
                                         <div class="grid grid-cols-1 sm:grid-cols-3 items-start gap-y-4 mt-2 text-md gap-x-24">
                                             <div>
                                                 <p>Games Won: <span class="font-semibold">{data.player.statistics.dynaball.wins.toLocaleString()}</span></p>
-                                                <p>Games Lost: <span class="font-semibold">{data.player.statistics.dynaball.games_played - data.player.statistics.dynaball.wins.toLocaleString()}</span></p>
+                                                <p>Games Lost: <span class="font-semibold">{(data.player.statistics.dynaball.games_played - data.player.statistics.dynaball.wins).toLocaleString()}</span></p>
                                                 <p>WLR: <span class="font-semibold">{(Math.floor((data.player.statistics.dynaball.wins / (data.player.statistics.dynaball.games_played - data.player.statistics.dynaball.wins)) * 100) / 100 || 0).toLocaleString()}</span></p>
                                             </div>
                                             <div>
@@ -607,8 +607,8 @@
                                             </div>
                                             <div>
                                                 <p>Total Standard Completions: <span class="font-semibold">{data.player.statistics.pkw.dojo.total_standard.toLocaleString()}</span></p>
-                                                <p>Total Advanced Completions: <span class="font-semibold">{data.player.statistics.pkw.dojo.total_standard.toLocaleString()}</span></p>
-                                                <p>Total Expert Completions: <span class="font-semibold">{data.player.statistics.pkw.dojo.total_standard.toLocaleString()}</span></p>
+                                                <p>Total Advanced Completions: <span class="font-semibold">{data.player.statistics.pkw.dojo.total_advanced.toLocaleString()}</span></p>
+                                                <p>Total Expert Completions: <span class="font-semibold">{data.player.statistics.pkw.dojo.total_expert.toLocaleString()}</span></p>
                                             </div>
                                         </div>
 
