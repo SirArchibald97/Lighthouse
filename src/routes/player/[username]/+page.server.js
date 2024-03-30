@@ -12,7 +12,8 @@ export async function load({ params, cookies }) {
     
     // fetch player data from the MCC Island API
     const res = await fetch(`${DEV === "true" ? "http://localhost:3000" : "https://api.sirarchibald.dev"}/islandstats/${await formatUUID(id)}`, { headers: { "auth": `${SAD_API_KEY}` } });
-    const { player } = await res.json();
+    const data = await res.json();
+    const player = data?.player || null;
 
     // if the player exists, update requests in the database and return data to client
     if (player) {
