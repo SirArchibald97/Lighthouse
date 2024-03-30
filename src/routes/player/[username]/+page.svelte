@@ -59,8 +59,8 @@
 </svelte:head>
 <main class="py-4 mx-4 2xl:mx-24">
     {#if data.success === false}
-        <div class="border-2 border-red-300 bg-red-100 rounded-lg py-2">
-            <p class="text-center text-2xl font-semibold">I couldn't find that player!</p>
+        <div class="border-2 border-red-300 bg-slate-50 rounded-lg py-2">
+            <p class="text-center text-3xl text-slate-800 font-semibold py-2">I couldn't find any data for that player!</p>
         </div>
     {:else}
         <!-- page container -->
