@@ -4,7 +4,7 @@ import db from "$lib/db.js";
 
 export async function load({ cookies }) {
     // fetch top 4 most searched username's from the database
-    const topRequests = await db.collection("requests").find({ username: { $ne: "SirArchibald97" } }).sort({ requests_current: -1 }).limit(4).toArray();
+    const topRequests = await db.collection("requests").find({ username: { $ne: "SirArchibald97" } }).sort({ requests: -1 }).limit(4).toArray();
 
     const profiles = [];
     if (topRequests.length === 0) return { profiles: [] };
