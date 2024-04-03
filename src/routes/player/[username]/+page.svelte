@@ -1,9 +1,10 @@
 <script>
     import { getRankIcon, getStatusGame, getStatusIcon } from "$lib/utils.js";
-    import { badges, calculateBadgeCompletion, calculateBadgeTier, calculateTrophies, calculateTotalTrophies, calculateMaxTrophies } from "$lib/data.js";
+    import { badges, calculateBadgeTier, calculateTrophies, calculateTotalTrophies, calculateMaxTrophies } from "$lib/data.js";
     import { DateTime } from "luxon";
     import Star from "$lib/svgs/Star.svelte";
     import Check from "$lib/svgs/Check.svelte";
+    import tooltip from "$lib/tooltip.js";
     
     export let data;
     export let form;
@@ -57,6 +58,9 @@
     <title>{data.player.username ? `${data.player.username}'s Stats` : "Unknown Player"}</title>
     <link rel="icon" type="image/png" src={`https://craftar.com/avatars/${data.player.uuid}.png?overlay`} />
     <meta name="description" content={`View ${data.player.username}'s stats on MCC Island Stats by SirArchibald, including game stats, currency, socials and more!`} />
+
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
 </svelte:head>
 <main class="py-4 mx-4 2xl:mx-24">
     {#if data.success === false}
@@ -139,7 +143,7 @@
                     <p class="text-md 2xl:text-xl font-semibold mt-4">Trophies</p>
                     <div class="flex flex-row gap-x-1">
                         <img src="https://cdn.islandstats.xyz/icons/trophy.png" alt="Total Trophies" class="w-5 h-5 self-center" />
-                        <span class="text-md 2xl:text-xl">{data.player.statistics ? calculateTotalTrophies(data.player.statistics).toLocaleString() : "Unknown"}</span>
+                        <span use:tooltip title="Only includes trophies earned from game badges" class="text-md 2xl:text-xl duration-100">{data.player.statistics ? calculateTotalTrophies(data.player.statistics).toLocaleString() : "Unknown"}*</span>
                     </div>
     
                     <!-- searches -->
@@ -230,16 +234,13 @@
                                             <span class="text-xl px-2">•</span>
                                             <div class="flex flex-row gap-x-1 mb-2">
                                                 <img src="https://cdn.islandstats.xyz/icons/trophy.png" alt="Trophies" class="w-5 h-5 self-center" />
-                                                <span class="text-slate-600 self-center text-lg font-semibold">{calculateTrophies(data.player.statistics.battle_box, badges.battle_box.concat(badges.battle_box_tiered))}<span class="font-normal text-slate-500">/{calculateMaxTrophies(badges.battle_box.concat(badges.battle_box_tiered))} ({calculateBadgeCompletion(data.player, "battle_box", badges.battle_box, badges.battle_box_tiered)}%)</span></span>
+                                                <span class="text-slate-600 self-center text-lg font-semibold">{calculateTrophies(data.player.statistics.battle_box, badges.battle_box.concat(badges.battle_box_tiered))}<span class="font-normal text-slate-500">/{calculateMaxTrophies(badges.battle_box.concat(badges.battle_box_tiered))} ({Math.round((calculateTrophies(data.player.statistics.battle_box, badges.battle_box.concat(badges.battle_box_tiered)) / calculateMaxTrophies(badges.battle_box.concat(badges.battle_box_tiered))) * 100)}%)</span></span>
                                             </div>
                                         </div>
                                         <div class="grid grid-cols-2 sm:grid-cols-3 2xl:grid-cols-5 gap-5">
                                             {#each badges.battle_box as badge}
                                                 <div class="flex flex-col sm:flex-row gap-x-2">
-                                                    <div class="group duration-100">
-                                                        <img class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/battle_box/${badge.icon}.png`} alt={badge.name} />
-                                                        <p class="absolute invisible xl:group-hover:visible opacity-0 group-hover:opacity-100 z-10 bg-slate-500 text-slate-200 rounded-md py-1 px-2 text-wrap duration-100">{badge.description}</p>
-                                                    </div>
+                                                    <img use:tooltip title={badge.description} class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/battle_box/${badge.icon}.png`} alt={badge.name} />
                                                     <div class="flex flex-col items-start mt-2 sm:mt-0">
                                                         <p class={`font-semibold ${data.player.statistics.battle_box.badges[badge.stat] > 0 ? "text-green-500" : "text-red-500"}`}>{badge.name}</p>
                                                         <p>Completed <span class="font-semibold">{data.player.statistics.battle_box.badges[badge.stat].toLocaleString()}</span> time{data.player.statistics.battle_box[badge.stat] === 1 ? "" : "s"}</p>
@@ -251,10 +252,7 @@
                                         <div class="grid grid-cols-2 sm:grid-cols-2 2xl:grid-cols-3 gap-5 mt-5">
                                             {#each badges.battle_box_tiered as badge}
                                                 <div class="flex flex-col sm:flex-row gap-x-2">
-                                                    <div class="group duration-100">
-                                                        <img class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/battle_box/${badge.icon}.png`} alt={badge.name} />
-                                                        <p class="absolute invisible xl:group-hover:visible opacity-0 group-hover:opacity-100 z-10 bg-slate-500 text-slate-200 rounded-md py-1 px-2 text-wrap duration-100">{badge.description}</p>
-                                                    </div>
+                                                    <img use:tooltip title={badge.description} class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/battle_box/${badge.icon}.png`} alt={badge.name} />
                                                     <div class="flex flex-col items-start mt-2 sm:mt-0">
                                                         <p class="font-semibold">{badge.name} {calculateBadgeTier(data.player.statistics.battle_box[badge.stat], badge.tiers).tier.name} {#if data.player.statistics.battle_box[badge.stat] >= badge.tiers[badge.tiers.length - 1].amount}<span class="text-slate-400 font-normal">({data.player.statistics.battle_box[badge.stat].toLocaleString()})</span>{/if} </p>
                                                         <p>
@@ -331,16 +329,13 @@
                                             <span class="text-xl px-2">•</span>
                                             <div class="flex flex-row gap-x-1 mb-2">
                                                 <img src="https://cdn.islandstats.xyz/icons/trophy.png" alt="Trophies" class="w-5 h-5 self-center" />
-                                                <span class="text-slate-600 self-center text-lg font-semibold">{calculateTrophies(data.player.statistics.sky_battle[sbCategory], badges.sky_battle.concat(badges.sky_battle_tiered))}<span class="font-normal text-slate-500">/{calculateMaxTrophies(badges.sky_battle.concat(badges.sky_battle_tiered))} ({calculateBadgeCompletion(data.player, `sky_battle.${sbCategory}`, badges.sky_battle, badges.sky_battle_tiered)}%)</span></span>
+                                                <span class="text-slate-600 self-center text-lg font-semibold">{calculateTrophies(data.player.statistics.sky_battle[sbCategory], badges.sky_battle.concat(badges.sky_battle_tiered))}<span class="font-normal text-slate-500">/{calculateMaxTrophies(badges.sky_battle.concat(badges.sky_battle_tiered))} ({Math.round((calculateTrophies(data.player.statistics.sky_battle[sbCategory], badges.sky_battle.concat(badges.sky_battle_tiered)) / calculateMaxTrophies(badges.sky_battle.concat(badges.sky_battle_tiered))) * 100)}%)</span></span>
                                             </div>
                                         </div>                                        
                                         <div class="grid grid-cols-2 sm:grid-cols-3 2xl:grid-cols-5 gap-5">
                                             {#each badges.sky_battle as badge}
                                                 <div class="flex flex-col sm:flex-row gap-x-2">
-                                                    <div class="group duration-100">
-                                                        <img class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/sky_battle/${badge.icon}.png`} alt={badge.name} />
-                                                        <p class="absolute invisible xl:group-hover:visible opacity-0 group-hover:opacity-100 z-10 bg-slate-500 text-slate-200 rounded-md py-1 px-2 text-wrap duration-100">{badge.description}</p>
-                                                    </div>                                                    
+                                                    <img use:tooltip title={badge.description} class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/sky_battle/${badge.icon}.png`} alt={badge.name} />
                                                     <div class="flex flex-col items-start mt-2 sm:mt-0">
                                                         <p class={`font-semibold ${data.player.statistics.sky_battle[sbCategory].badges[badge.stat] > 0 ? "text-green-500" : "text-red-500"}`}>{badge.name}</p>
                                                         <p>Completed <span class="font-semibold">{data.player.statistics.sky_battle[sbCategory].badges[badge.stat].toLocaleString()}</span> time{data.player.statistics.sky_battle[sbCategory].badges[badge.stat] === 1 ? "" : "s"}</p>
@@ -352,10 +347,7 @@
                                         <div class="grid grid-cols-2 sm:grid-cols-2 2xl:grid-cols-3 gap-5 mt-5">
                                             {#each badges.sky_battle_tiered as badge}
                                                 <div class="flex flex-col sm:flex-row gap-x-2">
-                                                    <div class="group duration-100">
-                                                        <img class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/sky_battle/${badge.icon}.png`} alt={badge.name} />
-                                                        <p class="absolute invisible xl:group-hover:visible opacity-0 group-hover:opacity-100 z-10 bg-slate-500 text-slate-200 rounded-md py-1 px-2 text-wrap duration-100">{badge.description}</p>
-                                                    </div>
+                                                    <img use:tooltip title={badge.description} class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/sky_battle/${badge.icon}.png`} alt={badge.name} />
                                                     <div class="flex flex-col items-start mt-2 sm:mt-0">
                                                         <p class="font-semibold">{badge.name} {calculateBadgeTier(data.player.statistics.sky_battle[sbCategory][badge.stat], badge.tiers).tier.name} {#if data.player.statistics.sky_battle[sbCategory][badge.stat] >= badge.tiers[badge.tiers.length - 1].amount}<span class="text-slate-400 font-normal">({data.player.statistics.sky_battle[sbCategory][badge.stat].toLocaleString()})</span>{/if} </p>
                                                         <p>
@@ -422,16 +414,13 @@
                                             <span class="text-xl px-2">•</span>
                                             <div class="flex flex-row gap-x-1 mb-2">
                                                 <img src="https://cdn.islandstats.xyz/icons/trophy.png" alt="Trophies" class="w-5 h-5 self-center" />
-                                                <span class="text-slate-600 self-center text-lg font-semibold">{calculateTrophies(data.player.statistics.tgttos, badges.tgttos.concat(badges.tgttos_tiered))}<span class="font-normal text-slate-500">/{calculateMaxTrophies(badges.tgttos.concat(badges.tgttos_tiered))} ({calculateBadgeCompletion(data.player, "tgttos", badges.tgttos, badges.tgttos_tiered)}%)</span></span>
+                                                <span class="text-slate-600 self-center text-lg font-semibold">{calculateTrophies(data.player.statistics.tgttos, badges.tgttos.concat(badges.tgttos_tiered))}<span class="font-normal text-slate-500">/{calculateMaxTrophies(badges.tgttos.concat(badges.tgttos_tiered))} ({Math.round((calculateTrophies(data.player.statistics.tgttos, badges.tgttos.concat(badges.tgttos_tiered)) / calculateMaxTrophies(badges.tgttos.concat(badges.tgttos_tiered))) * 100)}%)</span></span>
                                             </div>
                                         </div>                                        
                                         <div class="grid grid-cols-2 sm:grid-cols-3 2xl:grid-cols-5 gap-5">
                                             {#each badges.tgttos as badge}
                                                 <div class="flex flex-col sm:flex-row gap-x-2">
-                                                    <div class="group duration-100">
-                                                        <img class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/tgttos/${badge.icon}.png`} alt={badge.name} />
-                                                        <p class="absolute invisible xl:group-hover:visible opacity-0 group-hover:opacity-100 z-10 bg-slate-500 text-slate-200 rounded-md py-1 px-2 text-wrap duration-100">{badge.description}</p>
-                                                    </div>
+                                                    <img use:tooltip title={badge.description} class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/tgttos/${badge.icon}.png`} alt={badge.name} />
                                                     <div class="flex flex-col items-start mt-2 sm:mt-0">
                                                         <p class={`font-semibold ${data.player.statistics.tgttos.badges[badge.stat] > 0 ? "text-green-500" : "text-red-500"}`}>{badge.name}</p>
                                                         <p>Completed <span class="font-semibold">{data.player.statistics.tgttos.badges[badge.stat].toLocaleString()}</span> time{data.player.statistics.tgttos.badges[badge.stat] === 1 ? "" : "s"}</p>
@@ -443,10 +432,7 @@
                                         <div class="grid grid-cols-2 sm:grid-cols-2 2xl:grid-cols-3 gap-5 mt-5">
                                             {#each badges.tgttos_tiered as badge}
                                                 <div class="flex flex-col sm:flex-row gap-x-2">
-                                                    <div class="group duration-100">
-                                                        <img class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/tgttos/${badge.icon}.png`} alt={badge.name} />
-                                                        <p class="absolute invisible xl:group-hover:visible opacity-0 group-hover:opacity-100 z-10 bg-slate-500 text-slate-200 rounded-md py-1 px-2 text-wrap duration-100">{badge.description}</p>
-                                                    </div>
+                                                    <img use:tooltip title={badge.description} class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/tgttos/${badge.icon}.png`} alt={badge.name} />
                                                     <div class="flex flex-col items-start mt-2 sm:mt-0">
                                                         <p class="font-semibold">{badge.name} {calculateBadgeTier(data.player.statistics.tgttos[badge.stat], badge.tiers).tier.name} {#if data.player.statistics.tgttos[badge.stat] >= badge.tiers[badge.tiers.length - 1].amount}<span class="text-slate-400 font-normal">({data.player.statistics.tgttos[badge.stat].toLocaleString()})</span>{/if} </p>
                                                         <p>
@@ -503,16 +489,13 @@
                                             <span class="text-xl px-2">•</span>
                                             <div class="flex flex-row gap-x-1 mb-2">
                                                 <img src="https://cdn.islandstats.xyz/icons/trophy.png" alt="Trophies" class="w-5 h-5 self-center" />
-                                                <span class="text-slate-600 self-center text-lg font-semibold">{calculateTrophies(data.player.statistics.hitw, badges.hitw.concat(badges.hitw_tiered))}<span class="font-normal text-slate-500">/{calculateMaxTrophies(badges.hitw.concat(badges.hitw_tiered))} ({calculateBadgeCompletion(data.player, "hitw", badges.hitw, badges.hitw_tiered)}%)</span></span>
+                                                <span class="text-slate-600 self-center text-lg font-semibold">{calculateTrophies(data.player.statistics.hitw, badges.hitw.concat(badges.hitw_tiered))}<span class="font-normal text-slate-500">/{calculateMaxTrophies(badges.hitw.concat(badges.hitw_tiered))} ({Math.round((calculateTrophies(data.player.statistics.hitw, badges.hitw.concat(badges.hitw_tiered)) / calculateMaxTrophies(badges.hitw.concat(badges.hitw_tiered))) * 100)}%)</span></span>
                                             </div>
                                         </div>                                        
                                         <div class="grid grid-cols-2 sm:grid-cols-3 2xl:grid-cols-5 gap-5">
                                             {#each badges.hitw as badge}
                                                 <div class="flex flex-col sm:flex-row gap-x-2">
-                                                    <div class="group duration-100">
-                                                        <img class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/hitw/${badge.icon}.png`} alt={badge.name} />
-                                                        <p class="absolute invisible xl:group-hover:visible opacity-0 group-hover:opacity-100 z-10 bg-slate-500 text-slate-200 rounded-md py-1 px-2 text-wrap duration-100">{badge.description}</p>
-                                                    </div>
+                                                    <img use:tooltip title={badge.description} class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/hitw/${badge.icon}.png`} alt={badge.name} />
                                                     <div class="flex flex-col items-start mt-2 sm:mt-0">
                                                         <p class={`font-semibold ${data.player.statistics.hitw.badges[badge.stat] > 0 ? "text-green-500" : "text-red-500"}`}>{badge.name}</p>
                                                         <p>Completed <span class="font-semibold">{data.player.statistics.hitw.badges[badge.stat].toLocaleString()}</span> time{data.player.statistics.hitw.badges[badge.stat] === 1 ? "" : "s"}</p>
@@ -524,10 +507,7 @@
                                         <div class="grid grid-cols-2 sm:grid-cols-1 2xl:grid-cols-2 gap-5 mt-5">
                                             {#each badges.hitw_tiered as badge}
                                                 <div class="flex flex-col sm:flex-row gap-x-2">
-                                                    <div class="group duration-100">
-                                                        <img class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/hitw/${badge.icon}.png`} alt={badge.name} />
-                                                        <p class="absolute invisible xl:group-hover:visible opacity-0 group-hover:opacity-100 z-10 bg-slate-500 text-slate-200 rounded-md py-1 px-2 text-wrap duration-100">{badge.description}</p>
-                                                    </div>
+                                                    <img use:tooltip title={badge.description} class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/hitw/${badge.icon}.png`} alt={badge.name} />
                                                     <div class="flex flex-col items-start mt-2 sm:mt-0">
                                                         <p class="font-semibold">{badge.name} {calculateBadgeTier(data.player.statistics.hitw[badge.stat], badge.tiers).tier.name} {#if data.player.statistics.hitw[badge.stat] >= badge.tiers[badge.tiers.length - 1].amount}<span class="text-slate-400 font-normal">({data.player.statistics.hitw[badge.stat].toLocaleString()})</span>{/if} </p>
                                                         <p>
@@ -588,16 +568,13 @@
                                             <span class="text-xl px-2">•</span>
                                             <div class="flex flex-row gap-x-1 mb-2">
                                                 <img src="https://cdn.islandstats.xyz/icons/trophy.png" alt="Trophies" class="w-5 h-5 self-center" />
-                                                <span class="text-slate-600 self-center text-lg font-semibold">{calculateTrophies(data.player.statistics.dynaball, badges.dynaball.concat(badges.dynaball_tiered))}<span class="font-normal text-slate-500">/{calculateMaxTrophies(badges.dynaball.concat(badges.dynaball_tiered))} ({calculateBadgeCompletion(data.player, "dynaball", badges.dynaball, badges.dynaball_tiered)}%)</span></span>
+                                                <span class="text-slate-600 self-center text-lg font-semibold">{calculateTrophies(data.player.statistics.dynaball, badges.dynaball.concat(badges.dynaball_tiered))}<span class="font-normal text-slate-500">/{calculateMaxTrophies(badges.dynaball.concat(badges.dynaball_tiered))} ({Math.round((calculateTrophies(data.player.statistics.dynaball, badges.dynaball.concat(badges.dynaball_tiered)) / calculateMaxTrophies(badges.dynaball.concat(badges.dynaball_tiered))) * 100)}%)</span></span>
                                             </div>
                                         </div>                                        
                                         <div class="grid grid-cols-2 sm:grid-cols-3 2xl:grid-cols-5 gap-5">
                                             {#each badges.dynaball as badge}
                                                 <div class="flex flex-col sm:flex-row gap-x-2">
-                                                    <div class="group duration-100">
-                                                        <img class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/dynaball/${badge.icon}.png`} alt={badge.name} />
-                                                        <p class="absolute invisible xl:group-hover:visible opacity-0 group-hover:opacity-100 z-10 bg-slate-500 text-slate-200 rounded-md py-1 px-2 text-wrap duration-100">{badge.description}</p>
-                                                    </div>
+                                                    <img use:tooltip title={badge.description} class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/dynaball/${badge.icon}.png`} alt={badge.name} />
                                                     <div class="flex flex-col items-start mt-2 sm:mt-0">
                                                         <p class={`font-semibold ${data.player.statistics.dynaball.badges[badge.stat] > 0 ? "text-green-500" : "text-red-500"}`}>{badge.name}</p>
                                                         <p>Completed <span class="font-semibold">{data.player.statistics.dynaball.badges[badge.stat].toLocaleString()}</span> time{data.player.statistics.dynaball.badges[badge.stat] === 1 ? "" : "s"}</p>
@@ -609,10 +586,7 @@
                                         <div class="grid grid-cols-2 sm:grid-cols-1 2xl:grid-cols-2 gap-5 mt-5">
                                             {#each badges.dynaball_tiered as badge}
                                                 <div class="flex flex-col sm:flex-row gap-x-2">
-                                                    <div class="group duration-100">
-                                                        <img class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/dynaball/${badge.icon}.png`} alt={badge.name} />
-                                                        <p class="absolute invisible xl:group-hover:visible opacity-0 group-hover:opacity-100 z-10 bg-slate-500 text-slate-200 rounded-md py-1 px-2 text-wrap duration-100">{badge.description}</p>
-                                                    </div>
+                                                    <img use:tooltip title={badge.description} class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/dynaball/${badge.icon}.png`} alt={badge.name} />
                                                     <div class="flex flex-col items-start mt-2 sm:mt-0">
                                                         <p class="font-semibold">{badge.name} {calculateBadgeTier(data.player.statistics.dynaball[badge.stat], badge.tiers).tier.name} {#if data.player.statistics.dynaball[badge.stat] >= badge.tiers[badge.tiers.length - 1].amount}<span class="text-slate-400 font-normal">({data.player.statistics.dynaball[badge.stat].toLocaleString()})</span>{/if} </p>
                                                         <p>
@@ -666,16 +640,13 @@
                                             <span class="text-xl px-2">•</span>
                                             <div class="flex flex-row gap-x-1 mb-2">
                                                 <img src="https://cdn.islandstats.xyz/icons/trophy.png" alt="Trophies" class="w-5 h-5 self-center" />
-                                                <span class="text-slate-600 self-center text-lg font-semibold">{calculateTrophies(data.player.statistics.pkw.dojo, badges.dojo_tiered)}<span class="font-normal text-slate-500">/{calculateMaxTrophies(badges.dojo_tiered)} ({calculateBadgeCompletion(data.player, "pkw.dojo", [], badges.dojo_tiered)}%)</span></span>
+                                                <span class="text-slate-600 self-center text-lg font-semibold">{calculateTrophies(data.player.statistics.pkw.dojo, badges.dojo_tiered)}<span class="font-normal text-slate-500">/{calculateMaxTrophies(badges.dojo_tiered)} ({Math.round((calculateTrophies(data.player.statistics.pkw.dojo, badges.dojo_tiered) / calculateMaxTrophies(badges.dojo_tiered)) * 100)}%)</span></span>
                                             </div>
                                         </div>                                        
                                         <div class="grid grid-cols-2 sm:grid-cols-2 2xl:grid-cols-3 gap-5">
                                             {#each badges.dojo_tiered as badge}
                                                 <div class="flex flex-col sm:flex-row gap-x-2">
-                                                    <div class="group duration-100">
-                                                        <img class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/pkw/${badge.icon}.png`} alt={badge.name} />
-                                                        <p class="absolute invisible xl:group-hover:visible opacity-0 group-hover:opacity-100 z-10 bg-slate-500 text-slate-200 rounded-md py-1 px-2 text-wrap duration-100">{badge.description}</p>
-                                                    </div>
+                                                    <img use:tooltip title={badge.description} class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/pkw/${badge.icon}.png`} alt={badge.name} />
                                                     <div class="flex flex-col items-start mt-2 sm:mt-0">
                                                         <p class="font-semibold">{badge.name} {calculateBadgeTier(data.player.statistics.pkw.dojo[badge.stat], badge.tiers).tier.name} {#if data.player.statistics.pkw.dojo[badge.stat] >= badge.tiers[badge.tiers.length - 1].amount}<span class="text-slate-400 font-normal">({data.player.statistics.pkw.dojo[badge.stat].toLocaleString()})</span>{/if} </p>
                                                         <p>
@@ -725,16 +696,13 @@
                                             <span class="text-xl px-2">•</span>
                                             <div class="flex flex-row gap-x-1 mb-2">
                                                 <img src="https://cdn.islandstats.xyz/icons/trophy.png" alt="Trophies" class="w-5 h-5 self-center" />
-                                                <span class="text-slate-600 self-center text-lg font-semibold">{calculateTrophies(data.player.statistics.pkw.survivor, badges.survivor_tiered)}<span class="font-normal text-slate-500">/{calculateMaxTrophies(badges.survivor_tiered)} ({calculateBadgeCompletion(data.player, "pkw.survivor", [], badges.survivor_tiered)}%)</span></span>
+                                                <span class="text-slate-600 self-center text-lg font-semibold">{calculateTrophies(data.player.statistics.pkw.survivor, badges.survivor_tiered)}<span class="font-normal text-slate-500">/{calculateMaxTrophies(badges.survivor_tiered)} ({Math.round((calculateTrophies(data.player.statistics.pkw.survivor, badges.survivor_tiered) / calculateMaxTrophies(badges.survivor_tiered)) * 100)}%)</span></span>
                                             </div>
                                         </div>                                        
                                         <div class="grid grid-cols-2 sm:grid-cols-2 2xl:grid-cols-3 gap-5">
                                             {#each badges.survivor_tiered as badge}
                                                 <div class="flex flex-col sm:flex-row gap-x-2">
-                                                    <div class="group duration-100">
-                                                        <img class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/pkw/${badge.icon}.png`} alt={badge.name} />
-                                                        <p class="absolute invisible xl:group-hover:visible opacity-0 group-hover:opacity-100 z-10 bg-slate-500 text-slate-200 rounded-md py-1 px-2 text-wrap duration-100">{badge.description}</p>
-                                                    </div>
+                                                    <img use:tooltip title={badge.description} class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/pkw/${badge.icon}.png`} alt={badge.name} />
                                                     <div class="flex flex-col items-start mt-2 sm:mt-0">
                                                         <p class="font-semibold">{badge.name} {calculateBadgeTier(data.player.statistics.pkw.survivor[badge.stat], badge.tiers).tier.name} {#if data.player.statistics.pkw.survivor[badge.stat] >= badge.tiers[badge.tiers.length - 1].amount}<span class="text-slate-400 font-normal">({data.player.statistics.pkw.survivor[badge.stat].toLocaleString()})</span>{/if} </p>
                                                         <p>

@@ -93,7 +93,7 @@ export const badges = {
         { name: "Blaze of Glory", description: "Finish 3rd or higher in a game where you punched a blaze", icon: "blaze_of_glory", stat: "blaze_of_glory", trophies: 50 },
         { name: "Bullet Time", description: "Survive being hit by the matrix trap", icon: "bullet_time", stat: "bullet_time", trophies: 10 },
         { name: "Something in the Waves", description: "Catch a fish during a game of HITW", icon: "something_in_the_waves", stat: "fish_catcher", trophies: 10 },
-        { name: "Barely Broiled", description: "Survive being launched by a hot potato", icon: "barely_broiled", stat: "hot_potato_survivor", trophies: 10 },
+        { name: "Barely Broiled", description: "Survive being launched by a hot potato", icon: "barely_broiled", stat: "hot_potato_survivor", trophies: 15 },
         { name: "Monster Catch", description: "Hook a guardian with a fishing rod", icon: "monster_catch", stat: "monster_catcher", trophies: 35 },
         { name: "Slimey Rivalry", description: "Survival all 4 minutes of a game of HITW", icon: "slimey_rivalry", stat: "slimey_rivalry", trophies: 25 },
     ],
@@ -224,7 +224,6 @@ export function calculateTrophies(stats, badges) {
     for (let badge of badges) {
         if (badge.tiers) {
             for (let tier of badge.tiers) {
-                console.log(tier.trophies)
                 if (stats[badge.stat] >= tier.amount) {
                     trophies += tier.trophies;
                 }
@@ -240,85 +239,28 @@ export function calculateTrophies(stats, badges) {
 
 export function calculateTotalTrophies(stats) {
     let trophies = 0;
-    for (let badge of badges.battle_box.concat(badges.battle_box_tiered)) {
-        if (badge.tiers) {
-            for (let tier of badge.tiers) {
-                if (stats.battle_box[badge.stat] >= tier.amount) {
-                    trophies += tier.trophies;
+    let games = [
+        { stats: stats.battle_box, badges: badges.battle_box.concat(badges.battle_box_tiered) },
+        { stats: stats.sky_battle.quads, badges: badges.sky_battle.concat(badges.sky_battle_tiered) },
+        { stats: stats.tgttos, badges: badges.tgttos.concat(badges.tgttos_tiered) },
+        { stats: stats.hitw, badges: badges.hitw.concat(badges.hitw_tiered) },
+        { stats: stats.dynaball, badges: badges.dynaball.concat(badges.dynaball_tiered) },
+        { stats: stats.pkw.dojo, badges: badges.dojo_tiered },
+        { stats: stats.pkw.survivor, badges: badges.survivor_tiered }
+    ];
+    for (let { stats, badges } of games) {
+        for (let badge of badges) {
+            if (badge.tiers) {
+                for (let tier of badge.tiers) {
+                    if (stats[badge.stat] >= tier.amount) {
+                        trophies += tier.trophies;
+                    }
+                }
+            } else {
+                if (stats.badges[badge.stat] > 0) {
+                    trophies += badge.trophies;
                 }
             }
-        } else {
-            if (stats.battle_box.badges[badge.stat] > 0) {
-                trophies += badge.trophies;
-            }
-        }
-    }
-    for (let badge of badges.sky_battle.concat(badges.sky_battle_tiered)) {
-        if (badge.tiers) {
-            for (let tier of badge.tiers) {
-                if (stats.sky_battle.quads[badge.stat] >= tier.amount) {
-                    trophies += tier.trophies;
-                }
-            }
-        } else {
-            if (stats.sky_battle.quads.badges[badge.stat] > 0) {
-                trophies += badge.trophies;
-            }
-        }
-    }
-    for (let badge of badges.tgttos.concat(badges.tgttos_tiered)) {
-        if (badge.tiers) {
-            for (let tier of badge.tiers) {
-                if (stats.tgttos[badge.stat] >= tier.amount) {
-                    trophies += tier.trophies;
-                }
-            }
-        } else {
-            if (stats.tgttos.badges[badge.stat] > 0) {
-                trophies += badge.trophies;
-            }
-        }
-    }
-    for (let badge of badges.hitw.concat(badges.hitw_tiered)) {
-        if (badge.tiers) {
-            for (let tier of badge.tiers) {
-                if (stats.hitw[badge.stat] >= tier.amount) {
-                    trophies += tier.trophies;
-                }
-            }
-        } else {
-            if (stats.hitw.badges[badge.stat] > 0) {
-                trophies += badge.trophies;
-            }
-        }
-    }
-    for (let badge of badges.dynaball.concat(badges.dynaball_tiered)) {
-        if (badge.tiers) {
-            for (let tier of badge.tiers) {
-                if (stats.dynaball[badge.stat] >= tier.amount) {
-                    trophies += tier.trophies;
-                }
-            }
-        } else {
-            if (stats.dynaball.badges[badge.stat] > 0) {
-                trophies += badge.trophies;
-            }
-        }
-    }
-    for (let badge of badges.dojo_tiered) {
-        for (let tier of badge.tiers) {
-            if (stats.pkw.dojo[badge.stat] >= tier.amount) {
-                trophies += tier.trophies;
-            }
-        
-        }
-    }
-    for (let badge of badges.survivor_tiered) {
-        for (let tier of badge.tiers) {
-            if (stats.pkw.survivor[badge.stat] >= tier.amount) {
-                trophies += tier.trophies;
-            }
-        
         }
     }
     return trophies;
