@@ -11,7 +11,10 @@ export async function load({ params, cookies }) {
     if (params.username !== name) throw redirect(301, `/player/${name}`);
     
     // fetch player data from the MCC Island API
-    const res = await fetch(`${DEV === "true" ? "http://localhost:3000" : "https://api.sirarchibald.dev"}/islandstats/${await formatUUID(id)}`, { headers: { "auth": `${SAD_API_KEY}` } });
+    const res = await fetch(`${DEV === "true" ? "http://localhost:3000" : "https://api.sirarchibald.dev"}/islandstats/player/${await formatUUID(id)}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json", "Accept": "application/json", "auth": `${SAD_API_KEY}` },
+    });
     const data = await res.json();
     const player = data?.player || null;
 
@@ -20,7 +23,7 @@ export async function load({ params, cookies }) {
         const result = await db.collection("requests").findOne({ username: name });
         const isFavourite = cookies.get("favourites") ? JSON.parse(cookies.get("favourites")).find(f => f.username === name) : false;
 
-        return { uuid: await formatUUID(id), name: name, player, rank: getRankIcon(player.ranks), views: result?.requests || 0, favourite: isFavourite };
+        return { uuid: player.uuid, name: player.username, player, rank: getRankIcon(player.ranks), views: result?.requests || 0, favourite: isFavourite };
     } else return { success: false, player: {} };
 }
 

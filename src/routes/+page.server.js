@@ -8,11 +8,16 @@ export async function load({ cookies }) {
 
     const profiles = [];
     if (topRequests.length === 0) return { profiles: [] };
-    for (let request of topRequests) {
-        // fetch player data from the MCC Island API
-        const res = await fetch(`${DEV === "true" ? "http://localhost:3000" : "https://api.sirarchibald.dev"}/islandstats/${request.uuid}`, { headers: { "auth": `${SAD_API_KEY}` } });
-        const { player } = await res.json();
-        if (player) profiles.push({ uuid: request.uuid, username: request.username, player: player });
+
+    const uuids = topRequests.map(request => request.uuid);
+    const res = await fetch(`${DEV === "true" ? "http://localhost:3000" : "https://api.sirarchibald.dev"}/islandstats/players`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json", "auth": `${SAD_API_KEY}` },
+        body: JSON.stringify({ uuids })
+    });
+    const { players } = await res.json();
+    for (let player of players) {
+        profiles.push({ uuid: player.uuid, username: player.username, player: player })
     }
 
     const favourites = cookies.get("favourites") ? JSON.parse(cookies.get("favourites")) : [];
