@@ -1,22 +1,22 @@
 <script>
     import Star from "$lib/svgs/Star.svelte";
-    import Check from "$lib/svgs/Check.svelte";
-
-    import PlayerCard from "../../../components/PlayerCard.svelte";
-    import Games from "../../../components/Games.svelte";
-    import Party from "../../../components/Party.svelte";
-    import Friends from "../../../components/Friends.svelte";
+    import PlayerCard from "../../../components/player/PlayerCard.svelte";
+    import Factions from "../../../components/player/Factions.svelte";
+    import Games from "../../../components/player/Games.svelte";
+    import Party from "../../../components/player/Party.svelte";
+    import Friends from "../../../components/player/Friends.svelte";
+    import Footer from "../../../components/Footer.svelte";
     
     export let data;
     export let form;
 
-    let infoTab = "stats";
+    let infoTab = "games";
     function switchInfoTab(newTab) { infoTab = newTab; }
 </script>
 
 <svelte:head>
     <title>{data.player.username ? `${data.player.username}'s Stats` : "Unknown Player"}</title>
-    <link rel="icon" type="image/png" src={`https://craftar.com/avatars/${data.player.uuid}.png?overlay`} />
+    <link rel="icon" type="image/png" src={`https://craftar.com/avatars/${data.player.uuid}?overlay`} />
     <meta name="description" content={`View ${data.player.username}'s stats on MCC Island Stats by SirArchibald, including game stats, currency, socials and more!`} />
 
     <script src="https://unpkg.com/@popperjs/core@2"></script>
@@ -37,26 +37,6 @@
                     <PlayerCard data={data} />
                 </div>
 
-
-                <!-- favourites -->
-                <div class="bg-slate-50 border-l-4 border-l-red-500 rounded-sm p-4 self-center sm:self-start w-full text-sm 2xl:text-lg">
-                    <form method="POST" action="?/favourite">
-                        <input type="text" name="username" class="hidden" bind:value={data.player.username} />
-                        <input type="text" name="uuid" class="hidden" bind:value={data.uuid} />
-                        <input type="text" name="ranks" class="hidden" bind:value={data.player.ranks} />
-
-                        <button type="submit" class="flex flex-row place-items-center font-semibold hover:bg-slate-100 hover:scale-105 py-1 px-3 rounded-md">
-                            {#if !form?.favourites.find(f => f?.username === data.player.username) && !data.favourite}
-                                <span class="w-6 h-6 mr-2 text-black"><Star /></span>
-                                <span>Add to favourites</span>
-                            {:else}
-                                <span class="w-6 h-6 mr-2"><Check /></span>
-                                <span>Added to favourites!</span>
-                            {/if}
-                        </button>
-                    </form>
-                </div>
-
                 <!-- notice card -->
                 <div class="bg-slate-50 border-l-4 border-l-red-500 rounded-sm p-4 self-center sm:self-start w-full text-sm 2xl:text-lg">
                     <p><span class="font-semibold">Not seeing your stats?</span> Make sure to set your API preferences in your in-game settings!</p>
@@ -68,12 +48,30 @@
             <div class="flex flex-col col-span-4 grow">
                 <!-- tabs -->
                 <div class="flex flex-row text-xl mb-4 gap-x-4 self-center sm:self-start">
-                    <button class={`bg-slate-50 hover:bg-slate-100 border-b-red-500 rounded-sm px-6 py-2 ${infoTab === "stats" ? "font-bold border-b-4" : ""}`} on:click={() => switchInfoTab("stats")}>Games</button>
+                    <button class={`bg-slate-50 hover:bg-slate-100 border-b-red-500 rounded-sm px-6 py-2 ${infoTab === "factions" ? "font-bold border-b-4" : ""}`} on:click={() => switchInfoTab("factions")}>Factions</button>
+                    <button class={`bg-slate-50 hover:bg-slate-100 border-b-red-500 rounded-sm px-6 py-2 ${infoTab === "games" ? "font-bold border-b-4" : ""}`} on:click={() => switchInfoTab("games")}>Games</button>
                     <button class={`bg-slate-50 hover:bg-slate-100 border-b-red-500 rounded-sm px-6 py-2 ${infoTab === "party" ? "font-bold border-b-4" : ""}`} on:click={() => switchInfoTab("party")}>Party</button>
                     <button class={`bg-slate-50 hover:bg-slate-100 border-b-red-500 rounded-sm px-6 py-2 ${infoTab === "friends" ? "font-bold border-b-4" : ""}`} on:click={() => switchInfoTab("friends")}>Friends</button>
+                    
+                    <form method="POST" action="?/favourite" class="bg-slate-50 hover:bg-slate-100 border-b-red-500 rounded-sm text-md px-1 py-2">
+                        <input type="text" name="username" class="hidden" bind:value={data.player.username} />
+                        <input type="text" name="uuid" class="hidden" bind:value={data.uuid} />
+                        <input type="text" name="ranks" class="hidden" bind:value={data.player.ranks} />
+
+                        <button type="submit" class="flex flex-row place-items-center font-semibold hover:bg-slate-100 hover:scale-105 text-md py-1 px-3 rounded-md">
+                            {#if !form?.favourites.find(f => f?.username === data.player.username) && !data.favourite}
+                                <span class="w-6 h-6"><Star fill={false} /></span>
+                            {:else}
+                                <span class="w-6 h-6"><Star fill={true} /></span>
+                            {/if}
+                        </button>
+                    </form>
                 </div>
 
-                {#if infoTab === "stats"}
+                {#if infoTab === "factions"}
+                    <Factions data={data} />
+
+                {:else if infoTab === "games"}
                     <Games data={data} />
 
                 {:else if infoTab === "party"}
@@ -87,8 +85,4 @@
     {/if}
 </main>
 
-<footer class={`w-full bg-red-500 p-4 ${!data.player ? "sm:absolute sm:bottom-0" : "sm:relative"}`}>
-    <div>
-        <p class="text-center text-slate-100">© 2024 <a href="https://sirarchibald.dev" class="underline hover:text-slate-200">SirArchibald</a> • Not affiliated with Minecraft or Noxcrew!</p>
-    </div>
-</footer>
+<Footer data={data} />

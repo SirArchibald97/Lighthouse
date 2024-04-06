@@ -48,8 +48,8 @@ export const actions = {
         if (!favourites.find(f => f?.username === username)) {
             cookies.set("favourites", JSON.stringify([...favourites, { uuid, username, ranks: ranks.split(",") }]), { path: "/" });
             return { favourites: [...favourites, { uuid, username, ranks: ranks.split(",") }] };
-        } else {
-            favourites.splice(favourites.indexOf(username), 1);
+        } else {            
+            favourites.splice(favourites.indexOf(favourites.find(f => f.username === username)), 1);
             cookies.set("favourites", JSON.stringify(favourites), { path: "/" });
             return { favourites };
         }

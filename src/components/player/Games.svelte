@@ -1,11 +1,11 @@
 <script>
-    import BattleBox from "./games/BattleBox.svelte";
-    import SkyBattle from "./games/SkyBattle.svelte";
-    import Tgttos from "./games/Tgttos.svelte";
-    import Hitw from "./games/Hitw.svelte";
-    import Dynaball from "./games/Dynaball.svelte";
-    import Dojo from "./games/Dojo.svelte";
-    import Survivor from "./games/Survivor.svelte";
+    import BattleBox from "../games/BattleBox.svelte";
+    import SkyBattle from "../games/SkyBattle.svelte";
+    import Tgttos from "../games/Tgttos.svelte";
+    import Hitw from "../games/Hitw.svelte";
+    import Dynaball from "../games/Dynaball.svelte";
+    import Dojo from "../games/Dojo.svelte";
+    import Survivor from "../games/Survivor.svelte";
 
     export let data;
 

@@ -1,6 +1,6 @@
 {
-	"name": "island-stats",
-	"version": "0.0.1",
+	"name": "lighthouse",
+	"version": "1.0",
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
