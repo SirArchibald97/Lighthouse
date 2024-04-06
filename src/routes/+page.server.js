@@ -9,27 +9,33 @@ export async function load({ cookies }) {
     const profiles = [];
     if (topRequests.length === 0) return { profiles: [] };
 
-    const featured = cookies.get("featured");
-    if (!featured) {
-        try {
-            const uuids = topRequests.map(request => request.uuid);
-            for (let uuid of uuids) {
-                const res = await fetch(`${DEV === "true" ? "http://localhost:3000" : "https://api.sirarchibald.dev"}/islandstats/player/${uuid}`, {
-                    method: "GET",
-                    headers: { "Content-Type": "application/json", "Accept": "application/json", "auth": `${SAD_API_KEY}` }
-                });
-                const { player } = await res.json();
+    try {
+        const uuids = topRequests.map(request => request.uuid);
+        const res = await fetch(`${DEV === "true" ? "http://localhost:3000" : "https://api.sirarchibald.dev"}/islandstats/players`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "Accept": "application/json", "auth": `${SAD_API_KEY}` },
+            body: JSON.stringify({ uuids })
+        });
+        const { players } = await res.json();
+        for (let player of players) {
+            if (player) profiles.push({ uuid: player.uuid, username: player.username, player });
+        }
 
-                if (player) profiles.push({ uuid: player.uuid, username: player.username, player });
-            }
-            cookies.set("featured", JSON.stringify(profiles), { path: "/", maxAge: 60 * 60 });
-        } catch { /* api is being weird, pray to your god and hit refresh */ }
-    } else {
-        profiles.push(...JSON.parse(featured));
-    }
+        /*
+        for (let uuid of uuids) {
+            const res = await fetch(`${DEV === "true" ? "http://localhost:3000" : "https://api.sirarchibald.dev"}/islandstats/player/${uuid}`, {
+                method: "GET",
+                headers: { "Content-Type": "application/json", "Accept": "application/json", "auth": `${SAD_API_KEY}` }
+            });
+            const { player } = await res.json();
+
+            if (player) profiles.push({ uuid: player.uuid, username: player.username, player });
+        }
+        */
+    } catch(e) { console.log(e); /* api is being weird, pray to your god and hit refresh */ }
 
     const favourites = cookies.get("favourites") ? JSON.parse(cookies.get("favourites")) : [];
-
+    
     return { profiles, favourites };
 }
 
