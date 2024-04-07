@@ -106,7 +106,7 @@
                 </div>
             </div>
         {:else}
-            <p class="text-xl font-semibol">Statistics are disabled!</p>
+            <p class="text-xl">Statistics are disabled!</p>
         {/if}
     </div>
 </div>

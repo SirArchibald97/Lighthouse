@@ -23,10 +23,10 @@
                     </div>
                 {/each}
             {:else}
-                <p class="text-xl font-semibold">Not currently partied!</p>
+                <p class="text-xl">Not currently partied!</p>
             {/if}
         {:else}
-            <p class="text-xl font-semibold">Social information is disabled!</p>
+            <p class="text-xl">Social information is disabled!</p>
         {/if}
     </div>
 </div>

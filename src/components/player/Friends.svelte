@@ -62,7 +62,7 @@
                 </div>
             {/if}
         {:else}
-            <p class="text-xl font-semibol">Social information is disabled!</p>
+            <p class="text-xl">Social information is disabled!</p>
         {/if}
     </div>
 </div>
