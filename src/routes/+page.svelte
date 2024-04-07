@@ -2,6 +2,7 @@
     import Search from "$lib/svgs/Search.svelte";
     import Discord from "../components/Discord.svelte";
     import Favourites from "../components/Favourites.svelte";
+    import About from "../components/About.svelte";
 
     export let data;
     export let form;
@@ -28,14 +29,9 @@
         </div>
     </div>
 
-    <!-- main -->
-    <div class="flex flex-col gap-y-10 px-4 sm:px-24 2xl:px-96 py-8 bg-slate-100">
-        <Favourites {data} {form} />
-
-        <!--
-        <Discord />
-        -->
-    </div>
+    <Favourites {data} {form} />
+    <Discord />
+    <About />
 
     <footer class={`w-full bg-red-500 p-4`}>
         <div>

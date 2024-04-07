@@ -15,9 +15,9 @@
     function selectProfile(username) { selectedProfile = username; }
 </script>
 
-<div>
+<div class="flex flex-col gap-y-10 px-4 sm:px-24 2xl:px-96 py-8 bg-slate-100">
     <!-- featured profiles -->
-    <p class="text-slate-700 dark:text-slate-200 text-3xl text-center mb-8 font-semibold">Featured Profiles</p>
+    <p class="text-slate-700 dark:text-slate-200 text-3xl text-center font-semibold">Featured Profiles</p>
     <form method="POST" action="?/lookup" class={`${showFavourites && data?.favourites.length === 0 ? "flex flex-row justify-center" : "grid grid-cols-2 sm:grid-cols-3 gap-6"}`}>
         <input type="text" name="username" bind:value={selectedProfile} class="hidden" />
 
