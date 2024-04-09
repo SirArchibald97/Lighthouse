@@ -30,8 +30,10 @@
     </div>
 
     <Favourites {data} {form} />
+    <!--
     <Discord />
     <About />
+    -->
 
     <footer class={`w-full bg-red-500 p-4`}>
         <div>

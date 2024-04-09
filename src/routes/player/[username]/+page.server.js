@@ -15,6 +15,7 @@ export async function load({ params, cookies }) {
         method: "GET",
         headers: { "Content-Type": "application/json", "Accept": "application/json", "auth": `${SAD_API_KEY}` },
     });
+    console.log(res);
     const data = await res.json();
     const player = data?.player || null;
 
