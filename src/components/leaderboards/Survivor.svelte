@@ -7,10 +7,9 @@
     let sort = "wins";
     function toggleSort(stat) { sort = stat }
 
+    let username = "";
     let limit = 10;
-    function increaseLimit() {
-        limit += 10;
-    }
+    function increaseLimit() { limit += 10; }
 
     function sortPlayers(stat) {
         return players.sort((a, b) => {
@@ -33,9 +32,14 @@
 </svelte:head>
 <div class="flex flex-col mb-8">    
     <div class="bg-slate-100 rounded-sm border-l-4 border-red-500 mx-4 sm:mx-24 px-4 py-4">
-        <div class="flex flex-row mb-4 justify-center">
-            <img src={`https://cdn.islandstats.xyz/games/pkw/icon.png`} class="w-8 h-8 self-center" alt={`Battle Box Icon`} />
-            <p class="text-2xl font-semibold self-center ml-2">Parkour Warrior Survivor</p>
+        <div class="flex flex-row justify-between">
+            <div class="flex flex-row mb-4 justify-center">
+                <img src={`https://cdn.islandstats.xyz/games/pkw/icon.png`} class="w-8 h-8 self-center" alt={`Battle Box Icon`} />
+                <p class="text-2xl font-semibold self-center ml-2">Parkour Warrior Survivor</p>
+            </div>
+            <div>
+                <input bind:value={username} type="text" name="username" placeholder="Username" class="border-slate-300 border-2 rounded-md px-1" />
+            </div>
         </div>
         
         <div class="flex flex-col gap-y-2 justify-center">
@@ -52,11 +56,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {#each sortPlayers(sort).slice(0, limit) as player, count}
+                    {#each (username.length === 0 ? sortPlayers(sort).slice(0, limit) : sortPlayers(sort).filter(p => p.player.username.toLowerCase().includes(username.toLowerCase())).slice(0, limit)) as player}
                         <tr>
-                            <td>{count + 1}</td> 
+                            <td>{sortPlayers(sort).indexOf(sortPlayers(sort).find(p => p.player.username === player.player.username)) + 1}</td> 
                             <td class="flex flex-row">
-                                <img class="w-6 h-6 rounded-sm self-center" src={`https://cdn.islandstats.xyz/ranks/${getRankIcon(player.player.ranks)}`} alt={getRankIcon(player.player.ranks)} />
+                                <img class="w-6 h-6 rounded-sm self-center bg-slate-400" src={`https://cdn.islandstats.xyz/ranks/${getRankIcon(player.player.ranks)}`} alt={getRankIcon(player.player.ranks)} />
                                 <span class="self-center ml-2">{player.player.username}</span>
                             </td>
                             <td>{player.player.statistics?.pkw.survivor.wins.toLocaleString()}</td>

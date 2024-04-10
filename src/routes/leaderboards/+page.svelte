@@ -7,6 +7,7 @@
     import Dynaball from "../../components/leaderboards/Dynaball.svelte";
     import Dojo from "../../components/leaderboards/Dojo.svelte";
     import Survivor from "../../components/leaderboards/Survivor.svelte";
+    import Misc from "../../components/leaderboards/Misc.svelte";
 
     export let data;
     let players = data.players.filter(p => p.player.statistics);
@@ -18,6 +19,9 @@
 <svelte:head>
     <title>Leaderboards</title>
     <meta name="description" content="Leaderboards for the MCC Island Minecraft server" />
+
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
 </svelte:head>
 <div class="flex flex-col mb-8">
     <div class="flex flex-row justify-between my-6 mx-4 sm:mx-44">
@@ -61,6 +65,11 @@
                 <img src="https://cdn.islandstats.xyz/games/pkw/icon.png" class="w-16 h-16 self-center" alt="Battle Box Icon" />
                 <p class="text-2xl font-semibold self-center ml-2">Parkour Warrior Survivor</p>
             </button>
+
+            <button on:click={() => setGame("misc")} class="flex flex-col gap-y-3 bg-white p-4 rounded-md border-2 border-slate-300 hover:bg-slate-100 hover:scale-105 duration-100">
+                <img src="https://cdn.islandstats.xyz/icons/royal_reputation.png" class="w-16 h-16 self-center" alt="Battle Box Icon" />
+                <p class="text-2xl font-semibold self-center ml-2">Miscellaneous</p>
+            </button>
         </div>
     {:else}
         {#if game === "bb"}
@@ -83,9 +92,12 @@
 
         {:else if game === "survivor"}
             <Survivor players={players} />
+        
+        {:else if game === "misc"}
+            <Misc players={players} />
 
         {/if}
     {/if}
 </div>
 
-<Footer data={game ? null : undefined} />
+<Footer absolute={!game ? true : false} />
