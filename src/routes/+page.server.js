@@ -1,38 +1,15 @@
-import { SAD_API_KEY, DEV } from "$env/static/private";
 import { redirect } from '@sveltejs/kit';
 import db from "$lib/db.js";
 
 export async function load({ cookies }) {
     // fetch top 4 most searched username's from the database
-    const topRequests = await db.collection("requests").find({ username: { $ne: "SirArchibald97" } }).sort({ requests: -1 }).limit(4).toArray();
-
     const profiles = [];
+    const topRequests = await db.collection("requests").find({ username: { $ne: "SirArchibald97" } }).sort({ requests: -1 }).limit(4).toArray();
     if (topRequests.length === 0) return { profiles: [] };
-
-    try {
-        const uuids = topRequests.map(request => request.uuid);
-        const res = await fetch(`${DEV === "true" ? "http://localhost:3000" : "https://api.sirarchibald.dev"}/islandstats/players`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json", "Accept": "application/json", "auth": `${SAD_API_KEY}` },
-            body: JSON.stringify({ uuids })
-        });
-        const { players } = await res.json();
-        for (let player of players) {
-            if (player) profiles.push({ uuid: player.uuid, username: player.username, player });
-        }
-
-        /*
-        for (let uuid of uuids) {
-            const res = await fetch(`${DEV === "true" ? "http://localhost:3000" : "https://api.sirarchibald.dev"}/islandstats/player/${uuid}`, {
-                method: "GET",
-                headers: { "Content-Type": "application/json", "Accept": "application/json", "auth": `${SAD_API_KEY}` }
-            });
-            const { player } = await res.json();
-
-            if (player) profiles.push({ uuid: player.uuid, username: player.username, player });
-        }
-        */
-    } catch(e) { console.log(e); /* api is being weird, pray to your god and hit refresh */ }
+    for (let entry of topRequests) {
+        const player = await db.collection("players").findOne({ uuid: entry.uuid });
+        if (player) profiles.push({ uuid: player.player.uuid, username: player.player.username, player: player.player });
+    }
 
     const favourites = cookies.get("favourites") ? JSON.parse(cookies.get("favourites")) : [];
     
@@ -49,4 +26,8 @@ export const actions = {
         const { name } = await mj_res.json();
         throw redirect(301, `/player/${name || username}`);
     },
+
+    leaderboards: async () => {
+        throw redirect(301, "/leaderboards");
+    }
 }
