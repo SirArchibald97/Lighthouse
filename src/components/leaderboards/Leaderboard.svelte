@@ -70,7 +70,7 @@
                     <td>{leaderboard.indexOf(leaderboard.find(p => p.player.username === player.player.username)) + 1}</td>
                     <td class="flex flex-row gap-x-2">
                         <img class="w-8 h-8 self-center bg-slate-400 rounded-sm" src={`https://cdn.islandstats.xyz/ranks/${getRankIcon(player.player.ranks)}`} alt={`${player.player.username}'s Rank`} />
-                        <span>{player.player.username}</span>
+                        <a href={`/player/${player.player.username}`}>{player.player.username}</a>
                     </td>
                     <td>{(isBadge ? fetchStat(player)?.toLocaleString() : fetchStat(player)?.toLocaleString()) || "Unknown"}</td>
                 </tr>
