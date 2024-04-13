@@ -1,12 +1,4 @@
 import { redirect } from "@sveltejs/kit";
-import db from "$lib/db.js";
-
-export async function load() {
-    const allPlayers = await db.collection("players").find({}).toArray();
-    allPlayers.forEach(p => p._id = p._id.toString());
-    
-    return { players: allPlayers }
-}
 
 export const actions = {
     lookup: async ({ request }) => {
@@ -20,5 +12,14 @@ export const actions = {
 
     home: async () => {
         throw redirect(301, "/");
-    }
+    },
+
+    bbleaderboards: async () => { throw redirect(301, "/leaderboards/battlebox"); },
+    sbleaderboards: async () => { throw redirect(301, "/leaderboards/skybattle"); },
+    tgttosleaderboards: async () => { throw redirect(301, "/leaderboards/tgttos"); },
+    hitwleaderboards: async () => { throw redirect(301, "/leaderboards/hitw"); },
+    dynaballleaderboards: async () => { throw redirect(301, "/leaderboards/dynaball"); },
+    dojoleaderboards: async () => { throw redirect(301, "/leaderboards/dojo"); },
+    survivorleaderboards: async () => { throw redirect(301, "/leaderboards/survivor"); },
+    miscleaderboards: async () => { throw redirect(301, "/leaderboards/misc"); },
 }
