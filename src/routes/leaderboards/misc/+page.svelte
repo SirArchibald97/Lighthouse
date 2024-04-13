@@ -16,8 +16,8 @@
     <div class="flex flex-row justify-between mt-6 mx-4 sm:mx-44">
         <a href="/leaderboards" class="flex-none px-3 border-2 border-slate-300 py-1 bg-white rounded-md hover:bg-slate-100 hover:scale-105 duration-100 self-center">Go Back</a>
         <div class="flex flex-row gap-x-2 self-center flex-grow justify-center">
-            <img src="https://cdn.islandstats.xyz/games/pkw/icon.png" alt="Dynaball Logo" class="w-12 h-12 self-center" />
-            <p class="text-center text-3xl font-semibold self-center">Parkour Warrior Survivor Leaderboards</p>
+            <img src="https://cdn.islandstats.xyz/icons/royal_reputation.png" alt="Dynaball Logo" class="w-12 h-12 self-center" />
+            <p class="text-center text-3xl font-semibold self-center">Miscellaneous Leaderboards</p>
         </div>
     </div>
 
