@@ -17,11 +17,13 @@
 </svelte:head>
 <main>
     <div class="flex flex-row bg-red-500 place-content-end">
+        <!--
         <form method="POST" action="?/login" class="m-4">
             <button class="bg-white text-slate-800 text-lg px-5 py-2 shadow-md rounded-md hover:scale-105 hover:bg-slate-100 duration-100">
                 Login
             </button>
         </form>
+        -->
     </div>
     <div class="flex flex-col items-center px-4 sm:px-24 py-32 bg-red-500">
         <p class="text-slate-100 text-5xl sm:text-7xl font-bold text-center">Lighthouse</p>
@@ -50,7 +52,7 @@
                 <p class="text-2xl self-center font-semibold">Leaderboards</p>
             </div>
             <p class="text-center text-lg mt-2">
-                View leaderboards for over 80 different stats and badges, filter by username and sort in ascending or descending order!
+                View leaderboards for over 80 different stats and badges, filter by username and sort in either order!
             </p>
             <a href="/leaderboards" class="mt-6 px-3 py-1 bg-red-500 text-white text-center shadow-md rounded-md hover:scale-105 duration-100">
                 View leaderboards
@@ -64,9 +66,9 @@
             <p class="text-center text-lg mt-2">
                 Compare the profiles of two players side by side and see the differences in their stats and badges!
             </p>
-            <a href="/compare" class="mt-6 px-3 py-1 bg-red-500 text-white text-center shadow-md rounded-md hover:scale-105 duration-100">
-                Compare
-            </a>
+            <button href="/compare" class="mt-6 px-3 py-1 bg-red-500 text-white text-center shadow-md rounded-md hover:scale-105 duration-100">
+                Coming Soon
+            </button>
         </div>
         <div class="flex flex-col bg-white p-4 shadow-md rounded-md">
             <div class="flex flex-row gap-x-2 place-self-center">
@@ -76,9 +78,9 @@
             <p class="text-center text-lg mt-2">
                 Join or create a league and get a personalised leaderboard for you and friends and compete for the top spot!
             </p>
-            <a href="/leagues" class="mt-6 px-3 py-1 bg-red-500 text-white text-center shadow-md rounded-md hover:scale-105 duration-100">
-                Join a league
-            </a>
+            <button href="/leagues" class="mt-6 px-3 py-1 bg-red-500 text-white text-center shadow-md rounded-md hover:scale-105 duration-100">
+                Coming Soon
+            </button>
         </div>
         <!---
         <div class="flex flex-col bg-white p-4 shadow-md rounded-md">

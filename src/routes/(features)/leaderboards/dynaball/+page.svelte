@@ -1,6 +1,6 @@
 <script>
     import Footer from "$lib/components/Footer.svelte";
-    import Leaderboard from "$lib/components/leaderboards/Leaderboard.svelte";
+    import Leaderboard from "$lib/components/Leaderboard.svelte";
     import { badges } from "$lib/data.js";
 
     export let data;

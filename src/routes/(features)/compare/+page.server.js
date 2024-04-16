@@ -2,6 +2,8 @@ import { redirect } from '@sveltejs/kit';
 import { SAD_API_KEY, DEV } from "$env/static/private";
 
 export async function load({ cookies }) {
+    throw redirect(301, "/");
+
     const favourites = cookies.get("favourites") ? JSON.parse(cookies.get("favourites")) : [];
     return { favourites };
 }

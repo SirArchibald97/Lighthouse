@@ -31,7 +31,7 @@
 
     <!-- STATUS -->
     {#if data.player.status}
-        <div class="flex flex-col mt-2 text-md 2xl:text-lg">
+        <div class="flex flex-col mt-2 text-md 2xl:text-md">
             {#if data.player.status.server?.category === "GAME"}
                 <p class="flex flex-row gap-x-2">
                     Playing 
@@ -52,13 +52,13 @@
         </div>
 
         <!-- DATES -->
-        <div class="flex flex-col mt-4 text-md 2xl:text-lg">
+        <div class="flex flex-col mt-4 text-md 2xl:text-md">
             <p>Last joined: <span class="font-semibold">{lastJoin}</span></p>
             <p>First joined: <span class="font-semibold">{firstJoin}</span></p>
         </div>
     {/if}
 
-    <div class="flex flex-col mt-4 text-md 2xl:text-lg">
+    <div class="flex flex-col mt-4 text-md 2xl:text-md">
         <p>Total Faction XP: <span class="font-semibold">{data.player.statistics?.faction_total_xp.toLocaleString() || "Unknown"}</span></p>
         <p>Game XP: <span class="font-semibold">{data.player.statistics?.faction_game_xp.toLocaleString() || "Unknown"}</span></p>
         <p>Quest XP: <span class="font-semibold">{data.player.statistics?.faction_quest_xp.toLocaleString() || "Unknown"}</span></p>
@@ -69,23 +69,23 @@
         <p class="text-md 2xl:text-xl font-semibold">Wallet</p>
         <div class="flex flex-row sm:gap-1 2xl:gap-2 my-1">
             <img src="https://cdn.islandstats.xyz/icons/coin.png" class="w-6 h-6 2xl:w-8 2xl:h-8" alt="Coins" />
-            <p class="text-md ml-1 sm:ml-0 2xl:text-lg">{data.player.collections?.currency.coins.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') || "Unknown"}</p>
+            <p class="text-md ml-1 sm:ml-0 2xl:text-md">{data.player.collections?.currency.coins.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') || "Unknown"}</p>
         </div>
         <div class="flex flex-row sm:gap-1 2xl:gap-2 my-1">
             <img src="https://cdn.islandstats.xyz/icons/gem.png" class="w-6 h-6 2xl:w-8 2xl:h-8" alt="Coins" />
-            <p class="text-md ml-1 sm:ml-0 2xl:text-lg">{data.player.collections?.currency.gems.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') || "Unknown"}</p>
+            <p class="text-md ml-1 sm:ml-0 2xl:text-md">{data.player.collections?.currency.gems.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') || "Unknown"}</p>
         </div>
         <div class="flex flex-row sm:gap-1 2xl:gap-2 my-1">
             <img src="https://cdn.islandstats.xyz/icons/silver.png" class="w-6 h-6 2xl:w-8 2xl:h-8" alt="Coins" />
-            <p class="text-md ml-1 sm:ml-0 2xl:text-lg">{data.player.collections?.currency.silver.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') || "Unknown"}</p>
+            <p class="text-md ml-1 sm:ml-0 2xl:text-md">{data.player.collections?.currency.silver.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') || "Unknown"}</p>
         </div>
         <div class="flex flex-row sm:gap-1 2xl:gap-2 my-1">
             <img src="https://cdn.islandstats.xyz/icons/material_dust.png" class="w-6 h-6 2xl:w-8 2xl:h-8" alt="Coins" />
-            <p class="text-md ml-1 sm:ml-0 2xl:text-lg">{data.player.collections?.currency.materialDust.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') || "Unknown"}</p>
+            <p class="text-md ml-1 sm:ml-0 2xl:text-md">{data.player.collections?.currency.materialDust.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') || "Unknown"}</p>
         </div>
         <div class="flex flex-row sm:gap-1 2xl:gap-2 my-1">
             <img src="https://cdn.islandstats.xyz/icons/royal_reputation.png" class="w-6 h-6 2xl:w-8 2xl:h-8" alt="Coins" />
-            <p class="text-md ml-1 sm:ml-0 2xl:text-lg">{data.player.collections?.currency.royalReputation.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') || "Unknown"}</p>
+            <p class="text-md ml-1 sm:ml-0 2xl:text-md">{data.player.collections?.currency.royalReputation.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') || "Unknown"}</p>
         </div>
     </div>
 
@@ -93,9 +93,9 @@
     <p class="text-md 2xl:text-xl font-semibold mt-4">Trophies</p>
     <div class="flex flex-row sm:gap-1 2xl:gap-2 my-1">
         <img src="https://cdn.islandstats.xyz/icons/trophy.png" class="w-6 h-6 2xl:w-8 2xl:h-8 self-center" alt="Total Trophies" />
-        <span use:tooltip title="Only includes trophies earned from game badges" class="text-md ml-1 sm:ml-0 2xl:text-lg">{data.player.statistics ? calculateTotalTrophies(data.player.statistics).toLocaleString() : "Unknown"}*</span>
+        <span use:tooltip title="Only includes trophies earned from game badges" class="text-md ml-1 sm:ml-0">{data.player.statistics ? calculateTotalTrophies(data.player.statistics).toLocaleString() : "Unknown"}*</span>
     </div>
 
     <!-- VIEWS -->
-    <p class="mt-4 text-slate-500 text-sm 2xl:text-lg">Views: <span>{data.views.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></p>
+    <p class="mt-4 text-slate-500 text-sm 2xl:text-md">Views: <span>{data.views.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></p>
 </div>
