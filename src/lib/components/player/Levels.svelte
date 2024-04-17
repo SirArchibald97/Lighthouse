@@ -1,5 +1,5 @@
 <script>
-    import { calculateProgress, getNextLevel } from "$lib/levels.js";
+    import { calculateProgress, getNextLevel, getCurrentLevel } from "$lib/levels.js";
     import tooltip from "$lib/tooltip.js";
 
     export let data;
@@ -19,13 +19,14 @@
             <span class="self-center">{data.player.crownLevel.level}</span>
 
             <!-- progress bar -->
-            <div class="h-6 w-3/5 self-center rounded-md bg-slate-200 transition-all duration-500">
+            <div class="h-6 w-3/5 self-center rounded-md bg-slate-200 transition-all duration-500" use:tooltip title={`${calculateProgress(data.player.crownLevel.level) * 100}% (${Math.floor((getNextLevel(data.player.crownLevel.level) - getCurrentLevel(data.player.crownLevel.level)) * calculateProgress(data.player.crownLevel.level))}/${getNextLevel(data.player.crownLevel.level) - getCurrentLevel(data.player.crownLevel.level)})`}>
                 <div
                     class="flex flex-col h-full left-0 right-0 rounded-md text-center transition-all duration-500 group"
                     style={`width: calc(100% * ${calculateProgress(data.player.crownLevel.level)}); background-color: red`}
                 >
                 </div>
             </div>
+
 
             <span class="self-center">{data.player.crownLevel.level + 1}</span>
         </div>

@@ -9,14 +9,21 @@ export const levels = [
     { range: [81, 100], level: 1800, icon: "", colour: "#f59e0b" },
 ]
 
-export function calculateProgress(level) {
-    const currentLevel = levels.find(l => level >= l.range[0] && level <= l.range[1]);
-    const nextLevel = levels.indexOf(currentLevel) === levels.length - 1 ? currentLevel : levels[levels.indexOf(currentLevel) + 1];
-    const progress = (level - currentLevel.range[0]) / (nextLevel.range[1] - currentLevel.range[0]);
-    return progress;
+export function getCurrentLevel(level) {
+    let totalForCurrent = 0;
+    for (let tier of levels) {
+        if (level > tier.range[1]) {
+            totalForCurrent += (tier.level * 10);
+        } else {
+            for (let i = tier.range[0]; i <= level; i++) {
+                totalForCurrent += tier.level;
+            }
+        }
+    }
+    return totalForCurrent;
 }
 
-export function getNextLevel(level, trophies) {
+export function getNextLevel(level) {
     let totalForNext = 0;
     for (let tier of levels) {
         if (level > tier.range[1]) {
@@ -28,4 +35,8 @@ export function getNextLevel(level, trophies) {
         }
     }
     return totalForNext;
+}
+
+export function calculateProgress(level) {
+    return Math.floor((getCurrentLevel(level) / getNextLevel(level)) * 100) / 100;
 }

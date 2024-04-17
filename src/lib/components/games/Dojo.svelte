@@ -34,7 +34,7 @@
     <div class="grid grid-cols-2 sm:grid-cols-2 2xl:grid-cols-3 gap-5">
         {#each badges.dojo_tiered as badge}
             <div class="flex flex-col sm:flex-row gap-x-2">
-                <img use:tooltip title={badge.description} class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/pkw/${badge.icon}.png`} alt={badge.name} />
+                <img use:tooltip title={badge.description} class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/parkour_warrior/${badge.icon}.png`} alt={badge.name} />
                 <div class="flex flex-col items-start mt-2 sm:mt-0">
                     <p class="font-semibold">{badge.name} {calculateBadgeTier(stats[badge.stat], badge.tiers).tier.name} {#if stats[badge.stat] >= badge.tiers[badge.tiers.length - 1].amount}<span class="text-slate-400 font-normal">({stats[badge.stat].toLocaleString()})</span>{/if} </p>
                     <p>

@@ -41,7 +41,7 @@ export function getStatusIcon(game) {
         "BATTLE_BOX": "battle_box",
         "TGTTOS": "tgttos",
         "HOLE_IN_THE_WALL": "hitw",
-        "PARKOUR_WARRIOR": "pkw",
+        "PARKOUR_WARRIOR": "parkour_warrior",
         "DYNABALL": "dynaball",
         "ROCKET_SPLEEF": "rsr",
     };

@@ -154,7 +154,7 @@
                                 <!-- DOJO -->
                                 <div class="flex flex-col items-start bg-slate-100 rounded-md border-2 border-slate-200 p-3">
                                     <button on:click={() => switchCategory(expandedCategory === "dojo" ? null : "dojo")} class="flex flex-row w-full">
-                                        <img class="w-8 h-8 mr-2" src="https://cdn.islandstats.xyz/games/pkw/icon.png" alt="PKW Stats" />
+                                        <img class="w-8 h-8 mr-2" src="https://cdn.islandstats.xyz/games/parkour_warrior/icon.png" alt="PKW Stats" />
                                         <p class="text-xl font-semibold">Parkour Warrior Dojo</p>
                                     </button>
                                     {#if expandedCategory === "dojo"}
@@ -165,7 +165,7 @@
                                 <!-- SURVIVOR -->
                                 <div class="flex flex-col items-start bg-slate-100 rounded-md border-2 border-slate-200 p-3">
                                     <button on:click={() => switchCategory(expandedCategory === "survivor" ? null : "survivor")} class="flex flex-row w-full">
-                                        <img class="w-8 h-8 mr-2" src="https://cdn.islandstats.xyz/games/pkw/icon.png" alt="PKW Stats" />
+                                        <img class="w-8 h-8 mr-2" src="https://cdn.islandstats.xyz/games/parkour_warrior/solo/icon.png" alt="PKW Stats" />
                                         <p class="text-xl font-semibold">Parkour Warrior Survivor</p>
                                     </button>
                                     {#if expandedCategory === "survivor"}
