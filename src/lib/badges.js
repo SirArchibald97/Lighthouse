@@ -185,6 +185,19 @@ export const badges = {
             { name: "I", amount: 100, trophies: 10 }, { name: "II", amount: 350, trophies: 15 }, { name: "III", amount: 800, trophies: 25 }, { name: "IV", amount: 1750, trophies: 35 },
             { name: "V", amount: 3000, trophies: 50 }, { name: "VI", amount: 5000, trophies: 70 }, { name: "VII", amount: 8000, trophies: 100 },
         ]},
+    ],
+    rocket_spleef: [
+        { name: "Advanced Tactics", description: "Survive 60 seconds without deploying your elytra", icon: "", stat: "survive_60s_without_gliding", trophies: 0 },
+        { name: "Careful Glider", description: "Win a game without dropping below 50% elytra durability", icon: "", stat: "win_above_half_durability", trophies: 0 },
+        { name: "Flawless Rocketeer", description: "Win without using any updrafts", icon: "", stat: "win_without_updraft", trophies: 0 },
+        { name: "Rocket Brawler", description: "Punch 3 players within 10 seconds", icon: "", stat: "fast_punch", trophies: 30 },
+        { name: "Rocket Rush", description: "Eliminate 3 players with 20 seconds", icon: "", stat: "fast_triple_kill", trophies: 100 },
+        { name: "Spleef Sniper", description: "Land a direct hit with a rocket on a player at least 40 blocks away", icon: "", stat: "distant_direct", trophies: 70 },
+        { name: "Spleef Slapdown", description: "Eliminate a player by punching them into the void before they next land", icon: "", stat: "distant_direct", trophies: 35 },
+        { name: "Ultimate Rocketeer", description: "Eliminate 5 players in a single game", icon: "", stat: "eliminate_5", trophies: 100 },
+    ],
+    rocket_spleef_tiered: [
+
     ]
 }
 
