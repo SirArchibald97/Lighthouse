@@ -30,6 +30,7 @@ export function getStatusGame(game) {
         "PARKOUR_WARRIOR": "Parkour Warrior Dojo",
         "PARKOUR_WARRIOR_SURVIVOR": "Parkour Warrior Survivor",
         "DYNABALL": "Dynaball",
+        "ROCKET_SPLEEF": "Rocket Spleef Rush",
     };
     return games[game];
 }
@@ -42,6 +43,7 @@ export function getStatusIcon(game) {
         "HOLE_IN_THE_WALL": "hitw",
         "PARKOUR_WARRIOR": "pkw",
         "DYNABALL": "dynaball",
+        "ROCKET_SPLEEF": "rsr",
     };
     return games[game];
 }

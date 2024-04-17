@@ -1,7 +1,5 @@
 <script>
     import { getRankIcon, getStatusGame, getStatusIcon } from "$lib/utils.js";
-    import { calculateTotalTrophies } from "$lib/data.js";
-    import tooltip from "$lib/tooltip.js";
     import { DateTime } from "luxon";
 
     export let data;
@@ -58,42 +56,27 @@
         </div>
     {/if}
 
+    <!-- WALLET -->
+    <div class="flex flex-col mt-4">
+        <p class="text-md 2xl:text-xl font-semibold">Wallet</p>
+        {#each [
+            { stat: "coins", icon: "coin" },
+            { stat: "gems", icon: "gem" },
+            { stat: "silver", icon: "silver" },
+            { stat: "materialDust", icon: "material_dust" },
+            { stat: "royalReputation", icon: "royal_reputation" }
+        ] as currency}
+            <div class="flex flex-row sm:gap-1 my-1">
+                <img src={`https://cdn.islandstats.xyz/icons/${currency.icon}.png`} class="w-6 h-6" alt="Coins" />
+                <p class="text-md ml-1 sm:ml-0 2xl:text-md">{data.player.collections?.currency[currency.stat].toLocaleString() || "Unknown"}</p>
+            </div>
+        {/each}
+    </div>
+
     <div class="flex flex-col mt-4 text-md 2xl:text-md">
         <p>Total Faction XP: <span class="font-semibold">{data.player.statistics?.faction_total_xp.toLocaleString() || "Unknown"}</span></p>
         <p>Game XP: <span class="font-semibold">{data.player.statistics?.faction_game_xp.toLocaleString() || "Unknown"}</span></p>
         <p>Quest XP: <span class="font-semibold">{data.player.statistics?.faction_quest_xp.toLocaleString() || "Unknown"}</span></p>
-    </div>
-
-    <!-- WALLET -->
-    <div class="flex flex-col mt-4">
-        <p class="text-md 2xl:text-xl font-semibold">Wallet</p>
-        <div class="flex flex-row sm:gap-1 2xl:gap-2 my-1">
-            <img src="https://cdn.islandstats.xyz/icons/coin.png" class="w-6 h-6 2xl:w-8 2xl:h-8" alt="Coins" />
-            <p class="text-md ml-1 sm:ml-0 2xl:text-md">{data.player.collections?.currency.coins.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') || "Unknown"}</p>
-        </div>
-        <div class="flex flex-row sm:gap-1 2xl:gap-2 my-1">
-            <img src="https://cdn.islandstats.xyz/icons/gem.png" class="w-6 h-6 2xl:w-8 2xl:h-8" alt="Coins" />
-            <p class="text-md ml-1 sm:ml-0 2xl:text-md">{data.player.collections?.currency.gems.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') || "Unknown"}</p>
-        </div>
-        <div class="flex flex-row sm:gap-1 2xl:gap-2 my-1">
-            <img src="https://cdn.islandstats.xyz/icons/silver.png" class="w-6 h-6 2xl:w-8 2xl:h-8" alt="Coins" />
-            <p class="text-md ml-1 sm:ml-0 2xl:text-md">{data.player.collections?.currency.silver.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') || "Unknown"}</p>
-        </div>
-        <div class="flex flex-row sm:gap-1 2xl:gap-2 my-1">
-            <img src="https://cdn.islandstats.xyz/icons/material_dust.png" class="w-6 h-6 2xl:w-8 2xl:h-8" alt="Coins" />
-            <p class="text-md ml-1 sm:ml-0 2xl:text-md">{data.player.collections?.currency.materialDust.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') || "Unknown"}</p>
-        </div>
-        <div class="flex flex-row sm:gap-1 2xl:gap-2 my-1">
-            <img src="https://cdn.islandstats.xyz/icons/royal_reputation.png" class="w-6 h-6 2xl:w-8 2xl:h-8" alt="Coins" />
-            <p class="text-md ml-1 sm:ml-0 2xl:text-md">{data.player.collections?.currency.royalReputation.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') || "Unknown"}</p>
-        </div>
-    </div>
-
-    <!-- TROPHIES -->
-    <p class="text-md 2xl:text-xl font-semibold mt-4">Trophies</p>
-    <div class="flex flex-row sm:gap-1 2xl:gap-2 my-1">
-        <img src="https://cdn.islandstats.xyz/icons/trophy.png" class="w-6 h-6 2xl:w-8 2xl:h-8 self-center" alt="Total Trophies" />
-        <span use:tooltip title="Only includes trophies earned from game badges" class="text-md ml-1 sm:ml-0">{data.player.statistics ? calculateTotalTrophies(data.player.statistics).toLocaleString() : "Unknown"}*</span>
     </div>
 
     <!-- VIEWS -->

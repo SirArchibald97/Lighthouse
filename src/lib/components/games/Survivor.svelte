@@ -1,5 +1,5 @@
 <script>
-    import { badges, calculateTrophies, calculateMaxTrophies, calculateBadgeTier } from "$lib/data.js";
+    import { badges, calculateTrophies, calculateMaxTrophies, calculateBadgeTier } from "$lib/badges.js";
     import tooltip from "$lib/tooltip.js";
 
     export let stats;

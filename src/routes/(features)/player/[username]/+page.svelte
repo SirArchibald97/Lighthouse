@@ -1,7 +1,7 @@
 <script>
     import Star from "$lib/svgs/Star.svelte";
     import PlayerCard from "$lib/components/player/PlayerCard.svelte";
-    import Trophies from "$lib/components/player/Trophies.svelte";
+    import Levels from "$lib/components/player/Levels.svelte";
     import Games from "$lib/components/player/Games.svelte";
     import Party from "$lib/components/player/Party.svelte";
     import Friends from "$lib/components/player/Friends.svelte";
@@ -10,7 +10,7 @@
     export let data;
     export let form;
 
-    let infoTab = "games";
+    let infoTab = "levels";
     function switchInfoTab(newTab) { infoTab = newTab; }
 </script>
 
@@ -29,7 +29,7 @@
         </div>
     {:else}
         <!-- page container -->
-        <div class="flex flex-col sm:flex-row gap-4">
+        <div class="flex flex-col lg:flex-row gap-4">
             <div class="basis-80 flex flex-col gap-y-4 mb-8">
                 
                 <!-- player info card -->
@@ -47,8 +47,8 @@
             <!-- main container -->
             <div class="flex flex-col col-span-4 grow">
                 <!-- tabs -->
-                <div class="flex flex-row text-xl mb-4 gap-x-4 self-center sm:self-start">
-                    <button class={`bg-slate-50 hover:bg-slate-100 border-b-red-500 rounded-sm px-6 py-2 ${infoTab === "factions" ? "font-bold border-b-4" : ""}`} on:click={() => switchInfoTab("trophies")}>Trophies</button>
+                <div class="grid grid-cols-3 gap-y-2 md:flex md:flex-row text-xl mb-4 gap-x-4 self-center sm:self-start">
+                    <button class={`bg-slate-50 hover:bg-slate-100 border-b-red-500 rounded-sm px-6 py-2 ${infoTab === "levels" ? "font-bold border-b-4" : ""}`} on:click={() => switchInfoTab("levels")}>Levels</button>
                     <button class={`bg-slate-50 hover:bg-slate-100 border-b-red-500 rounded-sm px-6 py-2 ${infoTab === "games" ? "font-bold border-b-4" : ""}`} on:click={() => switchInfoTab("games")}>Games</button>
                     <button class={`bg-slate-50 hover:bg-slate-100 border-b-red-500 rounded-sm px-6 py-2 ${infoTab === "party" ? "font-bold border-b-4" : ""}`} on:click={() => switchInfoTab("party")}>Party</button>
                     <button class={`bg-slate-50 hover:bg-slate-100 border-b-red-500 rounded-sm px-6 py-2 ${infoTab === "friends" ? "font-bold border-b-4" : ""}`} on:click={() => switchInfoTab("friends")}>Friends</button>
@@ -68,8 +68,8 @@
                     </form>
                 </div>
 
-                {#if infoTab === "trophies"}
-                    <Trophies data={data} />
+                {#if infoTab === "levels"}
+                    <Levels data={data} />
 
                 {:else if infoTab === "games"}
                     <Games data={data} />
@@ -85,4 +85,4 @@
     {/if}
 </main>
 
-<Footer data={data} />
+<Footer absolute={true} />
