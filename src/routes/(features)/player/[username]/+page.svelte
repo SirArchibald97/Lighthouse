@@ -176,7 +176,7 @@
                                 <!-- ROCKET SPLEEF -->
                                 <div class="flex flex-col items-start bg-slate-100 rounded-md border-2 border-slate-200 p-3">
                                     <button on:click={() => switchCategory(expandedCategory === "rsr" ? null : "rsr")} class="flex flex-row w-full">
-                                        <img class="w-8 h-8 mr-2" src="https://cdn.islandstats.xyz/games/rsr/icon.png" alt="PKW Stats" />
+                                        <img class="w-8 h-8 mr-2" src="https://cdn.islandstats.xyz/games/rocket_spleef/icon.png" alt="PKW Stats" />
                                         <p class="text-xl font-semibold">Rocket Spleef Rush</p>
                                     </button>
                                     {#if expandedCategory === "rsr"}
@@ -200,4 +200,4 @@
     {/if}
 </main>
 
-<Footer absolute={expandedCategory ? false : true} />
+<Footer absolute={data.player && expandedCategory ? false : true} />

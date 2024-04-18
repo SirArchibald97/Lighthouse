@@ -1,5 +1,5 @@
 <script>
-    import { calculateProgress, getNextLevel, getCurrentLevel } from "$lib/levels.js";
+    import { calculateProgress, getNextLevel, getCurrentLevel, getIcon, getColour } from "$lib/levels.js";
     import tooltip from "$lib/tooltip.js";
 
     export let data;
@@ -15,14 +15,14 @@
             <span class="text-md font-normal self-center">({(data.player.crownLevel.skill_trophies.obtained + data.player.crownLevel.style_trophies.obtained).toLocaleString()}/{getNextLevel(data.player.crownLevel.level, data.player.crownLevel.skill_trophies.obtained + data.player.crownLevel.style_trophies.obtained).toLocaleString()})</span>
         </p>
         <div class="flex flex-row gap-x-3 mb-4 text-lg">
-            <!--<img src={``} alt={``} class="w-8 h-8 self-center" />-->
+            <img src={`https://cdn.islandstats.xyz/icons/crowns/${getIcon(data.player.crownLevel.level)}.png`} alt={`Crown Level ${data.player.crownLevel.level} Icon`} class="w-8 h-8 self-center" />
             <span class="self-center">{data.player.crownLevel.level}</span>
 
             <!-- progress bar -->
-            <div class="h-6 w-3/5 self-center rounded-md bg-slate-200 transition-all duration-500" use:tooltip title={`${calculateProgress(data.player.crownLevel.level) * 100}% (${Math.floor((getNextLevel(data.player.crownLevel.level) - getCurrentLevel(data.player.crownLevel.level)) * calculateProgress(data.player.crownLevel.level))}/${getNextLevel(data.player.crownLevel.level) - getCurrentLevel(data.player.crownLevel.level)})`}>
+            <div class={`h-6 w-3/5 self-center rounded-md bg-slate-200 transition-all duration-500`} use:tooltip title={`${calculateProgress(data.player.crownLevel.level) * 100}% (${Math.floor((getNextLevel(data.player.crownLevel.level) - getCurrentLevel(data.player.crownLevel.level)) * calculateProgress(data.player.crownLevel.level))}/${getNextLevel(data.player.crownLevel.level) - getCurrentLevel(data.player.crownLevel.level)})`}>
                 <div
                     class="flex flex-col h-full left-0 right-0 rounded-md text-center transition-all duration-500 group"
-                    style={`width: calc(100% * ${calculateProgress(data.player.crownLevel.level)}); background-color: red`}
+                    style={`width: calc(100% * ${calculateProgress(data.player.crownLevel.level)}); ${getColour(data.player.crownLevel.level)}`}
                 >
                 </div>
             </div>
@@ -34,43 +34,32 @@
 
 
         <!-- TROPHIES -->
-        <div class="flex flex-row sm:gap-1 my-1">
-            <!--<img src="https://cdn.islandstats.xyz/icons/trophy.png" class="w-6 h-6 self-center" alt="Total Trophies" />-->
-            <span class="text-lg ml-1 sm:ml-0">Total Trophies: 
-                <span class="font-semibold">
-                    {(data.player.crownLevel.skill_trophies.obtained + data.player.crownLevel.style_trophies.obtained).toLocaleString()}
-                </span>
-                <span class="text-sm">
-                    /{(data.player.crownLevel.style_trophies.obtainable + data.player.crownLevel.skill_trophies.obtainable).toLocaleString()}
-                </span>
+        <div class="flex flex-row sm:gap-1 my-1 text-lg">
+            <span>Total Trophies: </span>
+            <img src="https://cdn.islandstats.xyz/icons/trophies/yellow.png" class="w-5 h-5 self-center" alt="Total Trophies" />
+            <span class="font-semibold">
+                {(data.player.crownLevel.style_trophies.obtained + data.player.crownLevel.skill_trophies.obtained).toLocaleString()}<span class="font-normal text-sm">/{(data.player.crownLevel.style_trophies.obtainable + data.player.crownLevel.skill_trophies.obtainable).toLocaleString()}</span>
             </span>
         </div>
-        <div class="flex flex-row sm:gap-1 my-1">
-            <!--<img src="https://cdn.islandstats.xyz/icons/trophy.png" class="w-6 h-6 self-center" alt="Skill Trophies" />-->
-            <span class="text-lg ml-1 sm:ml-0">Skill Trophies: 
-                <span class="font-semibold" use:tooltip title={`${data.player.crownLevel.skill_trophies.bonus} Bonus Trophies`}>
-                    {data.player.crownLevel.skill_trophies.obtained.toLocaleString()}
-                </span>
-                <span class="text-sm">
-                    /{data.player.crownLevel.skill_trophies.obtainable.toLocaleString()}
-                </span>
+        <div class="flex flex-row sm:gap-1 my-1 text-lg">
+            <span>Style Trophies: </span>
+            <img src="https://cdn.islandstats.xyz/icons/trophies/purple.png" class="w-5 h-5 self-center" alt="Style Trophies" />
+            <span class="font-semibold" use:tooltip title={`${data.player.crownLevel.style_trophies.bonus} Bonus Trophies`}>
+                {data.player.crownLevel.style_trophies.obtained.toLocaleString()}<span class="font-normal text-sm">/{data.player.crownLevel.style_trophies.obtainable.toLocaleString()}</span>
             </span>
         </div>
-        <div class="flex flex-row sm:gap-1 my-1">
-            <!--<img src="https://cdn.islandstats.xyz/icons/trophy.png" class="w-6 h-6 self-center" alt="Style Trophies" />-->
-            <span class="text-lg ml-1 sm:ml-0">Style Trophies: 
-                <span class="font-semibold" use:tooltip title={`${data.player.crownLevel.style_trophies.bonus} Bonus Trophies`}>
-                    {data.player.crownLevel.style_trophies.obtained.toLocaleString()}
-                </span>
-                <span class="text-sm">
-                    /{data.player.crownLevel.style_trophies.obtainable.toLocaleString()}
-                </span>
+        <div class="flex flex-row sm:gap-1 my-1 text-lg">
+            <span>Skill Trophies: </span>
+            <img src="https://cdn.islandstats.xyz/icons/trophies/red.png" class="w-5 h-5 self-center" alt="Skill Trophies" />
+            <span class="font-semibold" use:tooltip title={`${data.player.crownLevel.skill_trophies.bonus} Bonus Trophies`}>
+                {data.player.crownLevel.skill_trophies.obtained.toLocaleString()}<span class="font-normal text-sm">/{data.player.crownLevel.skill_trophies.obtainable.toLocaleString()}</span>
             </span>
         </div>
-        <div class="flex flex-row sm:gap-1 my-1">
-            <!--<img src="https://cdn.islandstats.xyz/icons/trophy.png" class="w-6 h-6 self-center" alt="Style Trophies" />-->
-            <span class="text-lg ml-1 sm:ml-0">Bonus Trophies: 
-                <span class="font-semibold">{(data.player.crownLevel.style_trophies.bonus + data.player.crownLevel.skill_trophies.bonus).toLocaleString()}</span>
+        <div class="flex flex-row sm:gap-1 my-1 text-lg">
+            <span>Bonus Trophies: </span>
+            <img src="https://cdn.islandstats.xyz/icons/trophies/silver.png" class="w-5 h-5 self-center" alt="Style Trophies" />
+            <span class="font-semibold">
+                {(data.player.crownLevel.style_trophies.bonus + data.player.crownLevel.skill_trophies.bonus).toLocaleString()}
             </span>
         </div>
 

@@ -1,12 +1,13 @@
 export const levels = [
-    { range: [0, 10], level: 400, icon: "", colour: "#ef4444" },
-    { range: [11, 20], level: 600, icon: "", colour: "#22c55e" },
-    { range: [21, 30], level: 800, icon: "", colour: "#3b82f6" },
-    { range: [31, 40], level: 1000, icon: "", colour: "#a855f7" },
-    { range: [41, 50], level: 1200, icon: "", colour: "#f59e0b" },
-    { range: [51, 60], level: 1400, icon: "", colour: "#f59e0b" },
-    { range: [61, 80], level: 1600, icon: "", colour: "#f59e0b" },
-    { range: [81, 100], level: 1800, icon: "", colour: "#f59e0b" },
+    { range: [0, 9], level: 400, icon: "1", colour: "background-color: #9ca3af" },
+    { range: [10, 19], level: 600, icon: "2", colour: "background-color: #22c55e" },
+    { range: [20, 29], level: 800, icon: "3", colour: "background-color: #3b82f6" },
+    { range: [30, 39], level: 1000, icon: "4", colour: "background-color: #a855f7" },
+    { range: [40, 49], level: 1200, icon: "5", colour: "background-color: #f59e0b" },
+    { range: [50, 59], level: 1500, icon: "6", colour: "background-color: #ef4444" },
+    { range: [60, 79], level: 2000, icon: "7", colour: "background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(51,205,132,1) 0%, rgba(117,244,242,1) 50%, rgba(65,223,255,1) 100%);" },
+    { range: [80, 99], level: 2500, icon: "8", colour: "background: linear-gradient(90deg, rgba(226,113,203,1) 0%, rgba(244,147,223,1) 30%, rgba(187,252,251,1) 70%, rgba(137,235,255,1) 100%);" },
+    { range: [100, 199], level: 3000, icon: "9", colour: "background: linear-gradient(90deg, rgba(226,113,203,1) 0%, rgba(255,157,55,1) 0%, rgba(254,221,165,1) 50%, rgba(255,127,231,1) 100%);" },
 ]
 
 export function getCurrentLevel(level) {
@@ -39,4 +40,14 @@ export function getNextLevel(level) {
 
 export function calculateProgress(level) {
     return Math.floor((getCurrentLevel(level) / getNextLevel(level)) * 100) / 100;
+}
+
+export function getIcon(level) {
+    const current = levels.find((tier) => level >= tier.range[0] && level <= tier.range[1]);
+    return current.icon;
+}
+
+export function getColour(level) {
+    const current = levels.find((tier) => level >= tier.range[0] && level <= tier.range[1]);
+    return current.colour;
 }
