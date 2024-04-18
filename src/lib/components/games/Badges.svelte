@@ -15,8 +15,7 @@
         <div class="flex flex-row gap-x-1 mb-2 self-center">
             <img src="https://cdn.islandstats.xyz/icons/trophies/red.png" alt="Trophies" class="w-5 h-5 self-center" />
             <span class="text-slate-600 self-center text-lg font-semibold">
-                {calculateTrophies(stats, (badges[game] || []).concat(badges[`${game}_tiered`] || []))?.toLocaleString() || 0}
-                <span class="font-normal text-slate-500">
+                {calculateTrophies(stats, (badges[game] || []).concat(badges[`${game}_tiered`] || []))?.toLocaleString() || 0}<span class="font-normal text-slate-500">
                     /{calculateMaxTrophies((badges[game] || []).concat(badges[`${game}_tiered`] || []))?.toLocaleString() || 0} ({Math.round((calculateTrophies(stats, (badges[game] || []).concat(badges[`${game}_tiered`] || [])) / calculateMaxTrophies((badges[game] || []).concat(badges[`${game}_tiered`] || []))) * 100)}%)
                 </span>
             </span>
