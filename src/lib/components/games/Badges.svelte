@@ -27,7 +27,7 @@
             <div class="flex flex-col sm:flex-row gap-x-2">
                 <img use:tooltip title={badge.description} class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/${icons[game] || game}/${badge.icon}.png`} alt={badge.name} />
                 <div class="flex flex-col items-start mt-2 sm:mt-0">
-                    <p class={`flex flex-row font-semibold ${stats.badges[badge.stat] > 0 ? "text-green-500" : "text-red-500"}`}>
+                    <p class={`flex flex-row font-semibold ${(badge.stat.startsWith("!") ? stats[badge.stat.slice(1, badge.stat.length)] : stats.badges[badge.stat]) > 0 ? "text-green-500" : "text-red-500"}`}>
                         {badge.name}
                         <span class="text-md text-slate-800 px-2 self-center">•</span>
                         <span class="text-slate-800 flex flex-row gap-x-1 text-sm">
