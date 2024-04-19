@@ -19,10 +19,14 @@
             <span class="self-center">{data.player.crownLevel.level}</span>
 
             <!-- progress bar -->
-            <div class={`h-6 w-3/5 self-center rounded-md bg-slate-200 transition-all duration-500`} use:tooltip title={`${calculateProgress(data.player.crownLevel.level) * 100}% (${Math.floor((getNextLevel(data.player.crownLevel.level) - getCurrentLevel(data.player.crownLevel.level)) * calculateProgress(data.player.crownLevel.level))}/${getNextLevel(data.player.crownLevel.level) - getCurrentLevel(data.player.crownLevel.level)})`}>
+            <div class={`h-6 w-3/5 self-center rounded-md bg-slate-200 transition-all duration-500`} 
+                use:tooltip title={`
+                    ${Math.round(calculateProgress(data.player.crownLevel.level, data.player.crownLevel.skill_trophies.obtained + data.player.crownLevel.style_trophies.obtained) * 100)}%
+                    (${(data.player.crownLevel.skill_trophies.obtained + data.player.crownLevel.style_trophies.obtained - getCurrentLevel(data.player.crownLevel.level)).toLocaleString()}/${getNextLevel(data.player.crownLevel.level) - getCurrentLevel(data.player.crownLevel.level)})
+                `}>
                 <div
                     class="flex flex-col h-full left-0 right-0 rounded-md text-center transition-all duration-500 group"
-                    style={`width: calc(100% * ${calculateProgress(data.player.crownLevel.level)}); ${getColour(data.player.crownLevel.level)}`}
+                    style={`width: calc(100% * ${calculateProgress(data.player.crownLevel.level, data.player.crownLevel.skill_trophies.obtained + data.player.crownLevel.style_trophies.obtained)}); ${getColour(data.player.crownLevel.level)}`}
                 >
                 </div>
             </div>

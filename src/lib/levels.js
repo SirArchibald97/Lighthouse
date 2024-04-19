@@ -16,7 +16,7 @@ export function getCurrentLevel(level) {
         if (level > tier.range[1]) {
             totalForCurrent += (tier.level * 10);
         } else {
-            for (let i = tier.range[0]; i <= level; i++) {
+            for (let i = tier.range[0]; i < level; i++) {
                 totalForCurrent += tier.level;
             }
         }
@@ -30,7 +30,7 @@ export function getNextLevel(level) {
         if (level > tier.range[1]) {
             totalForNext += (tier.level * 10);
         } else {
-            for (let i = tier.range[0]; i <= level + 1; i++) {
+            for (let i = tier.range[0]; i <= level; i++) {
                 totalForNext += tier.level;
             }
         }
@@ -38,8 +38,8 @@ export function getNextLevel(level) {
     return totalForNext;
 }
 
-export function calculateProgress(level) {
-    return Math.floor((getCurrentLevel(level) / getNextLevel(level)) * 100) / 100;
+export function calculateProgress(level, trophies) {
+    return ((trophies - getCurrentLevel(level)) / (getNextLevel(level) - getCurrentLevel(level)));
 }
 
 export function getIcon(level) {
