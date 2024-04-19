@@ -43,7 +43,7 @@ export function getStatusIcon(game) {
         "HOLE_IN_THE_WALL": "hitw",
         "PARKOUR_WARRIOR": "parkour_warrior",
         "DYNABALL": "dynaball",
-        "ROCKET_SPLEEF": "rsr",
+        "ROCKET_SPLEEF": "rocket_spleef",
     };
     return games[game];
 }

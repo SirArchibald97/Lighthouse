@@ -94,7 +94,7 @@
                                 <!--  BATTLE BOX -->
                                 <div class="flex flex-col items-start bg-slate-100 rounded-md border-2 border-slate-200 p-3">
                                     <button on:click={() => switchCategory(expandedCategory === "bb" ? null : "bb")} class="flex flex-row w-full">
-                                        <img class="w-8 h-8 mr-2" src="https://cdn.islandstats.xyz/games/battle_box/icon.png" alt="Battle Box Stats" />
+                                        <img class="w-8 h-8 mr-2" src="https://cdn.islandstats.xyz/games/battle_box/icon.png" alt="Battle Box Icon" />
                                         <p class="text-xl font-semibold">Battle Box</p>
                                     </button>
                                     {#if expandedCategory === "bb"}
@@ -105,7 +105,7 @@
                                 <!--  SKY BATTLE -->
                                 <div class="flex flex-col items-start bg-slate-100 rounded-md border-2 border-slate-200 p-3">
                                     <button on:click={() => switchCategory(expandedCategory === "sb" ? null : "sb")} class="flex flex-row w-full">
-                                        <img class="w-8 h-8 mr-2" src="https://cdn.islandstats.xyz/games/sky_battle/icon.png" alt="Battle Box Stats" />
+                                        <img class="w-8 h-8 mr-2" src="https://cdn.islandstats.xyz/games/sky_battle/icon.png" alt="Sky Battle Icon" />
                                         <p class="text-xl font-semibold">Sky Battle</p>
                                     </button>
                                     {#if expandedCategory === "sb"}
@@ -121,7 +121,7 @@
                                 <!-- TGTTOS -->
                                 <div class="flex flex-col items-start bg-slate-100 rounded-md border-2 border-slate-200 p-3">
                                     <button on:click={() => switchCategory(expandedCategory === "tgttos" ? null : "tgttos")} class="flex flex-row w-full">
-                                        <img class="w-8 h-8 mr-2" src="https://cdn.islandstats.xyz/games/tgttos/icon.png" alt="Battle Box Stats" />
+                                        <img class="w-8 h-8 mr-2" src="https://cdn.islandstats.xyz/games/tgttos/icon.png" alt="TGTTOS Icon" />
                                         <p class="text-xl font-semibold">To Get To The Other Side</p>
                                     </button>
                                     {#if expandedCategory === "tgttos"}
@@ -132,7 +132,7 @@
                                 <!--  HITW -->
                                 <div class="flex flex-col items-start bg-slate-100 rounded-md border-2 border-slate-200 p-3">
                                     <button on:click={() => switchCategory(expandedCategory === "hitw" ? null : "hitw")} class="flex flex-row w-full">
-                                        <img class="w-8 h-8 mr-2" src="https://cdn.islandstats.xyz/games/hitw/icon.png" alt="HITW Stats" />
+                                        <img class="w-8 h-8 mr-2" src="https://cdn.islandstats.xyz/games/hitw/icon.png" alt="HITW Icon" />
                                         <p class="text-xl font-semibold">Hole in the Wall</p>
                                     </button>
                                     {#if expandedCategory === "hitw"}
@@ -143,7 +143,7 @@
                                 <!-- DYNABALL -->
                                 <div class="flex flex-col items-start bg-slate-100 rounded-md border-2 border-slate-200 p-3">
                                     <button on:click={() => switchCategory(expandedCategory === "db" ? null : "db")} class="flex flex-row w-full">
-                                        <img class="w-8 h-8 mr-2" src="https://cdn.islandstats.xyz/games/dynaball/icon.png" alt="HITW Stats" />
+                                        <img class="w-8 h-8 mr-2" src="https://cdn.islandstats.xyz/games/dynaball/icon.png" alt="HITW Icon" />
                                         <p class="text-xl font-semibold">Dynaball</p>
                                     </button>
                                     {#if expandedCategory === "db"}
@@ -154,7 +154,7 @@
                                 <!-- DOJO -->
                                 <div class="flex flex-col items-start bg-slate-100 rounded-md border-2 border-slate-200 p-3">
                                     <button on:click={() => switchCategory(expandedCategory === "dojo" ? null : "dojo")} class="flex flex-row w-full">
-                                        <img class="w-8 h-8 mr-2" src="https://cdn.islandstats.xyz/games/parkour_warrior/icon.png" alt="PKW Stats" />
+                                        <img class="w-8 h-8 mr-2" src="https://cdn.islandstats.xyz/games/parkour_warrior/icon.png" alt="PKW Icon" />
                                         <p class="text-xl font-semibold">Parkour Warrior Dojo</p>
                                     </button>
                                     {#if expandedCategory === "dojo"}
@@ -165,7 +165,7 @@
                                 <!-- SURVIVOR -->
                                 <div class="flex flex-col items-start bg-slate-100 rounded-md border-2 border-slate-200 p-3">
                                     <button on:click={() => switchCategory(expandedCategory === "survivor" ? null : "survivor")} class="flex flex-row w-full">
-                                        <img class="w-8 h-8 mr-2" src="https://cdn.islandstats.xyz/games/parkour_warrior/solo/icon.png" alt="PKW Stats" />
+                                        <img class="w-8 h-8 mr-2" src="https://cdn.islandstats.xyz/games/parkour_warrior/solo/icon.png" alt="PKW Icon" />
                                         <p class="text-xl font-semibold">Parkour Warrior Survivor</p>
                                     </button>
                                     {#if expandedCategory === "survivor"}
@@ -176,7 +176,7 @@
                                 <!-- ROCKET SPLEEF -->
                                 <div class="flex flex-col items-start bg-slate-100 rounded-md border-2 border-slate-200 p-3">
                                     <button on:click={() => switchCategory(expandedCategory === "rsr" ? null : "rsr")} class="flex flex-row w-full">
-                                        <img class="w-8 h-8 mr-2" src="https://cdn.islandstats.xyz/games/rocket_spleef/icon.png" alt="PKW Stats" />
+                                        <img class="w-8 h-8 mr-2" src="https://cdn.islandstats.xyz/games/rocket_spleef/icon.png" alt="Rocket Spleef Icon" />
                                         <p class="text-xl font-semibold">Rocket Spleef Rush</p>
                                     </button>
                                     {#if expandedCategory === "rsr"}
