@@ -24,8 +24,8 @@
         <div>
             <p>Games Played: <span class="font-semibold">{stats.games_played.toLocaleString()}</span></p>
             <p>Game 1st Places: <span class="font-semibold">{stats.first_place.toLocaleString()}</span> <span class="text-slate-500">({Math.round((stats.first_place / stats.games_played) * 100)}%)</span></p>
-            <p>Game Top 3: <span class="font-semibold">{(stats.top_three - stats.first_place).toLocaleString()}</span> <span class="text-slate-500">({Math.round((stats.top_three / stats.games_played) * 100)}%)</span></p>
-            <p>Game Top 5: <span class="font-semibold">{(stats.top_five - stats.top_three).toLocaleString()}</span> <span class="text-slate-500">({Math.round((stats.top_five / stats.games_played) * 100)}%)</span></p>
+            <p>Game Top 3: <span class="font-semibold">{(stats.top_three - stats.first_place).toLocaleString()}</span> <span class="text-slate-500">({Math.round(((stats.top_three - stats.first_place) / stats.games_played) * 100)}%)</span></p>
+            <p>Game Top 5: <span class="font-semibold">{(stats.top_five - stats.top_three).toLocaleString()}</span> <span class="text-slate-500">({Math.round(((stats.top_five - stats.top_three) / stats.games_played) * 100)}%)</span></p>
         </div>
         <div>
             <p>Round 1st Places: <span class="font-semibold">{stats.round_first_place.toLocaleString()}</span> <span class="text-slate-500">({Math.round((stats.round_first_place / (stats.games_played * 3)) * 100)}%)</span></p>

@@ -50,14 +50,14 @@
 
         <form method="post" action="?/dojoleaderboards" class="flex flex-col gap-y-3 bg-white rounded-md border-2 border-slate-300 hover:bg-slate-100 hover:scale-105 duration-100">
             <button type="submit" class="flex flex-col gap-y-3 p-4">
-                <img src="https://cdn.islandstats.xyz/games/pkw/solo/icon.png" class="w-16 h-16 self-center" alt="Battle Box Icon" />
+                <img src="https://cdn.islandstats.xyz/games/parkour_warrior/solo/icon.png" class="w-16 h-16 self-center" alt="Battle Box Icon" />
                 <p class="text-2xl font-semibold self-center ml-2">Parkour Warrior Dojo</p>
             </button>
         </form>
 
         <form method="post" action="?/survivorleaderboards" class="flex flex-col gap-y-3 bg-white rounded-md border-2 border-slate-300 hover:bg-slate-100 hover:scale-105 duration-100">
             <button type="submit" class="flex flex-col gap-y-3 p-4">
-                <img src="https://cdn.islandstats.xyz/games/pkw/icon.png" class="w-16 h-16 self-center" alt="Battle Box Icon" />
+                <img src="https://cdn.islandstats.xyz/games/parkour_warrior/icon.png" class="w-16 h-16 self-center" alt="Battle Box Icon" />
                 <p class="text-2xl font-semibold self-center ml-2">Parkour Warrior Survivor</p>
             </button>
         </form>

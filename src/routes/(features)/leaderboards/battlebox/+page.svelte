@@ -12,7 +12,9 @@
         { name: "Kills", value: "statistics.battle_box.kills" },
         { name: "Deaths", value: "statistics.battle_box.deaths" },
         { name: "KDR", value: "statistics.battle_box.kdr" },
-        { name: "Rounds Won", value: "statistics.battle_box.rounds_won" }
+        { name: "Rounds Won", value: "statistics.battle_box.rounds_won" },
+        { name: "Explosive Kills", value: "statistics.battle_box.explosive_kills" },
+        { name: "Ranged Kills", value: "statistics.battle_box.ranged_kills" },
     ];
 </script>
 

@@ -346,7 +346,7 @@ export const badges = {
         { name: "Careful Glider", description: "Win a game without dropping below 50% elytra durability", icon: "careful_glider", stat: "win_above_half_durability", trophies: 70 },
         { name: "Flawless Rocketeer", description: "Win without using any updrafts", icon: "flawless_rocketeer", stat: "win_without_updraft", trophies: 50 },
         { name: "Rocket Brawler", description: "Punch 3 players within 10 seconds", icon: "rocket_brawler", stat: "fast_punch", trophies: 30 },
-        { name: "Rocket Rush", description: "Eliminate 3 players with 20 seconds", icon: "rocket_rush", stat: "fast_triple_kill", trophies: 100 },
+        { name: "Rocket Rush", description: "Eliminate 3 players within 20 seconds", icon: "rocket_rush", stat: "fast_triple_kill", trophies: 100 },
         { name: "Spleef Sniper", description: "Land a direct hit with a rocket on a player at least 40 blocks away", icon: "rocket_spleef_sniper", stat: "distant_direct", trophies: 70 },
         { name: "Spleef Slapdown", description: "Eliminate a player by punching them into the void before they next land", icon: "spleef_slapdown", stat: "!melee_kills", trophies: 35 },
         { name: "Ultimate Rocketeer", description: "Eliminate 5 players in a single game", icon: "ultimate_rocketeer", stat: "eliminate_5", trophies: 100 },

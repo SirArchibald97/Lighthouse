@@ -15,6 +15,8 @@
         { name: "Kills", value: "statistics.sky_battle.quads.kills" },
         { name: "Deaths", value: "statistics.sky_battle.quads.deaths" },
         { name: "KDR", value: "statistics.sky_battle.quads.kdr" },
+        { name: "Explosive Kills", value: "statistics.sky_battle.quads.explosive_kills" },
+        { name: "Ranged Kills", value: "statistics.sky_battle.quads.ranged_kills" },
         { name: "Chests Looted", value: "statistics.sky_battle.quads.chests_looted" },
         { name: "Golden Chests Looted", value: "statistics.sky_battle.quads.golden_chests_looted" },
     ];
