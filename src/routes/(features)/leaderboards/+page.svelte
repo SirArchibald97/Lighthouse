@@ -13,6 +13,13 @@
     <p class="text-center text-4xl font-semibold my-6 mx-4 sm:mx-44">Leaderboards</p>
     
     <div class="grid grid-cols-1 md:grid-cols-3 mx-4 gap-4 md:mx-32">
+        <form method="post" action="?/trophyleaderboards" class="flex flex-col gap-y-3 bg-white rounded-md border-2 border-slate-300 hover:bg-slate-100 hover:scale-105 duration-100">
+            <button type="submit" class="flex flex-col gap-y-3 p-4">
+                <img src="https://cdn.islandstats.xyz/icons/trophies/yellow.png" class="w-16 h-16 self-center" alt="Trophy Icon" />
+                <p class="text-2xl font-semibold self-center ml-2">Trophies</p>
+            </button>
+        </form>
+
         <form method="post" action="?/bbleaderboards" class="flex flex-col gap-y-3 bg-white rounded-md border-2 border-slate-300 hover:bg-slate-100 hover:scale-105 duration-100">
             <button type="submit" class="flex flex-col gap-y-3 p-4">
                 <img src="https://cdn.islandstats.xyz/games/battle_box/icon.png" class="w-16 h-16 self-center" alt="Battle Box Icon" />

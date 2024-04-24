@@ -29,9 +29,9 @@
         </div>
         <div>
             <p>Team 1st Places: <span class="font-semibold">{stats.team_first_place.toLocaleString()}</span> <span class="text-slate-500">({Math.round((stats.team_first_place / stats.games_played) * 100)}%)</span></p>
-            <p>Team 2nd Places: <span class="font-semibold">{(stats.team_second_place - stats.team_first_place).toLocaleString()}</span> <span class="text-slate-500">({Math.round(((stats.team_second_place - stats.team_first_place) / stats.games_played) * 100)}%)</span></p>
-            <p>Team 3rd Places: <span class="font-semibold">{(stats.team_third_place - stats.team_second_place).toLocaleString()}</span> <span class="text-slate-500">({Math.round(((stats.team_third_place - stats.team_second_place) / stats.games_played) * 100)}%)</span></p>
-            <p>Team 4th Places: <span class="font-semibold">{(stats.team_fourth_place - stats.team_third_place).toLocaleString()}</span> <span class="text-slate-500">({Math.round(((stats.team_fourth_place - stats.team_third_place) / stats.games_played) * 100)}%)</span></p>
+            <p>Team 2nd Places: <span class="font-semibold">{(stats.team_second_place).toLocaleString()}</span> <span class="text-slate-500">({Math.round(((stats.team_second_place) / stats.games_played) * 100)}%)</span></p>
+            <p>Team 3rd Places: <span class="font-semibold">{(stats.team_third_place).toLocaleString()}</span> <span class="text-slate-500">({Math.round(((stats.team_third_place) / stats.games_played) * 100)}%)</span></p>
+            <p>Team 4th Places: <span class="font-semibold">{(stats.team_fourth_place).toLocaleString()}</span> <span class="text-slate-500">({Math.round(((stats.team_fourth_place) / stats.games_played) * 100)}%)</span></p>
         </div>
         <div>
             <p>Chests Looted: <span class="font-semibold">{stats.chests_looted.toLocaleString()}</span></p>

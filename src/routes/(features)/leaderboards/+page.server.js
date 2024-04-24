@@ -14,6 +14,7 @@ export const actions = {
         throw redirect(301, "/");
     },
 
+    trophyleaderboards: async () => { throw redirect(301, "/leaderboards/trophies"); },
     bbleaderboards: async () => { throw redirect(301, "/leaderboards/battlebox"); },
     sbleaderboards: async () => { throw redirect(301, "/leaderboards/skybattle"); },
     tgttosleaderboards: async () => { throw redirect(301, "/leaderboards/tgttos"); },
