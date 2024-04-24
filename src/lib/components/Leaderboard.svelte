@@ -10,7 +10,9 @@
     export let stat;
     export let display;
     export let players;
-    console.log(players)
+    for (let player of players) {
+        if (!fetchStat(player.player, stat)) players.slice(players.indexOf(player), 1);
+    }
 
     export let badge;
     export let game;
@@ -39,7 +41,7 @@
         const path = key.split(".");
         let value = stats[path[0]];
         for (let i = 1; i < path.length; i++) {
-            value = value[path[i]];
+            value = value[path[i]] || null;
         }
         return value;
     }

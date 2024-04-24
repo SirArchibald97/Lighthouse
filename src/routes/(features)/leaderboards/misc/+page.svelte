@@ -11,6 +11,7 @@
         { name: "Faction XP", value: "statistics.faction_total_xp" },
         { name: "Game XP", value: "statistics.faction_game_xp" },
         { name: "Quest XP", value: "statistics.faction_quest_xp" },
+        { name: "Most Coins", value: "collections.currency.peakCoins" },
     ];
 </script>
 
