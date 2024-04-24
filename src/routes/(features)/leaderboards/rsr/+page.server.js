@@ -2,7 +2,7 @@ import { DEV, SAD_API_KEY } from "$env/static/private";
 import { redirect } from "@sveltejs/kit";
 
 export async function load() {
-    const res = await fetch(`${DEV === "true" ? "http://localhost:3000" : "https://api.sirarchibald.dev"}/islandstats/leaderboard/trophies`, {
+    const res = await fetch(`${DEV === "true" ? "http://localhost:3000" : "https://api.sirarchibald.dev"}/islandstats/leaderboard/rocket_spleef`, {
         method: "get",
         headers: { "Content-Type": "application/json", "Accept": "application/json", "auth": SAD_API_KEY }
     });

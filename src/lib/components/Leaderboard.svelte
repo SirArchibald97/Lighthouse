@@ -8,7 +8,9 @@
 
     export let name;
     export let stat;
+    export let display;
     export let players;
+    console.log(players)
 
     export let badge;
     export let game;
@@ -65,7 +67,7 @@
                         <img class="w-8 h-8 self-center bg-slate-400 rounded-sm" src={`https://cdn.islandstats.xyz/ranks/${getRankIcon(player.player.ranks)}`} alt={`${player.username}'s Rank`} />
                         <a href={`/player/${player.player.username}`}>{player.player.username}</a>
                     </td>
-                    <td>{fetchStat(player.player, stat)?.toLocaleString() || "Unknown"}</td>
+                    <td>{fetchStat(player.player, display || stat)?.toLocaleString() || "Unknown"}</td>
                 </tr>
             {/each}
         </tbody>

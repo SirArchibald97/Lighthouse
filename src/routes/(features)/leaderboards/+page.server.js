@@ -22,5 +22,6 @@ export const actions = {
     dynaballleaderboards: async () => { throw redirect(301, "/leaderboards/dynaball"); },
     dojoleaderboards: async () => { throw redirect(301, "/leaderboards/dojo"); },
     survivorleaderboards: async () => { throw redirect(301, "/leaderboards/survivor"); },
+    rsrleaderboards: async () => { throw redirect(301, "/leaderboards/rsr"); },
     miscleaderboards: async () => { throw redirect(301, "/leaderboards/misc"); },
 }

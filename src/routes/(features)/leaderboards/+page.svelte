@@ -69,6 +69,13 @@
             </button>
         </form>
 
+        <form method="post" action="?/rsrleaderboards" class="flex flex-col gap-y-3 bg-white rounded-md border-2 border-slate-300 hover:bg-slate-100 hover:scale-105 duration-100">
+            <button type="submit" class="flex flex-col gap-y-3 p-4">
+                <img src="https://cdn.islandstats.xyz/games/rocket_spleef/icon.png" class="w-16 h-16 self-center" alt="Rocket Spleef Rush Icon" />
+                <p class="text-2xl font-semibold self-center ml-2">Rocket Spleef Rush</p>
+            </button>
+        </form>
+
         <form method="post" action="?/miscleaderboards" class="flex flex-col gap-y-3 bg-white rounded-md border-2 border-slate-300 hover:bg-slate-100 hover:scale-105 duration-100">
             <button type="submit" class="flex flex-col gap-y-3 p-4">
                 <img src="https://cdn.islandstats.xyz/icons/royal_reputation.png" class="w-16 h-16 self-center" alt="Battle Box Icon" />
