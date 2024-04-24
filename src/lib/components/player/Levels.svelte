@@ -53,7 +53,7 @@
                     {data.player.trophies.total.toLocaleString()}
                 </span>
                 <span class="font-normal text-sm">
-                    /{data.player.trophies.total.toLocaleString()}
+                    /{data.player.trophies.max.toLocaleString()}
                 </span>
             </div>
             <div class="flex flex-col bg-slate-100 border-2 border-slate-200 px-5 py-3 rounded-lg text-xl text-center" use:tooltip title="Skill Trophies">
