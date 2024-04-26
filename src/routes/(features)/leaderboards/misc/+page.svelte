@@ -7,11 +7,11 @@
     let stats = [
         { name: "Games Played", value: "statistics.games_played" },
         { name: "Course Contributions", value: "statistics.community_contribution" },
-        { name: "Royal Reputation", value: "collections.currency.royalReputation", icon: "icons/royal_reputation" },
+        { name: "Royal Reputation", value: "collections.currency.royalReputation", icon: "icons/currency/royal_reputation" },
         { name: "Faction XP", value: "statistics.faction_total_xp" },
         { name: "Game XP", value: "statistics.faction_game_xp" },
         { name: "Quest XP", value: "statistics.faction_quest_xp" },
-        { name: "Most Coins", value: "collections.currency.peakCoins", icon: "icons/coin" },
+        { name: "Most Coins", value: "collections.currency.peakCoins", icon: "icons/currency/coin" },
     ];
 </script>
 
