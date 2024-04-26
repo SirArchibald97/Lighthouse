@@ -1,5 +1,6 @@
 <script>
 	import Badges from '$lib/components/games/Badges.svelte';
+    import { calculatePercentage } from '$lib/utils.js';
 
     export let stats;
 </script>
@@ -9,7 +10,7 @@
         <div>
             <p>Games Won: <span class="font-semibold">{stats.first_place.toLocaleString()}</span></p>
             <p>Games Lost: <span class="font-semibold">{(stats.games_played - stats.first_place).toLocaleString()}</span></p>
-            <p>WLR: <span class="font-semibold">{(Math.floor((stats.first_place / (stats.games_played - stats.first_place)) * 100) / 100 || 0).toLocaleString()}</span></p>
+            <p>WLR: <span class="font-semibold">{(Math.floor((stats.first_place / (stats.games_played - stats.first_place)) * 100) / 100 || 0).toLocaleString()}</span> <span class="text-slate-500">({calculatePercentage(stats.first_place, stats.games_played)}%)</span></p>
         </div>
         <div>
             <p>Kills: <span class="font-semibold">{stats.kills.toLocaleString()}</span></p>
@@ -23,7 +24,7 @@
         </div>
         <div>
             <p>Games Played: <span class="font-semibold">{stats.games_played.toLocaleString()}</span></p>
-            <p>Game 1st Places: <span class="font-semibold">{stats.first_place.toLocaleString()}</span> <span class="text-slate-500">({Math.round((stats.first_place / stats.games_played) * 100)}%)</span></p>
+            <p>Game 1st Places: <span class="font-semibold">{stats.first_place.toLocaleString()}</span> <span class="text-slate-500">({calculatePercentage(stats.first_place, stats.games_played)}%)</span></p>
             <p>Game Top 3: <span class="font-semibold">{(stats.top_three - stats.first_place).toLocaleString()}</span> <span class="text-slate-500">({Math.round(((stats.top_three - stats.first_place) / stats.games_played) * 100)}%)</span></p>
             <p>Game Top 5: <span class="font-semibold">{(stats.top_five - stats.top_three).toLocaleString()}</span> <span class="text-slate-500">({Math.round(((stats.top_five - stats.top_three) / stats.games_played) * 100)}%)</span></p>
         </div>

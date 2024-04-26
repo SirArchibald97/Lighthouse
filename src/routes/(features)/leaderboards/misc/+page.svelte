@@ -7,11 +7,11 @@
     let stats = [
         { name: "Games Played", value: "statistics.games_played" },
         { name: "Course Contributions", value: "statistics.community_contribution" },
-        { name: "Royal Reputation", value: "collections.currency.royalReputation" },
+        { name: "Royal Reputation", value: "collections.currency.royalReputation", icon: "icons/royal_reputation" },
         { name: "Faction XP", value: "statistics.faction_total_xp" },
         { name: "Game XP", value: "statistics.faction_game_xp" },
         { name: "Quest XP", value: "statistics.faction_quest_xp" },
-        { name: "Most Coins", value: "collections.currency.peakCoins" },
+        { name: "Most Coins", value: "collections.currency.peakCoins", icon: "icons/coin" },
     ];
 </script>
 
@@ -34,7 +34,7 @@
     <div class="flex flex-col mb-8 gap-y-8">
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 mx-4 sm:mx-24 lg:mx-32">
             {#each stats as stat}
-                <Leaderboard name={stat.name} stat={stat.value} players={data.players} />
+                <Leaderboard name={stat.name} stat={stat.value} icon={stat.icon || null} players={data.players} />
             {/each}
         </div>
     </div>

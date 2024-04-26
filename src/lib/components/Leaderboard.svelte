@@ -1,5 +1,6 @@
 <script>
     import { getRankIcon } from "$lib/utils.js";
+    import { getIcon } from "$lib/levels.js";
     import tooltip from "$lib/tooltip.js";
     import DownArrow from "$lib/svgs/DownArrow.svelte";
     import UpArrow from "$lib/svgs/UpArrow.svelte";
@@ -9,6 +10,7 @@
     export let name;
     export let stat;
     export let display;
+    export let icon;
     export let players;
     for (let player of players) {
         if (!fetchStat(player.player, stat)) players.slice(players.indexOf(player), 1);
@@ -51,6 +53,7 @@
     <div class="flex flex-row justify-between mx-3 mb-2">
         <div class="flex flex-row gap-x-2 mt-2">
             {#if badge}<img src={`https://cdn.islandstats.xyz/badges/${game + "/" + badge.icon}.png`} alt={`${badge.name} Badge`} class="w-10 h-10 self-center" use:tooltip title={badge.description}/>{/if}
+            {#if icon}<img src={`https://cdn.islandstats.xyz/${icon}.png`} alt={`${icon} Icon`} class="w-8 h-8 self-center" />{/if}
             <p class="text-2xl font-semibold self-center">{name || badge.name}</p>
         </div>
         <div class="flex flex-row">

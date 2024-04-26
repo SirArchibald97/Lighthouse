@@ -24,11 +24,11 @@
     <script src="https://unpkg.com/tippy.js@6"></script>
 </svelte:head>
 <div class="flex flex-col mb-8 gap-y-8">
-    <div class="flex flex-row justify-between mt-6 mx-4 sm:mx-44">
+    <div class="flex flex-col-reverse gap-y-4 sm:flex-row justify-between mt-6 mx-4 sm:mx-44">
         <a href="/leaderboards" class="flex-none px-3 border-2 border-slate-300 py-1 bg-white rounded-md hover:bg-slate-100 hover:scale-105 duration-100 self-center">Go Back</a>
-        <div class="flex flex-row gap-x-2 self-center flex-grow justify-center">
-            <img src="https://cdn.islandstats.xyz/games/dynaball/icon.png" alt="Dynaball Logo" class="w-12 h-12 self-center" />
-            <p class="text-center text-3xl font-semibold self-center">Dynaball Leaderboards</p>
+        <div class="flex flex-row gap-x-3 self-center flex-grow justify-center">
+            <img src="https://cdn.islandstats.xyz/games/dynaball/icon.png" alt="Dynaball Logo" class="w-8 h-8 sm:w-12 sm:h-12 self-center" />
+            <p class="text-center text-2xl sm:text-3xl font-semibold self-center">Dynaball Leaderboards</p>
         </div>
     </div>
 

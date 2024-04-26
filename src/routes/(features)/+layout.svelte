@@ -4,12 +4,11 @@
     import Compare from "$lib/svgs/Compare.svelte";
 </script>
 
-<main>
+<main class="flex flex-col min-h-screen">
     <div class="flex flex-row justify-between bg-red-500">
         <form method="POST" action="?/home" class="self-center flex-none">
             <button type="submit" class="self-center flex flex-row items-center ml-2 gap-x-2 px-3 py-1 rounded-md bg-red-900 text-neutral-100 duration-100 hover:scale-105 shadow-xl">
                 <Home />
-                Home
             </button>
         </form>
 

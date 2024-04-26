@@ -5,11 +5,11 @@
     export let data;
 
     let stats = [
-        { name: "Crown Level", value: "trophies.total", display: "level" },
-        { name: "Total Trophies", value: "trophies.total" },
-        { name: "Skill Trophies", value: "trophies.skill.total" },
-        { name: "Style Trophies", value: "trophies.style.total" },
-        { name: "Bonus Trophies", value: "trophies.bonus" },
+        { name: "Crown Level", value: "trophies.total", display: "level", icon: "icons/crowns/1" },
+        { name: "Total Trophies", value: "trophies.total", icon: "icons/trophies/yellow" },
+        { name: "Skill Trophies", value: "trophies.skill.total", icon: "icons/trophies/red" },
+        { name: "Style Trophies", value: "trophies.style.total", icon: "icons/trophies/purple" },
+        { name: "Bonus Trophies", value: "trophies.bonus", icon: "icons/trophies/silver" },
     ];
 </script>
 
@@ -32,7 +32,7 @@
     <div class="flex flex-col mb-8 gap-y-8">
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 mx-4 sm:mx-24 lg:mx-32">
             {#each stats as stat}
-                <Leaderboard name={stat.name} stat={stat.value} display={stat.display || null} players={data.players} />
+                <Leaderboard name={stat.name} stat={stat.value} display={stat.display || null} icon={stat.icon || null} players={data.players} />
             {/each}
         </div>
     </div>

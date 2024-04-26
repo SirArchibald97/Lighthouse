@@ -46,7 +46,7 @@
 
 
         <!-- TROPHIES -->
-        <div class="flex flex-row gap-x-6">
+        <div class="grid grid-cols-2 sm:flex sm:flex-row gap-x-6 gap-y-4">
             <div class="flex flex-col bg-slate-100 border-2 border-slate-200 px-5 py-3 rounded-lg text-xl text-center" use:tooltip title="Total Trophies">
                 <img src="https://cdn.islandstats.xyz/icons/trophies/yellow.png" class="w-8 h-8 self-center" alt="Total Trophies" />
                 <span class="font-semibold">

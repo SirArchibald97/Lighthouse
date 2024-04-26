@@ -67,7 +67,7 @@
             { stat: "royalReputation", icon: "royal_reputation" }
         ] as currency}
             <div class="flex flex-row sm:gap-1 my-1">
-                <img src={`https://cdn.islandstats.xyz/icons/${currency.icon}.png`} class="w-6 h-6" alt="Coins" />
+                <img src={`https://cdn.islandstats.xyz/icons/currency/${currency.icon}.png`} class="w-6 h-6" alt="Coins" />
                 <p class="text-md ml-1 sm:ml-0 2xl:text-md">{data.player.collections?.currency[currency.stat].toLocaleString() || "Unknown"}</p>
             </div>
         {/each}

@@ -35,7 +35,7 @@
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="https://unpkg.com/tippy.js@6"></script>
 </svelte:head>
-<main class="py-4 mx-4 2xl:mx-24">
+<main class="flex-1 py-4 mx-4 2xl:mx-24">
     {#if data.success === false}
         <div class="border-2 border-red-300 bg-slate-50 rounded-lg py-2">
             <p class="text-center text-3xl text-slate-800 font-semibold py-2">I couldn't find any data for that player!</p>
@@ -200,4 +200,4 @@
     {/if}
 </main>
 
-<Footer absolute={!data.player || infoTab !== "games" ? true : false} />
+<Footer />

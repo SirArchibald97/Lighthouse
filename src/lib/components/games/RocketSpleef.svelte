@@ -1,5 +1,6 @@
 <script>
     import Badges from "$lib/components/games/Badges.svelte";
+    import { calculatePercentage } from '$lib/utils.js';
 
     export let stats;
 </script>
@@ -9,7 +10,7 @@
         <div>
             <p>Games Won: <span class="font-semibold">{stats.first_place.toLocaleString()}</span></p>
             <p>Games Lost: <span class="font-semibold">{stats.losses.toLocaleString()}</span></p>
-            <p>WLR: <span class="font-semibold">{stats.wlr.toLocaleString()}</span></p>
+            <p>WLR: <span class="font-semibold">{stats.wlr.toLocaleString()}</span> <span class="text-slate-500">({calculatePercentage(stats.first_place, stats.games_played)}%)</span></p>
         </div>
         <div>
             <p>Kills: <span class="font-semibold">{stats.kills.toLocaleString()}</span></p>
@@ -19,7 +20,7 @@
         <div>
             <p>Rockets Fired: <span class="font-semibold">{stats.rockets_fired.toLocaleString()}</span></p>
             <p>Rockets Hit: <span class="font-semibold">{stats.rockets_hit.toLocaleString()}</span></p>
-            <p>Rocket Hit Rate: <span class="font-semibold">{stats.rocket_hit_rate.toLocaleString()}%</span></p>
+            <p>Hits to Fired Ratio: <span class="font-semibold">{(Math.floor((stats.rockets_hit / stats.rockets_fired) * 100) / 100 || 0).toLocaleString()}</span> <span class="text-slate-500">({calculatePercentage(stats.rockets_hit, stats.rockets_fired)}%)</span></p>
         </div>
         <div>
             <p>Games Played: <span class="font-semibold">{stats.games_played.toLocaleString()}</span></p>
@@ -31,7 +32,7 @@
         <div>
             <p>Melee Kills: <span class="font-semibold">{stats.melee_kills.toLocaleString()}</span></p>
             <p>Players Outlived: <span class="font-semibold">{stats.players_outlived.toLocaleString()}</span></p>
-            <p>Survived 1 minute: <span class="font-semibold">{stats.survive_60s.toLocaleString()}</span></p>
+            <p>Survived 1 minute: <span class="font-semibold">{stats.survive_60s.toLocaleString()}</span> <span class="text-slate-500">({calculatePercentage(stats.survive_60s, stats.games_played)}%)</span></p>
         </div>
     </div>
     
