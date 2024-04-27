@@ -25,6 +25,16 @@ export function getRankIcon(ranks) {
     return "default.png";
 }
 
+export function getRankName(ranks) {
+    const rankNames = { "NOXCREW": "Noxcrew", "MODERATOR": "Moderator", "CONTESTANT": "Contestant", "CREATOR": "Creator", "GRAND_CHAMP_ROYALE": "Grand Champ Royale", "GRAND_CHAMP": "Grand Champ", "CHAMP": "Champ" };
+    for (let rank in rankNames) {
+        if (ranks.includes(rank)) {
+            return rankNames[rank];
+        }
+    }
+    return "Default";
+}
+
 export function getStatusGame(game) {
     const games = {
         "SKY_BATTLE": "Sky Battle",

@@ -13,6 +13,7 @@
     import Dojo from "$lib/components/games/Dojo.svelte";
     import Survivor from "$lib/components/games/Survivor.svelte";
 	import RocketSpleef from "$lib/components/games/RocketSpleef.svelte";
+    import { getRankName } from "$lib/utils.js";
     import { slide } from "svelte/transition";
     
     export let data;
@@ -29,9 +30,22 @@
 </script>
 
 <svelte:head>
-    <title>{data.player.username ? `${data.player.username}'s Stats` : "Unknown Player"}</title>
-    <link rel="icon" type="image/png" href={`https://craftar.com/avatars/${data.player.uuid}?overlay`} />
-    <meta name="description" content={`View ${data.player.username}'s stats on MCC Island Stats by SirArchibald, including game stats, currency, socials and more!`} />
+    <title>{data.player.username ? `${data.player.username} • Lighthouse` : "Unknown Player"}</title>
+    <link rel="icon" href={`https://mc-heads.net/avatar/${data.uuid}/128`} />    
+    <meta name="description" content={`View ${data.player.username}'s stats on Lighthouse by SirArchibald, including game stats, currency, socials and more!`} />
+    <meta name="og:title" content={`${data.player.username} • Lighthouse`} />
+	<meta
+		name="og:description"
+		content={[
+			`Rank: ${getRankName(data.player.ranks)}`,
+			"", // Empty line
+			`Crown Level: ${data.player.level.toLocaleString()}`,
+			`Total Trophies: ${data.player.trophies.total.toLocaleString()}`,
+			`Skill Trophies: ${data.player.trophies.skill.total.toLocaleString()}`,
+			`Style Trophies: ${data.player.trophies.style.total.toLocaleString()}`
+		].join("\n")}
+	/>
+    <meta name="theme-color" content="#ef4444" />
 
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="https://unpkg.com/tippy.js@6"></script>
