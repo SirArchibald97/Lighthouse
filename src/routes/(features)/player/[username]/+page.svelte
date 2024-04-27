@@ -13,6 +13,7 @@
     import Dojo from "$lib/components/games/Dojo.svelte";
     import Survivor from "$lib/components/games/Survivor.svelte";
 	import RocketSpleef from "$lib/components/games/RocketSpleef.svelte";
+    import { slide } from "svelte/transition";
     
     export let data;
     export let form;
@@ -88,7 +89,7 @@
                     <!-- stats -->
                     <div class="bg-slate-50 border-l-4 border-l-red-500 rounded-sm p-4">
                         {#if data.player.statistics}
-                            <p class="text-3xl font-bold mb-2">Games</p>
+                            <p class="text-3xl font-bold mb-4">Games</p>
                             <div class="flex flex-col gap-y-3">
 
                                 <!--  BATTLE BOX -->
@@ -98,7 +99,9 @@
                                         <p class="text-xl font-semibold">Battle Box</p>
                                     </button>
                                     {#if expandedCategory === "bb"}
-                                        <BattleBox stats={data.player.statistics.battle_box} />
+                                        <div transition:slide={{ duration: 400 }}>
+                                            <BattleBox stats={data.player.statistics.battle_box} />
+                                        </div>
                                     {/if}
                                 </div>
 
@@ -109,12 +112,14 @@
                                         <p class="text-xl font-semibold">Sky Battle</p>
                                     </button>
                                     {#if expandedCategory === "sb"}
-                                        <div class="flex flex-row mt-4 mb-2">
-                                            <button on:click={() => switchSBCategory("quads")} class={`bg-slate-200 hover:bg-slate-300 px-2 py-1 rounded-l-sm ${sbCategory === "quads" ? "border-b-4 border-red-400" : ""}`}>Quads</button>
-                                            <button on:click={() => switchSBCategory("summer")} class={`bg-slate-200 hover:bg-slate-300 px-2 py-1 rounded-r-sm ${sbCategory === "summer" ? "border-b-4 border-red-400" : ""}`}>Water Fight</button>
-                                        </div>
+                                        <div transition:slide={{ duration: 400 }}>
+                                            <div class="flex flex-row mt-4 mb-2">
+                                                <button on:click={() => switchSBCategory("quads")} class={`bg-slate-200 hover:bg-slate-300 px-2 py-1 rounded-l-sm ${sbCategory === "quads" ? "border-b-4 border-red-400" : ""}`}>Quads</button>
+                                                <button on:click={() => switchSBCategory("summer")} class={`bg-slate-200 hover:bg-slate-300 px-2 py-1 rounded-r-sm ${sbCategory === "summer" ? "border-b-4 border-red-400" : ""}`}>Water Fight</button>
+                                            </div>
 
-                                        <SkyBattle stats={data.player.statistics.sky_battle[sbCategory]} />
+                                            <SkyBattle stats={data.player.statistics.sky_battle[sbCategory]} />
+                                        </div>
                                     {/if}
                                 </div>
 
@@ -125,7 +130,9 @@
                                         <p class="text-xl font-semibold">To Get To The Other Side</p>
                                     </button>
                                     {#if expandedCategory === "tgttos"}
-                                        <Tgttos stats={data.player.statistics.tgttos} />
+                                        <div transition:slide={{ duration: 400 }}>
+                                            <Tgttos stats={data.player.statistics.tgttos} />
+                                        </div>
                                     {/if}
                                 </div>
 
@@ -136,7 +143,9 @@
                                         <p class="text-xl font-semibold">Hole in the Wall</p>
                                     </button>
                                     {#if expandedCategory === "hitw"}
-                                        <Hitw stats={data.player.statistics.hitw} />
+                                        <div transition:slide={{ duration: 400 }}>
+                                            <Hitw stats={data.player.statistics.hitw} />
+                                        </div>
                                     {/if}
                                 </div>
 
@@ -147,7 +156,9 @@
                                         <p class="text-xl font-semibold">Dynaball</p>
                                     </button>
                                     {#if expandedCategory === "db"}
-                                        <Dynaball stats={data.player.statistics.dynaball} />
+                                        <div transition:slide={{ duration: 400 }}>
+                                            <Dynaball stats={data.player.statistics.dynaball} />
+                                        </div>
                                     {/if}
                                 </div>
 
@@ -158,7 +169,9 @@
                                         <p class="text-xl font-semibold">Parkour Warrior Dojo</p>
                                     </button>
                                     {#if expandedCategory === "dojo"}
-                                        <Dojo stats={data.player.statistics.pkw.dojo} />
+                                        <div transition:slide={{ duration: 400 }}>
+                                            <Dojo stats={data.player.statistics.pkw.dojo} />
+                                        </div>
                                     {/if}
                                 </div>
 
@@ -169,7 +182,9 @@
                                         <p class="text-xl font-semibold">Parkour Warrior Survivor</p>
                                     </button>
                                     {#if expandedCategory === "survivor"}
-                                        <Survivor stats={data.player.statistics.pkw.survivor} />
+                                        <div transition:slide={{ duration: 400 }}>
+                                            <Survivor stats={data.player.statistics.pkw.survivor} />
+                                        </div>
                                     {/if}
                                 </div>
 
@@ -180,7 +195,9 @@
                                         <p class="text-xl font-semibold">Rocket Spleef Rush</p>
                                     </button>
                                     {#if expandedCategory === "rsr"}
-                                        <RocketSpleef stats={data.player.statistics.rocket_spleef} />
+                                        <div transition:slide={{ duration: 400 }}>
+                                            <RocketSpleef stats={data.player.statistics.rocket_spleef} />
+                                        </div>
                                     {/if}
                                 </div>
                             </div>
