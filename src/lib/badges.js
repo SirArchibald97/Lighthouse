@@ -375,7 +375,7 @@ export const badges = {
             { name: "II", amount: 60, trophies: 20 },
             { name: "III", amount: 150, trophies: 30 },
             { name: "IV", amount: 300, trophies: 50 },
-            { name: "V", amount: 550, trophies: 75 },
+            { name: "V", amount: 600, trophies: 75 },
             { name: "VI", amount: 950, trophies: 100 },
             { name: "VII", amount: 1550, trophies: 125 },
         ]},
