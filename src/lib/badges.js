@@ -376,8 +376,8 @@ export const badges = {
             { name: "III", amount: 150, trophies: 30 },
             { name: "IV", amount: 300, trophies: 50 },
             { name: "V", amount: 600, trophies: 75 },
-            { name: "VI", amount: 950, trophies: 100 },
-            { name: "VII", amount: 1550, trophies: 125 },
+            { name: "VI", amount: 1000, trophies: 100 },
+            { name: "VII", amount: 1500, trophies: 125 },
         ]},
 		{ name: "Rocket Spleef Warrior", description: "Land direct hits with rockets during games of Rocket Spleef Rush", icon: "rocket_spleef_warrior", stat: "rockets_hit", tiers: [
             { name: "I", amount: 50, trophies: 10 },
