@@ -11,7 +11,7 @@
                 Invite Lighthouse to your server
             </a>
             <a href="https://discord.gg/JXdQ54DPtd" target="_blank" class="text-center text-lg font-semibold bg-slate-50 text-slate-800 py-3 px-5 rounded-md shadow-md hover:scale-105 duration-100">
-                Join the support server
+                Join the community
             </a>
         </div>
     </div>

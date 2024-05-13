@@ -2,8 +2,7 @@
     import Star from "$lib/svgs/Star.svelte";
     import PlayerCard from "$lib/components/player/PlayerCard.svelte";
     import Levels from "$lib/components/player/Levels.svelte";
-    import Party from "$lib/components/player/Party.svelte";
-    import Friends from "$lib/components/player/Friends.svelte";
+    import Social from "$lib/components/player/Social.svelte";
     import Footer from "$lib/components/Footer.svelte";
     import BattleBox from "$lib/components/games/BattleBox.svelte";
     import SkyBattle from "$lib/components/games/SkyBattle.svelte";
@@ -58,7 +57,7 @@
     {:else}
         <!-- page container -->
         <div class="flex flex-col lg:flex-row gap-4">
-            <div class="basis-80 flex flex-col gap-y-4 mb-8">
+            <div class="basis-96 flex flex-col gap-y-4 mb-8">
                 
                 <!-- player info card -->
                 <div class="bg-slate-50 border-l-4 border-l-red-500 rounded-sm p-4 sm:self-start w-full">
@@ -75,12 +74,22 @@
             <!-- main container -->
             <div class="flex flex-col col-span-4 grow">
                 <!-- tabs -->
-                <div class="grid grid-cols-3 gap-y-2 md:flex md:flex-row text-xl mb-4 gap-x-4 self-center sm:self-start">
-                    <button class={`bg-slate-50 hover:bg-slate-100 border-b-red-500 rounded-sm px-6 py-2 ${infoTab === "levels" ? "font-bold border-b-4" : ""}`} on:click={() => switchInfoTab("levels")}>Levels</button>
-                    <button class={`bg-slate-50 hover:bg-slate-100 border-b-red-500 rounded-sm px-6 py-2 ${infoTab === "games" ? "font-bold border-b-4" : ""}`} on:click={() => switchInfoTab("games")}>Games</button>
-                    <button class={`bg-slate-50 hover:bg-slate-100 border-b-red-500 rounded-sm px-6 py-2 ${infoTab === "party" ? "font-bold border-b-4" : ""}`} on:click={() => switchInfoTab("party")}>Party</button>
-                    <button class={`bg-slate-50 hover:bg-slate-100 border-b-red-500 rounded-sm px-6 py-2 ${infoTab === "friends" ? "font-bold border-b-4" : ""}`} on:click={() => switchInfoTab("friends")}>Friends</button>
-                    
+                <div class="grid grid-cols-2 gap-y-2 md:flex md:flex-row text-xl mb-4 gap-x-4 self-center sm:self-start">
+                    <button class={`flex flex-row gap-x-2 bg-slate-50 hover:bg-slate-100 border-b-red-500 rounded-sm px-6 py-2 ${infoTab === "levels" ? "font-bold border-b-4" : ""}`} on:click={() => switchInfoTab("levels")}>
+                        <img src="https://cdn.islandstats.xyz/icons/trophies/yellow.png" alt="Levels Icon" class="w-6 h-6 self-center" /><span class="self-center">Levels</span>
+                    </button>
+                    <button class={`flex flex-row gap-x-2 bg-slate-50 hover:bg-slate-100 border-b-red-500 rounded-sm px-6 py-2 ${infoTab === "games" ? "font-bold border-b-4" : ""}`} on:click={() => switchInfoTab("games")}>
+                        <img src="https://cdn.islandstats.xyz/games/battle_box/icon.png" alt="Levels Icon" class="w-6 h-6 self-center" /><span class="self-center">Games</span>
+                    </button>
+                    <button class={`flex flex-row gap-x-2 bg-slate-50 hover:bg-slate-100 border-b-red-500 rounded-sm px-6 py-2 ${infoTab === "social" ? "font-bold border-b-4" : ""}`} on:click={() => switchInfoTab("social")}>
+                        <img src="https://cdn.discordapp.com/emojis/1040623207792775289.webp?quality=lossless" alt="Levels Icon" class="w-6 h-6 self-center" /><span class="self-center">Social</span>
+                    </button>
+                    <!--
+                    <button class={`flex flex-row gap-x-2 bg-slate-50 hover:bg-slate-100 border-b-red-500 rounded-sm px-6 py-2 ${infoTab === "crafting" ? "font-bold border-b-4" : ""}`} on:click={() => switchInfoTab("crafting")}>
+                        <img src="https://cdn.islandstats.xyz/icons/wardrobe/crafting.png" alt="Levels Icon" class="w-6 h-6 self-center" /><span class="self-center">Crafting</span>
+                    </button>
+                    -->
+
                     <form method="POST" action="?/favourite" class="bg-slate-50 hover:bg-slate-100 border-b-red-500 rounded-sm text-md px-1 py-2">
                         <input type="text" name="username" class="hidden" bind:value={data.player.username} />
                         <input type="text" name="uuid" class="hidden" bind:value={data.uuid} />
@@ -220,11 +229,9 @@
                         {/if}
                     </div>
 
-                {:else if infoTab === "party"}
-                    <Party data={data} />
+                {:else if infoTab === "social"}
+                    <Social data={data} />
 
-                {:else if infoTab === "friends"}
-                    <Friends data={data} />
                 {/if}                
             </div>
         </div>

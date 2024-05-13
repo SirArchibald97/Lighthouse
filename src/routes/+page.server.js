@@ -1,6 +1,5 @@
 import { redirect } from '@sveltejs/kit';
 import db from "$lib/db.js";
-import { login } from '../lib/api.js';
 
 export async function load({ cookies }) {
     // fetch top 4 most searched username's from the database
@@ -13,8 +12,10 @@ export async function load({ cookies }) {
     }
 
     const favourites = cookies.get("favourites") ? JSON.parse(cookies.get("favourites")) : [];
+
+    const user = cookies.get("user") ? JSON.parse(cookies.get("user")) : null;
     
-    return { profiles, favourites };
+    return { profiles, favourites, user };
 }
 
 export const actions = {
@@ -31,8 +32,4 @@ export const actions = {
     leaderboards: async () => {
         throw redirect(301, "/leaderboards");
     },
-
-    login: async () => {
-        login();
-    }
 }

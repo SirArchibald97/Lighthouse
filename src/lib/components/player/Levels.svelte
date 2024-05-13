@@ -47,7 +47,7 @@
 
         <!-- TROPHIES -->
         <div class="grid grid-cols-2 sm:flex sm:flex-row gap-x-6 gap-y-4">
-            <div class="flex flex-col bg-slate-100 border-2 border-slate-200 px-5 py-3 rounded-lg text-xl text-center" use:tooltip title="Total Trophies">
+            <div class="flex flex-col bg-slate-100 border-2 border-slate-200 px-5 py-3 rounded-lg text-xl text-center w-28" use:tooltip title="Total Trophies">
                 <img src="https://cdn.islandstats.xyz/icons/trophies/yellow.png" class="w-8 h-8 self-center" alt="Total Trophies" />
                 <span class="font-semibold">
                     {data.player.trophies.total.toLocaleString()}
@@ -56,7 +56,7 @@
                     /{data.player.trophies.max.toLocaleString()}
                 </span>
             </div>
-            <div class="flex flex-col bg-slate-100 border-2 border-slate-200 px-5 py-3 rounded-lg text-xl text-center" use:tooltip title="Skill Trophies">
+            <div class="flex flex-col bg-slate-100 border-2 border-slate-200 px-5 py-3 rounded-lg text-xl text-center w-28" use:tooltip title="Skill Trophies">
                 <img src="https://cdn.islandstats.xyz/icons/trophies/red.png" class="w-8 h-8 self-center" alt="Skill Trophies" />
                 <span class="font-semibold">
                     {data.player.trophies.skill.total.toLocaleString()}
@@ -65,7 +65,7 @@
                     /{data.player.trophies.skill.max.toLocaleString()}
                 </span>
             </div>
-            <div class="flex flex-col bg-slate-100 border-2 border-slate-200 px-5 py-3 rounded-lg text-xl text-center" use:tooltip title="Style Trophies">
+            <div class="flex flex-col bg-slate-100 border-2 border-slate-200 px-5 py-3 rounded-lg text-xl text-center w-28" use:tooltip title="Style Trophies">
                 <img src="https://cdn.islandstats.xyz/icons/trophies/purple.png" class="w-8 h-8 self-center" alt="Style Trophies" />
                 <span class="font-semibold">
                     {data.player.trophies.style.total.toLocaleString()}
@@ -74,7 +74,7 @@
                     /{data.player.trophies.style.max.toLocaleString()}
                 </span>
             </div>
-            <div class="flex flex-col bg-slate-100 border-2 border-slate-200 px-6 py-3 rounded-lg text-xl text-center" use:tooltip title="Bonus Trophies">
+            <div class="flex flex-col bg-slate-100 border-2 border-slate-200 px-6 py-3 rounded-lg text-xl text-center w-28" use:tooltip title="Bonus Trophies">
                 <img src="https://cdn.islandstats.xyz/icons/trophies/silver.png" class="w-8 h-8 self-center" alt="Bonus Trophies" />
                 <span class="font-semibold">
                     {data.player.trophies.bonus.toLocaleString()}

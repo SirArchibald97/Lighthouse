@@ -22,8 +22,9 @@ export async function load({ params, cookies }) {
     if (player) {
         const result = await db.collection("requests").findOne({ username: name });
         const isFavourite = cookies.get("favourites") ? JSON.parse(cookies.get("favourites")).find(f => f.username === name) : false;
+        const user = cookies.get("user") ? JSON.parse(cookies.get("user")) : null;
 
-        return { uuid: player.uuid, name: player.username, player, rank: getRankIcon(player.ranks), views: result?.requests || 0, favourite: isFavourite };
+        return { uuid: player.uuid, name: player.username, player, rank: getRankIcon(player.ranks), views: result?.requests || 0, favourite: isFavourite, user };
     } else return { success: false, player: {} };
 }
 
@@ -58,8 +59,4 @@ export const actions = {
     home: async () => {
         throw redirect(301, "/");
     },
-
-    compare: async () => {
-        throw redirect(301, "/compare");
-    }
 }

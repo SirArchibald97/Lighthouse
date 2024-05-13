@@ -19,9 +19,6 @@
     export let badge;
     export let game;
 
-    let order = "desc";
-    function toggleOrder() { order = order === "asc" ? "desc" : "asc"; }
-
     let username = "";
     function sort() { return players.sort((a, b) => fetchStat(b.player, stat) - fetchStat(a.player, stat)); }
 
@@ -33,10 +30,10 @@
             page = 0;
     }
     function prevPage() { 
-        if (page - 1 > -1)
+        if (page - 1 > 0)
             page--;
         else
-            page = Math.floor(players.length / 10);
+            page = Math.ceil(players.length / 10) - 1;
     }
 
     function fetchStat(stats, key) {
@@ -57,15 +54,15 @@
             <p class="text-2xl font-semibold self-center">{name || badge.name}</p>
         </div>
         <div class="flex flex-row">
-            <button on:click={toggleOrder} class="h-8 w-8 self-center p-1 bg-slate-200 hover:bg-slate-300 duration-100 rounded-sm">{#if order === "desc"}<DownArrow />{:else}<UpArrow />{/if}</button>
+            <button class="h-8 w-8 self-center p-1 bg-slate-200 hover:bg-slate-300 duration-100 rounded-sm"><DownArrow /></button>
         </div>
     </div>
     <table class="table-auto border-separate border-spacing-y-1 border-spacing-x-5 text-lg">
         <tbody>
             {#each (username.length > 0 ? 
-                (order === "asc" ? sort().filter(p => p.player.username.toLowerCase().includes(username.toLowerCase())).reverse().slice(page * 10, (page + 1) * 10) : sort().filter(p => p.player.username.toLowerCase().includes(username.toLowerCase())).slice(page * 10, (page + 1) * 10)) :
-                (order === "asc" ? sort().reverse().slice(page * 10, (page + 1) * 10) : sort().slice(page * 10, (page + 1) * 10))
-            ) as player}
+                sort().filter(p => p.player.username?.toLowerCase().includes(username.toLowerCase())).slice(page * 10, (page + 1) * 10) : 
+                sort().slice(page * 10, (page + 1) * 10))
+            as player}
                 <tr>
                     <td>{players.indexOf(players.find(p => p.player.username === player.player.username)) + 1}</td>
                     <td class="flex flex-row gap-x-2">
