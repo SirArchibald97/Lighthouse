@@ -19,7 +19,7 @@
     <!-- PLAYER -->
     <div class="flex flex-row items-center">
         <img src={`https://cdn.islandstats.xyz/ranks/${getRankIcon(data.player.ranks)}`} class="w-8 h-8 2xl:w-10 2xl:h-10 rounded-[8px] bg-slate-400" alt="" />
-        <p class="text-xl 2xl:text-3xl font-bold pl-2">{data.name}</p>
+        <p class="flex flex-row text-xl 2xl:text-3xl font-bold pl-2">{data.name} {#if data.name === "CarnivalCow"}<span>🐮</span>{/if}</p>
         {#if data.player.status}
             <span class={`ml-2 w-4 h-4 rounded-full ${data.player.status?.online ? "bg-green-500" : "bg-red-500"}`}></span>
         {:else}
