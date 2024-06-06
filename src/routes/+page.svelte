@@ -17,7 +17,7 @@
     <meta name="description" content="MCC Island Stats by SirArchibald! Lookup any player to view their game stats, currency, socials and more!" />
 </svelte:head>
 <main>
-    <!--
+    
     <div class="flex flex-row bg-red-500 place-content-end">
         {#if !data.user}
             <a href={PUBLIC_MINECRAFT_OAUTH_URL} class="mr-4 mt-4 bg-white text-slate-800 text-lg px-5 py-2 shadow-md rounded-md hover:scale-105 hover:bg-slate-100 duration-100">
@@ -25,7 +25,7 @@
             </a>
         {/if}
     </div>
-    -->
+    
     <div class="flex flex-col items-center px-4 sm:px-24 py-32 bg-red-500">
         <p class="text-slate-100 text-5xl sm:text-7xl font-bold text-center">Lighthouse</p>
         <p class="text-slate-100 text-xl mt-2">by SirArchibald</p>

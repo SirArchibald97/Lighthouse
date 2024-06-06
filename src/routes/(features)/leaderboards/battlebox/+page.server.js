@@ -1,13 +1,14 @@
 import { DEV, SAD_API_KEY } from "$env/static/private";
 import { redirect } from "@sveltejs/kit";
+import db from "$lib/db.js";
 
 export async function load() {
-    const res = await fetch(`${DEV === "true" ? "http://localhost:3000" : "https://api.sirarchibald.dev"}/islandstats/leaderboard/battle_box`, {
-        method: "get",
-        headers: { "Content-Type": "application/json", "Accept": "application/json", "auth": SAD_API_KEY }
-    });
-    const { leaderboard } = await res.json();
-    return { players: leaderboard };
+    const players = await db.collection("players")
+        .find({ $and: [ {[`player.statistics`]: { $exists: true } }, { [`player.statistics.battle_box`]: { $exists: true } }] })
+        .project({ uuid: 1, "player.username": 1, "player.ranks": 1, [`player.statistics.battle_box`]: 1 })
+        .toArray();
+    for (let player of players) player._id = player._id.toString();
+    return { players };
 }
 
 export const actions = {

@@ -9,6 +9,7 @@
     export let stat;
     export let display;
     export let icon;
+    export let inlineIcon;
     export let players;
     for (let player of players) {
         if (!fetchStat(player.player, stat)) players.slice(players.indexOf(player), 1);
@@ -42,11 +43,6 @@
         }
         return value;
     }
-
-    let displayedPlayers = (username.length > 0 ? 
-        sort().filter(p => p.player.username?.toLowerCase().includes(username.toLowerCase())).slice(page * 10, (page + 1) * 10) : 
-        sort().slice(page * 10, (page + 1) * 10)
-    )
 </script>
 
 <div class="flex flex-col bg-white border-2 border-slate-300 rounded-md py-1">
@@ -69,7 +65,16 @@
                         <img class="w-8 h-8 self-center bg-slate-400 rounded-sm" src={`https://cdn.islandstats.xyz/ranks/${getRankIcon(player.player.ranks)}`} alt={`${player.username}'s Rank`} />
                         <a href={`/player/${player.player.username}`} class="hover:underline">{player.player.username}</a>
                     </td>
-                    <td>{fetchStat(player.player, display || stat)?.toLocaleString() || "Unknown"}</td>
+                    <td>
+                        <div class="flex flex-row gap-x-2">
+                            {#if inlineIcon === "level"}
+                                <img class="w-7 h-7 self-center" src={`https://cdn.islandstats.xyz/icons/crowns/${getIcon(player.player.level)}.png`} alt={`Crown Level Icon`} />
+                            {:else}
+                                <img class="w-7 h-7 self-center" src={`https://cdn.islandstats.xyz/${inlineIcon}.png`} alt={`Trophy Icon`} />
+                            {/if}
+                            <span class="self-center">{fetchStat(player.player, display || stat)?.toLocaleString() || "Unknown"}</span>
+                        </div>
+                    </td>
                 </tr>
             {/each}
         </tbody>

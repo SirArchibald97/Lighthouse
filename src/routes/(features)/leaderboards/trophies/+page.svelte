@@ -1,15 +1,16 @@
 <script>
     import Footer from "$lib/components/Footer.svelte";
     import Leaderboard from "$lib/components/Leaderboard.svelte";
+	import IconLeaderboard from "$lib/components/IconLeaderboard.svelte";
 
     export let data;
 
     let stats = [
-        { name: "Crown Level", value: "trophies.total", display: "level", icon: "icons/crowns/1" },
-        { name: "Total Trophies", value: "trophies.total", icon: "icons/trophies/yellow" },
-        { name: "Skill Trophies", value: "trophies.skill.total", icon: "icons/trophies/red" },
-        { name: "Style Trophies", value: "trophies.style.total", icon: "icons/trophies/purple" },
-        { name: "Bonus Trophies", value: "trophies.bonus", icon: "icons/trophies/silver" },
+        { name: "Crown Level", value: "trophies.total", display: "level", icon: "icons/crowns/1", inlineIcon: "level" },
+        { name: "Total Trophies", value: "trophies.total", icon: "icons/trophies/yellow", inlineIcon: "icons/trophies/yellow" },
+        { name: "Skill Trophies", value: "trophies.skill.total", icon: "icons/trophies/red", inlineIcon: "icons/trophies/red" },
+        { name: "Style Trophies", value: "trophies.style.total", icon: "icons/trophies/purple", inlineIcon: "icons/trophies/purple" },
+        { name: "Bonus Trophies", value: "trophies.bonus", icon: "icons/trophies/silver", inlineIcon: "icons/trophies/silver" },
     ];
 </script>
 
@@ -32,7 +33,11 @@
     <div class="flex flex-col mb-8 gap-y-8">
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 mx-4 sm:mx-24 lg:mx-32">
             {#each stats as stat}
-                <Leaderboard name={stat.name} stat={stat.value} display={stat.display || null} icon={stat.icon || null} players={data.players} />
+                {#if stat.inlineIcon}
+                    <IconLeaderboard name={stat.name} stat={stat.value} display={stat.display || null} icon={stat.icon || null} inlineIcon={stat.inlineIcon} players={data.players} />
+                {:else}
+                    <Leaderboard name={stat.name} stat={stat.value} display={stat.display || null} icon={stat.icon || null} players={data.players} />
+                {/if}
             {/each}
         </div>
     </div>

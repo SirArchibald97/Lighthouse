@@ -6,7 +6,6 @@ export async function load() {
     const players = await db.collection("players")
         .find({ [`player.trophies`]: { $exists: true } })
         .project({ uuid: 1, "player.username": 1, "player.ranks": 1, "player.level": 1, "player.trophies": 1 })
-        .limit(1000)
         .toArray();
     for (let player of players) player._id = player._id.toString();
     return { players };
