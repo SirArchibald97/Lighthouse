@@ -12,7 +12,7 @@ export const badges = {
         { name: "Untouchable Assassin", description: "Place 1st as a team whilst taking no damage and getting at least 4 eliminations", icon: "untouchable_assassin", stat: "untouchable_assassin", trophies: 70 },
     ],
     battle_box_tiered: [
-        { name: "Battle Box Player", description: "Play all 3 rounds of games of Battle Box", icon: "battle_box_player", stat: "games_played", tiers: [
+        { name: "Battle Box Player", description: "Play all 3 rounds of games of Battle Box", icon: "battle_box_player", stat: "games_played", suggestionStat: "games_played", tiers: [
             { name: "I", amount: 15, trophies: 10 },
             { name: "II", amount: 50, trophies: 20 },
             { name: "III", amount: 125, trophies: 30 },
@@ -21,7 +21,7 @@ export const badges = {
             { name: "VI", amount: 800, trophies: 100 },
             { name: "VII", amount: 1300, trophies: 125 },
         ]},
-        { name: "Battle Box Warrior", description: "Eliminate players in Battle Box", icon: "battle_box_warrior", stat: "kills", tiers: [
+        { name: "Battle Box Warrior", description: "Eliminate players in Battle Box", icon: "battle_box_warrior", stat: "kills", suggestionStat: "kills/games_played", tiers: [
             { name: "I", amount: 25, trophies: 10 },
             { name: "II", amount: 75, trophies: 20 },
             { name: "III", amount: 175, trophies: 30 },
@@ -30,7 +30,7 @@ export const badges = {
             { name: "VI", amount: 1200, trophies: 100 },
             { name: "VII", amount: 2000, trophies: 125 },    
         ]},
-        { name: "Battle Box Champion", description: "Finish games of Battle Box with your team in 1st place", icon: "battle_box_champion", stat: "team_first_place", tiers: [
+        { name: "Battle Box Champion", description: "Finish games of Battle Box with your team in 1st place", icon: "battle_box_champion", stat: "team_first_place", suggestionStat: "team_first_place/games_played", tiers: [
             { name: "I", amount: 5, trophies: 10 },
             { name: "II", amount: 15, trophies: 20 },
             { name: "III", amount: 35, trophies: 30 },
@@ -39,7 +39,7 @@ export const badges = {
             { name: "VI", amount: 250, trophies: 100 },
             { name: "VII", amount: 400, trophies: 125 },    
         ]},
-        { name: "Battle Box Expert", description: "Win rounds of Battle Box", icon: "battle_box_expert", stat: "rounds_won", tiers: [
+        { name: "Battle Box Expert", description: "Win rounds of Battle Box", icon: "battle_box_expert", stat: "rounds_won", suggestionStat: "rounds_won/games_played", tiers: [
             { name: "I", amount: 25, trophies: 10 },
             { name: "II", amount: 75, trophies: 20 },
             { name: "III", amount: 175, trophies: 30 },
@@ -50,17 +50,17 @@ export const badges = {
         ]}
     ],
     sky_battle: [
-        { name: "Creeper Coffin", description: "Get an elimination using a Creeper you spawned", icon: "creeper_coffin", stat: "creeper_coffin", trophies: 10 },
-        { name: "Fallen Warrior", description: "Die after getting 8 eliminations in a single game", icon: "fallen_warrior", stat: "fallen_warrior", trophies: 25 },
-        { name: "Personal Feast", description: "Eat 12 or more pieces of steak in a single game", icon: "personal_feast", stat: "personal_feast", trophies: 35 },
-        { name: "Sky Lord", description: "Get at least 10 eliminations in a single game", icon: "sky_lord", stat: "sky_lord", trophies: 25 },
-        { name: "Sky Sniper", description: "Get an elimination with a ranged weapon from over 50 blocks away", icon: "sky_sniper", stat: "sky_sniper", trophies: 35 },
-        { name: "Team Crusher", description: "Eliminate all 4 members of an enemy team", icon: "team_crusher", stat: "team_crusher", trophies: 15 },
-        { name: "Untouchable Champion", description: "Reach a survival placement of 1st without taking damage", icon: "untouchable_champion", stat: "untouchable_champion", trophies: 50 },
-        { name: "Wings to Fly", description: "Don't touch the ground for 30s after using a levitation spark", icon: "wings_to_fly", stat: "wings_to_fly", trophies: 15 },
+        { name: "Creeper Coffin", description: "Get an elimination using a Creeper you spawned", icon: "creeper_coffin", stat: "creeper_coffin", trophies: 30 },
+        { name: "Fallen Warrior", description: "Die after getting 8 eliminations in a single game", icon: "fallen_warrior", stat: "fallen_warrior", trophies: 50 },
+        { name: "Personal Feast", description: "Eat 12 or more pieces of steak in a single game", icon: "personal_feast", stat: "personal_feast", trophies: 70 },
+        { name: "Sky Lord", description: "Get at least 10 eliminations in a single game", icon: "sky_lord", stat: "sky_lord", trophies: 70 },
+        { name: "Sky Sniper", description: "Get an elimination with a ranged weapon from over 50 blocks away", icon: "sky_sniper", stat: "sky_sniper", trophies: 70 },
+        { name: "Team Crusher", description: "Eliminate all 4 members of an enemy team", icon: "team_crusher", stat: "team_crusher", trophies: 30 },
+        { name: "Untouchable Champion", description: "Reach a survival placement of 1st without taking damage", icon: "untouchable_champion", stat: "untouchable_champion", trophies: 150 },
+        { name: "Wings to Fly", description: "Don't touch the ground for 30s after using a levitation spark", icon: "wings_to_fly", stat: "wings_to_fly", trophies: 30 },
     ],
     sky_battle_tiered: [
-        { name: "Sky Battle Player", description: "Survive for at least 60s in games of Sky Battle", icon: "sky_battle_player", stat: "survived_minute", tiers: [
+        { name: "Sky Battle Player", description: "Survive for at least 60s in games of Sky Battle", icon: "sky_battle_player", stat: "survived_minute", suggestionStat: "survived_minute/games_played", tiers: [
             { name: "I", amount: 30, trophies: 10 },
             { name: "II", amount: 90, trophies: 20 },
             { name: "III", amount: 200, trophies: 30 },
@@ -69,7 +69,7 @@ export const badges = {
             { name: "VI", amount: 1400, trophies: 100 },
             { name: "VII", amount: 2300, trophies: 125 },
         ]},
-        { name: "Sky Battle Warrior", description: "Eliminate players in games of Sky Battle", icon: "sky_battle_warrior", stat: "kills", tiers: [
+        { name: "Sky Battle Warrior", description: "Eliminate players in games of Sky Battle", icon: "sky_battle_warrior", stat: "kills", suggestionStat: "kills/games_played", tiers: [
             { name: "I", amount: 25, trophies: 10 },
             { name: "II", amount: 75, trophies: 20 },
             { name: "III", amount: 150, trophies: 30 },
@@ -78,7 +78,7 @@ export const badges = {
             { name: "VI", amount: 1000, trophies: 100 },
             { name: "VII", amount: 1700, trophies: 125 },    
         ]},
-        { name: "Sky Battle Champion", description: "Reach survival placement of 1st in games of Sky Battle", icon: "sky_battle_champion", stat: "solo_first_place", tiers: [
+        { name: "Sky Battle Champion", description: "Reach survival placement of 1st in games of Sky Battle", icon: "sky_battle_champion", stat: "solo_first_place", suggestionStat: "solo_first_place/games_played", tiers: [
             { name: "I", amount: 2, trophies: 10 },
             { name: "II", amount: 5, trophies: 20 },
             { name: "III", amount: 15, trophies: 30 },
@@ -87,7 +87,7 @@ export const badges = {
             { name: "VI", amount: 100, trophies: 100 },
             { name: "VII", amount: 150, trophies: 125 },    
         ]},
-        { name: "Sky Battle Expert", description: "Reach survival placement of 8 or better in games of Sky Battle", icon: "sky_battle_expert", stat: "solo_top_eight", tiers: [
+        { name: "Sky Battle Expert", description: "Reach survival placement of 8 or better in games of Sky Battle", icon: "sky_battle_expert", stat: "solo_top_eight", suggestionStat: "solo_top_eight/games_played", tiers: [
             { name: "I", amount: 20, trophies: 10 },
             { name: "II", amount: 65, trophies: 20 },
             { name: "III", amount: 150, trophies: 30 },
@@ -325,7 +325,7 @@ export const badges = {
         { name: "PKW Finalist", description: "Complete Leap 6 in games of Parkour Warrior Survivor", icon: "parkour_warrior_finalist", stat: "leap_6", tiers: [
             { name: "I", amount: 10, trophies: 10 },
             { name: "II", amount: 25, trophies: 20 },
-            { name: "III", amount: 6, trophies: 30 },
+            { name: "III", amount: 60, trophies: 30 },
             { name: "IV", amount: 120, trophies: 50 },
             { name: "V", amount: 225, trophies: 75 },
             { name: "VI", amount: 375, trophies: 100 },
@@ -348,7 +348,7 @@ export const badges = {
         { name: "Rocket Brawler", description: "Punch 3 players within 10 seconds", icon: "rocket_brawler", stat: "fast_punch", trophies: 30 },
         { name: "Rocket Rush", description: "Eliminate 3 players within 20 seconds", icon: "rocket_rush", stat: "fast_triple_kill", trophies: 100 },
         { name: "Spleef Sniper", description: "Land a direct hit with a rocket on a player at least 40 blocks away", icon: "rocket_spleef_sniper", stat: "distant_direct", trophies: 70 },
-        { name: "Spleef Slapdown", description: "Eliminate a player by punching them into the void before they next land", icon: "spleef_slapdown", stat: "!melee_kills", trophies: 35 },
+        { name: "Spleef Slapdown", description: "Eliminate a player by punching them into the void before they next land", icon: "spleef_slapdown", stat: "!melee_kills", trophies: 30 },
         { name: "Ultimate Rocketeer", description: "Eliminate 5 players in a single game", icon: "ultimate_rocketeer", stat: "eliminate_5", trophies: 100 },
     ],
     rocket_spleef_tiered: [
@@ -441,8 +441,14 @@ export function calculateTrophies(stats, badges) {
                 }
             }
         } else {
-            if (stats.badges[badge.stat] > 0) {
-                trophies += badge.trophies;
+            if (badge.stat.startsWith("!")) {
+                if (stats[badge.stat.slice(1, badge.stat.length)] > 0) {
+                    trophies += badge.trophies;
+                }
+            } else {
+                if (stats.badges[badge.stat] > 0) {
+                    trophies += badge.trophies;
+                }
             }
         }
     }
