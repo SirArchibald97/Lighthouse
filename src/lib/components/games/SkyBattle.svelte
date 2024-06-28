@@ -2,10 +2,18 @@
     import Badges from "$lib/components/games/Badges.svelte";
     import { calculatePercentage } from "$lib/utils.js";
 
-    export let stats;
+    let category = "quads";
+    function switchCategory(newCategory) { category = newCategory; }
+
+    export let ostats;
+    $: stats = ostats[category];
 </script>
 
 <div>
+    <div class="flex flex-row mt-4 mb-2">
+        <button on:click={() => switchCategory("quads")} class={`bg-slate-200 hover:bg-slate-300 px-2 py-1 rounded-l-sm ${category === "quads" ? "border-b-4 border-red-400" : ""}`}>Quads</button>
+        <button on:click={() => switchCategory("summer")} class={`bg-slate-200 hover:bg-slate-300 px-2 py-1 rounded-r-sm ${category === "summer" ? "border-b-4 border-red-400" : ""}`}>Water Fight</button>
+    </div>
     <div class="grid grid-cols-1 sm:grid-cols-3 items-start gap-y-4 mt-2 text-md gap-x-24">
         <div>
             <p>Games Won: <span class="font-semibold">{stats.solo_first_place.toLocaleString()}</span></p>

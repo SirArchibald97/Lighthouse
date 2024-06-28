@@ -22,6 +22,7 @@
 		"@vercel/analytics": "^1.2.2",
 		"luxon": "^3.4.4",
 		"mongodb": "^6.5.0",
-		"tippy.js": "^6.3.7"
+		"tippy.js": "^6.3.7",
+		"util.promisify": "^1.1.2"
 	}
 }
