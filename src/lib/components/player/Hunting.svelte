@@ -25,14 +25,21 @@
             if (badge.suggestionStat) {
                 const components = badge.suggestionStat.split("/");
                 // number of stats left divided by the average stat per game
-                const averagePerGame = stats[components[0]] / stats[components[1]];
+                const averagePerGame = (stats[components[0]] / stats[components[1]]) || 0;
                 const statsLeft = badge.tiers[badge.tiers.length - 1].amount - stats[badge.stat];
-                gamesLeft.push({ stats, icons, badge, average: Math.round(averagePerGame * 10) / 10, gamesLeft: Math.ceil(statsLeft / averagePerGame) });
+                gamesLeft.push({ stats, icons, badge, average: Math.round(averagePerGame * 10) / 10, gamesLeft: Math.ceil(statsLeft / averagePerGame) || 0 });
+                console.log(components, stats[components[0]], stats[components[1]], averagePerGame, statsLeft, Math.ceil(statsLeft / averagePerGame));
             }
         }
     }
     const sortedBadges = gamesLeft.sort((a, b) => a.gamesLeft - b.gamesLeft);
     const mostGamesLeft = sortedBadges[sortedBadges.length - 1].gamesLeft;
+    const easyBadges = sortedBadges.filter(b => b.gamesLeft > 0 && b.gamesLeft < (mostGamesLeft * (1/5)));
+    const mediumBadges = sortedBadges.filter(b => b.gamesLeft >= (mostGamesLeft * (1/5)) && b.gamesLeft < (mostGamesLeft * (3 / 5)));
+    const hardBadges = sortedBadges.filter(b => b.gamesLeft >= (mostGamesLeft * (3 / 5)));
+    const completedBadges = sortedBadges.filter(b => b.gamesLeft <= 0);
+
+    const tiers = { "I": 1, "II": 2, "III": 3, "IV": 4, "V": 5, "VI": 6, "VII": 7 };
 </script>
 
 <div class="bg-slate-50 border-l-4 border-l-red-500 rounded-sm p-4">
@@ -47,15 +54,19 @@
                 {#if expandedCategory === "easy"}
                     <div transition:slide={{ duration: 400 }}>
                         <div class="mt-4 flex flex-col gap-y-3">
-                            {#each sortedBadges.filter(b => b.gamesLeft > 0 && b.gamesLeft < (mostGamesLeft * (1/5))) as item}
-                                <div class="flex flex-col sm:flex-row gap-x-2">
-                                    <img use:tooltip title={item.badge.description} class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/${item.icons}/${item.badge.icon}.png`} alt={item.badge.name} />
-                                    <div class="flex flex-col items-start mt-2 sm:mt-0">
-                                        <p class="font-semibold text-yellow-500">{item.badge.name} {calculateBadgeTier(item.stats[item.badge.stat], item.badge.tiers).tier.name}/VII</p>
-                                        <p>Average of <span class="font-semibold">{item.average.toLocaleString()}</span> completions per game, badge complete in <span class="font-semibold">~{item.gamesLeft.toLocaleString()}</span> games!</p>
-                                    </div>
-                                </div>                        
-                            {/each}
+                            {#if easyBadges.length > 0}
+                                {#each easyBadges as item}
+                                    <div class="flex flex-col sm:flex-row gap-x-2">
+                                        <img use:tooltip title={item.badge.description} class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/${item.icons}/${item.badge.icon}.png`} alt={item.badge.name} />
+                                        <div class="flex flex-col items-start mt-2 sm:mt-0">
+                                            <p class="font-semibold text-yellow-500">{item.badge.name} {tiers[calculateBadgeTier(item.stats[item.badge.stat], item.badge.tiers).tier.name] || 0}/7</p>
+                                            <p>Average of <span class="font-semibold">{item.average.toLocaleString()}</span> completions per game, badge complete in <span class="font-semibold">~{item.gamesLeft.toLocaleString()}</span> games!</p>
+                                        </div>
+                                    </div>                        
+                                {/each}
+                            {:else}
+                                <p>Nothing to show here!</p>
+                            {/if}
                         </div>
                     </div>
                 {/if}
@@ -69,15 +80,19 @@
                 {#if expandedCategory === "medium"}
                     <div transition:slide={{ duration: 400 }}>
                         <div class="mt-4 flex flex-col gap-y-3">
-                            {#each sortedBadges.filter(b => b.gamesLeft > (mostGamesLeft * (1/5)) && b.gamesLeft < (mostGamesLeft * (3 / 5))) as item}
-                                <div class="flex flex-col sm:flex-row gap-x-2">
-                                    <img use:tooltip title={item.badge.description} class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/${item.icons}/${item.badge.icon}.png`} alt={item.badge.name} />
-                                    <div class="flex flex-col items-start mt-2 sm:mt-0">
-                                        <p class="font-semibold text-orange-500">{item.badge.name} {calculateBadgeTier(item.stats[item.badge.stat], item.badge.tiers).tier.name}/VII</p>
-                                        <p>Average of <span class="font-semibold">{item.average.toLocaleString()}</span> completions per game, badge complete in <span class="font-semibold">~{item.gamesLeft.toLocaleString()}</span> games!</p>
+                            {#if mediumBadges.length > 0}
+                                {#each mediumBadges as item}
+                                    <div class="flex flex-col sm:flex-row gap-x-2">
+                                        <img use:tooltip title={item.badge.description} class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/${item.icons}/${item.badge.icon}.png`} alt={item.badge.name} />
+                                        <div class="flex flex-col items-start mt-2 sm:mt-0">
+                                            <p class="font-semibold text-orange-500">{item.badge.name} {tiers[calculateBadgeTier(item.stats[item.badge.stat], item.badge.tiers).tier.name] || 0}/7</p>
+                                            <p>Average of <span class="font-semibold">{item.average.toLocaleString()}</span> completions per game, badge complete in <span class="font-semibold">~{item.gamesLeft.toLocaleString()}</span> games!</p>
+                                        </div>
                                     </div>
-                                </div>
-                            {/each}
+                                {/each}
+                            {:else}
+                                <p>Nothing to show here!</p>
+                            {/if}
                         </div>
                     </div>
                 {/if}
@@ -91,15 +106,19 @@
                 {#if expandedCategory === "hard"}
                     <div transition:slide={{ duration: 400 }}>
                         <div class="mt-4 flex flex-col gap-y-3">
-                            {#each sortedBadges.filter(b => b.gamesLeft > (mostGamesLeft * (3 / 5))) as item}
-                                <div class="flex flex-col sm:flex-row gap-x-2">
-                                    <img use:tooltip title={item.badge.description} class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/${item.icons}/${item.badge.icon}.png`} alt={item.badge.name} />
-                                    <div class="flex flex-col items-start mt-2 sm:mt-0">
-                                        <p class="font-semibold text-red-500">{item.badge.name} {calculateBadgeTier(item.stats[item.badge.stat], item.badge.tiers).tier.name}/VII</p>
-                                        <p>Average of <span class="font-semibold">{item.average.toLocaleString()}</span> completions per game, badge complete in <span class="font-semibold">~{item.gamesLeft.toLocaleString()}</span> games!</p>
-                                    </div>
-                                </div>                        
-                            {/each}
+                            {#if hardBadges.length > 0}
+                                {#each hardBadges as item}
+                                    <div class="flex flex-col sm:flex-row gap-x-2">
+                                        <img use:tooltip title={item.badge.description} class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/${item.icons}/${item.badge.icon}.png`} alt={item.badge.name} />
+                                        <div class="flex flex-col items-start mt-2 sm:mt-0">
+                                            <p class="font-semibold text-red-500">{item.badge.name} {tiers[calculateBadgeTier(item.stats[item.badge.stat], item.badge.tiers).tier.name] || 0}/7</p>
+                                            <p>Average of <span class="font-semibold">{item.average.toLocaleString()}</span> completions per game, badge complete in <span class="font-semibold">~{item.gamesLeft.toLocaleString()}</span> games!</p>
+                                        </div>
+                                    </div>                        
+                                {/each}
+                            {:else}
+                                <p>Nothing to show here!</p>
+                            {/if}
                         </div>
                     </div>
                 {/if}
@@ -113,15 +132,19 @@
                 {#if expandedCategory === "complete"}
                     <div transition:slide={{ duration: 400 }}>
                         <div class="mt-4 flex flex-col gap-y-3">
-                            {#each sortedBadges.filter(b => b.gamesLeft < 0) as item}
-                                <div class="flex flex-col sm:flex-row gap-x-2">
-                                    <img use:tooltip title={item.badge.description} class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/${item.icons}/${item.badge.icon}.png`} alt={item.badge.name} />
-                                    <div class="flex flex-col items-start mt-2 sm:mt-0">
-                                        <p class="font-semibold text-green-500">{item.badge.name} {calculateBadgeTier(item.stats[item.badge.stat], item.badge.tiers).tier.name}/VII</p>
-                                        <p>Average of <span class="font-semibold">{item.average.toLocaleString()}</span> completions per game</p>
-                                    </div>
-                                </div>                        
-                            {/each}
+                            {#if completedBadges.length > 0}
+                                {#each completedBadges as item}
+                                    <div class="flex flex-col sm:flex-row gap-x-2">
+                                        <img use:tooltip title={item.badge.description} class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/${item.icons}/${item.badge.icon}.png`} alt={item.badge.name} />
+                                        <div class="flex flex-col items-start mt-2 sm:mt-0">
+                                            <p class="font-semibold text-green-500">{item.badge.name} {tiers[calculateBadgeTier(item.stats[item.badge.stat], item.badge.tiers).tier.name] || 0}/7</p>
+                                            <p>Average of <span class="font-semibold">{item.average.toLocaleString()}</span> completions per game</p>
+                                        </div>
+                                    </div>                        
+                                {/each}
+                            {:else}
+                                <p>Nothing to show here!</p>
+                            {/if}
                         </div>
                     </div>
                 {/if}
