@@ -1,93 +1,34 @@
 <script>
-    import Star from "$lib/svgs/Star.svelte";
-    import LeftArrow from "$lib/svgs/LeftArrow.svelte";
     import { getRankIcon } from "$lib/utils.js";
 
     export let data;
-    export let form;
-
-    let showFavourites = false;
-    function toggleFavourites() { showFavourites = !showFavourites; }
-
-    if (form) toggleFavourites();
-
-    let selectedProfile = null;
-    function selectProfile(username) { selectedProfile = username; }
 </script>
 
-<div class="flex flex-col gap-y-10 px-4 sm:px-24 2xl:px-96 py-8 bg-slate-100">
+<div class="flex flex-col px-4 sm:px-24 2xl:px-96 py-4 sm:py-8">
     <!-- featured profiles -->
-    <p class="text-slate-800 dark:text-slate-200 text-3xl text-center font-semibold">Featured Profiles</p>
-    <form method="POST" action="?/lookup" class={`${showFavourites && data?.favourites.length === 0 ? "flex flex-row justify-center" : "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6"}`}>
-        <input type="text" name="username" bind:value={selectedProfile} class="hidden" />
-
-        <!-- favourites -->
-        {#if showFavourites}
-            {#if data?.favourites.length > 0}
-                <button on:click={toggleFavourites} class="flex flex-col justify-center items-center bg-white rounded-lg p-4 hover:bg-slate-200 hover:scale-105 duration-100 shadow-md">
-                    <div class="flex flex-row gap-x-1">
-                        <span class="self-center w-6 h-6"><LeftArrow /></span>
-                        <p class="text-2xl font-semibold">Go back</p>
-                    </div>
-                </button>
-
-                {#each data?.favourites as favourite}
-                    <button type="submit" on:click={() => selectProfile(favourite.username)} class="bg-white rounded-lg p-4 hover:bg-slate-200 hover:scale-105 duration-100 shadow-md">
-                        <div class="flex flex-col justify-center items-center gap-y-3">
-                            <img class="rounded-md" src={`https://crafatar.com/avatars/${favourite.uuid}?overlay`} alt={`SirArchibald97's Profile'`} />
-                            <div class="flex flex-row gap-x-2">
-                                <img class="h-8 w-8 bg-slate-400 rounded-md hidden sm:block" src={`https://cdn.islandstats.xyz/ranks/${getRankIcon(favourite.ranks)}`} alt={`SirArchibald97's rank`} />
-                                <p class="text-slate-700 text-center text-lg font-semibold self-center">{favourite.username}</p>
-                            </div>
-                        </div>
-                    </button>
-                {/each}
-            {:else}
-                <button on:click={toggleFavourites} class="flex flex-col justify-center items-center bg-white rounded-lg px-24 py-20 hover:bg-slate-200 hover:scale-105 duration-100 shadow-md">
-                    <div class="flex flex-row gap-x-1">
-                        <span class="self-center w-6 h-6"><Star /></span>
-                        <p class="text-2xl font-semibold">No favourites set!</p>
-                    </div>
-                    <p class="text-xl">Go back</p>
-                </button>
-            {/if}
-        {:else}
-            <button on:click={toggleFavourites} class="flex flex-col justify-center items-center bg-white rounded-lg p-4 hover:bg-slate-200 hover:scale-105 duration-100 shadow-md">
-                <div class="flex flex-row gap-x-1">
-                    <span class="self-center w-6 h-6"><Star /></span>
-                    <p class="text-2xl font-semibold">Favourites</p>
+    <p class="text-neutral-900 dark:text-neutral-100 text-2xl sm:text-3xl text-center font-semibold pb-4">Featured Profiles</p>
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        <a href="/player/SirArchibald97" class="flex flex-row justify-center gap-x-2 hover:bg-neutral-200 dark:hover:bg-neutral-700 border border-neutral-200 dark:border-neutral-800 duration-100 p-4 rounded-md">
+            <div class="flex flex-col justify-center items-center gap-y-3">
+                <img class="rounded-md w-24 h-24 sm:w-44 sm:h-44" src={`https://mc-heads.net/avatar/19f9fd28-558c-4959-98c2-fb1a18bed0a1/128`} alt={`SirArchibald97's Profile'`} />
+                <div class="flex flex-row gap-x-2">
+                    <img class="h-8 w-8 rounded-md hidden sm:block" src={`https://cdn.islandstats.xyz/ranks/moderator.png`} alt={`SirArchibald97's rank`} />
+                    <p class="text-neutral-900 dark:text-neutral-100 text-center text-lg font-semibold self-center">SirArchibald97</p>
                 </div>
-            </button>
-
-            {#each [
-                { username: "SirArchibald97", uuid: "19f9fd28-558c-4959-98c2-fb1a18bed0a1", rank: "moderator", icon: "dev" },
-                { username: "CarnivalCow", uuid: "0ae2d928-7252-4831-b445-51a9737106e1", rank: "moderator" },
-                { username: "Centranos", uuid: "db6f2b90-762c-4ec9-82b1-9a2392cf409a", rank: "moderator" },
-            ] as player}
-                <button type="submit" on:click={() => selectProfile(player.username)} class="bg-white rounded-lg p-4 hover:bg-slate-200 hover:scale-105 duration-100 shadow-md">
-                    <div class="flex flex-col justify-center items-center gap-y-3">
-                        <img class="rounded-md" src={`https://crafatar.com/avatars/${player.uuid}?overlay`} alt={`${player.username}'s Profile'`} />
-                        <div class="flex flex-row gap-x-2">
-                            <img class="h-8 w-8 rounded-md hidden sm:block" src={`https://cdn.islandstats.xyz/ranks/${player.rank}.png`} alt={`${player.username}'s rank`} />
-                            <p class="text-slate-700 text-center text-lg font-semibold self-center">{player.username}</p>
-                        </div>
+            </div>
+        </a>
+    
+        <!-- most searched usernames -->
+        {#each data.profiles as profile}
+            <a href={`/player/${profile.username}`} class="flex flex-row justify-center gap-x-2 hover:bg-neutral-200 dark:hover:bg-neutral-700 border border-neutral-200 dark:border-neutral-800 duration-100 p-4 rounded-md">
+                <div class="flex flex-col justify-center items-center gap-y-3">
+                    <img class="rounded-md w-24 h-24 sm:w-44 sm:h-44" src={`https://mc-heads.net/avatar/${profile.uuid}/128`} alt={`${profile.username}'s Profile'`} />
+                    <div class="flex flex-row gap-x-2">
+                        <img class="h-8 w-8 rounded-md bg-slate-400 hidden sm:block" src={`https://cdn.islandstats.xyz/ranks/${getRankIcon(profile.player.ranks)}`} alt={`${profile.username}'s rank`} />
+                        <p class="text-neutral-900 dark:text-neutral-100 text-center text-lg font-semibold self-center">{profile.username}</p>
                     </div>
-                </button>
-               
-            {/each}
-
-            <!-- most searched usernames -->
-            {#each data.profiles as profile}
-                <button type="submit" on:click={() => selectProfile(profile.username)} class="bg-white rounded-lg p-4 hover:bg-slate-200 hover:scale-105 duration-100 shadow-md">
-                    <div class="flex flex-col justify-center items-center gap-y-3">
-                        <img class="rounded-md" src={`https://crafatar.com/avatars/${profile.uuid}?overlay`} alt={`${profile.username}'s Profile'`} />
-                        <div class="flex flex-row gap-x-2">
-                            <img class="h-8 w-8 rounded-md bg-slate-400 hidden sm:block" src={`https://cdn.islandstats.xyz/ranks/${getRankIcon(profile.player.ranks)}`} alt={`${profile.username}'s rank`} />
-                            <p class="text-slate-700 text-center text-lg font-semibold self-center">{profile.username}</p>
-                        </div>
-                    </div>
-                </button>
-            {/each}
-        {/if}
-    </form>
+                </div>
+            </a>
+        {/each}
+    </div>
 </div>

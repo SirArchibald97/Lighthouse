@@ -1,17 +1,17 @@
 import { redirect } from '@sveltejs/kit';
 
-export async function load({ url, cookies }) {
+export async function load({ url }) {
     const access_token = url.searchParams.get("code");
     const xbox_auth = await fetch("https://user.auth.xboxlive.com/user/authenticate", {
         method: "POST",
         headers: {
-            "Content-Type": "application/json", Accept: "application/json"
+            "Content-Type": "application/json", "Accept": "application/json"
         },
-        body: JSON.stringify({
+        body: new URLSearchParams({
             Properties: {
                 AuthMethod: "RPS",
                 SiteName: "user.auth.xboxlive.com",
-                RpsTicket: `d=${access_token}` // your access token from the previous step here
+                RpsTicket: `d=${access_token}`
             },
             RelyingParty: "http://auth.xboxlive.com",
             TokenType: "JWT"

@@ -28,7 +28,7 @@ export function getRankIcon(ranks) {
 export function getRankName(ranks) {
     const rankNames = { "NOXCREW": "Noxcrew", "MODERATOR": "Moderator", "CONTESTANT": "Contestant", "CREATOR": "Creator", "GRAND_CHAMP_ROYALE": "Grand Champ Royale", "GRAND_CHAMP": "Grand Champ", "CHAMP": "Champ" };
     for (let rank in rankNames) {
-        if (ranks.includes(rank)) {
+        if (ranks?.includes(rank)) {
             return rankNames[rank];
         }
     }

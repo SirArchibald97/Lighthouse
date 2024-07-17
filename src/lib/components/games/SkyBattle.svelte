@@ -10,9 +10,9 @@
 </script>
 
 <div>
-    <div class="flex flex-row mt-4 mb-2">
-        <button on:click={() => switchCategory("quads")} class={`bg-slate-200 hover:bg-slate-300 px-2 py-1 rounded-l-sm ${category === "quads" ? "border-b-4 border-red-400" : ""}`}>Quads</button>
-        <button on:click={() => switchCategory("summer")} class={`bg-slate-200 hover:bg-slate-300 px-2 py-1 rounded-r-sm ${category === "summer" ? "border-b-4 border-red-400" : ""}`}>Water Fight</button>
+    <div class="flex flex-row gap-x-2 mt-4 mb-2">
+        <button on:click={() => switchCategory("quads")} class={`hover:bg-neutral-200 dark:hover:bg-neutral-700 border border-neutral-300 dark:border-neutral-800 duration-100 px-3 py-1 rounded-sm ${category === "quads" ? "bg-neutral-300 dark:bg-neutral-700" : ""}`}>Quads</button>
+        <button on:click={() => switchCategory("summer")} class={`hover:bg-neutral-200 dark:hover:bg-neutral-700 border border-neutral-300 dark:border-neutral-800 duration-100 px-3 py-1 rounded-sm ${category === "summer" ? "bg-neutral-300 dark:bg-neutral-700" : ""}`}>Summer</button>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-3 items-start gap-y-4 mt-2 text-md gap-x-24">
         <div>

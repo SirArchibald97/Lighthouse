@@ -42,11 +42,11 @@
     const tiers = { "I": 1, "II": 2, "III": 3, "IV": 4, "V": 5, "VI": 6, "VII": 7 };
 </script>
 
-<div class="bg-slate-50 border-l-4 border-l-red-500 rounded-sm p-4">
+<div class="rounded-sm p-4">
     {#if data.player.statistics}
         <p class="text-3xl font-bold mb-4">Badges</p>
         <div class="flex flex-col gap-y-4">
-            <div class="flex flex-col items-start bg-slate-100 rounded-md border-2 border-slate-200 p-3">
+            <div class="flex flex-col items-start rounded-md border border-neutral-300 dark:border-neutral-800 p-3">
                 <button on:click={() => switchCategory(expandedCategory === "easy" ? null : "easy")} class="flex flex-row w-full">
                     <img class="w-8 h-8 mr-2" src="https://cdn.islandstats.xyz/icons/warnings/yellow.png" alt="Easiest Badges Icon" />
                     <p class="text-xl font-semibold">Easy Badges</p>
@@ -72,7 +72,7 @@
                 {/if}
             </div>
 
-            <div class="flex flex-col items-start bg-slate-100 rounded-md border-2 border-slate-200 p-3">
+            <div class="flex flex-col items-start rounded-md border border-neutral-300 dark:border-neutral-800 p-3">
                 <button on:click={() => switchCategory(expandedCategory === "medium" ? null : "medium")} class="flex flex-row w-full">
                     <img class="w-8 h-8 mr-2" src="https://cdn.islandstats.xyz/icons/warnings/orange.png" alt="Medium Badges Icon" />
                     <p class="text-xl font-semibold">Medium Badges</p>
@@ -98,7 +98,7 @@
                 {/if}
             </div>
 
-            <div class="flex flex-col items-start bg-slate-100 rounded-md border-2 border-slate-200 p-3">
+            <div class="flex flex-col items-start rounded-md border border-neutral-300 dark:border-neutral-800 p-3">
                 <button on:click={() => switchCategory(expandedCategory === "hard" ? null : "hard")} class="flex flex-row w-full">
                     <img class="w-8 h-8 mr-2" src="https://cdn.islandstats.xyz/icons/warnings/red.png" alt="Hardest Badges Icon" />
                     <p class="text-xl font-semibold">Hard Badges</p>
@@ -124,7 +124,7 @@
                 {/if}
             </div>
 
-            <div class="flex flex-col items-start bg-slate-100 rounded-md border-2 border-slate-200 p-3">
+            <div class="flex flex-col items-start rounded-md border border-neutral-300 dark:border-neutral-800 p-3">
                 <button on:click={() => switchCategory(expandedCategory === "complete" ? null : "complete")} class="flex flex-row w-full">
                     <img class="w-8 h-8 mr-2" src="https://cdn.discordapp.com/emojis/1042056406997663844.webp?size=96&quality=lossless" alt="Completed Badges Icon" />
                     <p class="text-xl font-semibold">Completed Badges</p>

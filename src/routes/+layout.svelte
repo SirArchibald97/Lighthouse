@@ -4,6 +4,6 @@
     inject();
 </script>
 
-<main class="bg-slate-200">
+<main>
     <slot />
 </main>

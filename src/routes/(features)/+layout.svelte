@@ -1,27 +1,38 @@
 <script>
-    import Search from "$lib/svgs/Search.svelte";
-    import Home from "$lib/svgs/Home.svelte";
-    import Compare from "$lib/svgs/Compare.svelte";
+    import Sun from "$lib/svgs/Sun.svelte";
+    import Moon from "$lib/svgs/Moon.svelte";
+    import Footer from "$lib/components/Footer.svelte";
+    import theme from '$lib/stores/theme.js';
+
+    $: dark = $theme === 'dark';
 </script>
 
-<main class="flex flex-col min-h-screen">
-    <div class="flex flex-row justify-between bg-red-500">
-        <form method="POST" action="?/home" class="self-center flex-none">
-            <button type="submit" class="self-center flex flex-row items-center ml-2 gap-x-2 px-3 py-1 rounded-md bg-red-900 text-neutral-100 duration-100 hover:scale-105 shadow-xl">
-                <Home />
-            </button>
-        </form>
-
-        <!-- search -->
-        <div class="max-w-sm mx-auto py-3 flex-grow flex justify-between">
-            <form method="POST" action="?/lookup">
-                <div class="flex flex-row bg-slate-100 rounded-full px-3 py-2">
-                    <span class="px-2"><Search /></span>
-                    <input class="bg-slate-100 focus:outline-none" name="username" type="text" placeholder="Username" />
-                </div>
-            </form>
+<main class={`flex flex-col min-h-screen ${dark ? "dark" : ""} bg-neutral-50 dark:bg-neutral-900 duration-100`}>
+    <div class="flex flex-row justify-center w-full py-4 bg-red-500 dark:bg-red-500/40 border-b border-red-600 dark:border-red-500/40">
+        <div class="flex flex-row justify-between w-4/5 sm:w-3/5">
+            <a href="/" class="flex flex-row gap-x-2">
+                <img src="https://mc-heads.net/avatar/19f9fd28-558c-4959-98c2-fb1a18bed0a1/128" alt="Logo" class="w-9 h-9 self-center rounded-sm" />
+                <p class="self-center text-lg text-neutral-100">Lighthouse</p>
+            </a>
+    
+            <div class="flex flex-row gap-x-2">
+                <form method="POST" action="?/lookup" class="hidden sm:flex">
+                    <input class="focus:outline dark:focus:outline-neutral-100 text-md dark:text-neutral-100 dark:bg-neutral-950 border border-neutral-300 dark:border-neutral-800 rounded-md px-3 py-2" name="username" type="text" placeholder="Search" />
+                </form>
+                <button on:click={() => dark ? theme.set('light') : theme.set('dark')} class="flex text-md border border-neutral-300 dark:border-neutral-800 p-2 rounded-md dark:text-neutral-100 bg-neutral-50 dark:bg-neutral-950 hover:bg-neutral-200 dark:hover:bg-neutral-800 duration-100">
+                    {#if dark}
+                        <span class="w-6 h-6 self-center"><Moon /></span>
+                    {:else}
+                        <span class="w-6 h-6 self-center"><Sun /></span>
+                    {/if}
+                </button>
+            </div>
         </div>
     </div>
 
-    <slot />
+    <div class="flex-1 mx-4 sm:mx-44 my-4">
+        <slot />
+    </div>
+
+    <Footer />
 </main>

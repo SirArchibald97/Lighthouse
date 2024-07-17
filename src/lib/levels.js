@@ -42,6 +42,13 @@ export function calculateProgress(level, trophies) {
     return ((trophies - getCurrentLevel(level)) / (getNextLevel(level) - getCurrentLevel(level)));
 }
 
+export function calculateNextEvolution(level, trophies) {
+    const currentEvolution = levels.find((tier) => level >= tier.range[0] && level <= tier.range[1]);
+    const nextEvolution = levels.find((tier) => tier.range[0] === currentEvolution.range[1] + 1);
+    const trophiesForNextEvolution = getCurrentLevel(nextEvolution.range[0]);
+    return { trophies: trophiesForNextEvolution - trophies, icon: nextEvolution.icon };
+}
+
 export function getIcon(level) {
     const current = levels.find((tier) => level >= tier.range[0] && level <= tier.range[1]);
     return current.icon;
