@@ -10,8 +10,9 @@ export async function load({ cookies }) {
         const player = await db.collection("players").findOne({ uuid: entry.uuid });
         if (player) profiles.push({ uuid: player.player.uuid, username: player.player.username, player: player.player });
     }
-    
-    return { profiles };
+
+    const user = cookies.get("user") ? JSON.parse(cookies.get("user")) : null;
+    return { profiles, user };
 }
 
 export const actions = {

@@ -147,7 +147,7 @@ export const openables = [
         rewards: [
             { name: "Coins", chance: 100, pool: [450, 750], currency: true, average: 600 },
             { name: "Silver", chance: 100, pool: [45, 75], currency: true, average: 60 },
-            { name: "Core", chance: 60, pool: [
+            { name: "Core", chance: 60, rewards: [
                 { reward: "Common Cosmetic Core", amount: 1, chance: 47 },
                 { reward: "Uncommon Cosmetic Core", amount: 1, chance: 10 },
                 { reward: "Rare Cosmetic Core", amount: 1, chance: 3 },
@@ -160,7 +160,7 @@ export const openables = [
         rewards: [
             { name: "Coins", chance: 100, pool: [1000, 1500], currency: true },
             { name: "Silver", chance: 100, pool: [100, 150], currency: true },
-            { name: "Core", chance: 60, pool: [
+            { name: "Core", chance: 60, rewards: [
                 { reward: "Uncommon Cosmetic Core", amount: 1, chance: 25 },
                 { reward: "Rare Cosmetic Core", amount: 1, chance: 15 },
                 { reward: "Bronze Treasure Core", amount: 1, chance: 10 },
@@ -173,7 +173,7 @@ export const openables = [
         rewards: [
             { name: "Coins", chance: 100, pool: [2000, 3000], currency: true },
             { name: "Silver", chance: 100, pool: [200, 300], currency: true },
-            { name: "Core", chance: 100, pool: [
+            { name: "Core", chance: 100, rewards: [
                 { reward: "Rare Cosmetic Core", amount: 1, chance: 26 },
                 { reward: "Epic Cosmetic Core", amount: 1, chance: 10 },
                 { reward: "Legendary Cosmetic Core", amount: 1, chance: 4 },
@@ -187,7 +187,7 @@ export const openables = [
         rewards: [
             { name: "Coins", chance: 100, pool: [3500, 5500], currency: true },
             { name: "Silver", chance: 100, pool: [350, 550], currency: true },
-            { name: "Core", chance: 100, pool: [
+            { name: "Core", chance: 100, rewards: [
                 { reward: "Epic Cosmetic Core", amount: 1, chance: 50 },
                 { reward: "Legendary Cosmetic Core", amount: 1, chance: 10 },
                 { reward: "Silver Treasure Core", amount: 1, chance: 30 },
@@ -201,49 +201,49 @@ export const openables = [
     // +-------------------+
     { name: "Magical Material Crate", icon: "/openables/magical.png", crate: "material", type: "magical",
         rewards: [
-            { name: "Material Dust", chance: 100, pool: [50, 100], currency: true, average: 75 },
+            { name: "Material Dust", chance: 100, pool: [50, 100], currency: true },
             { name: "Materials", chance: 100, pool: [
-                { name: "Foggy Crystal", amount: 1, chance: 51, average: 0.3 * 0.51 },
-                { name: "Jade Eye", amount: 1, chance: 25, average: 0.3 * 0.25 },
-                { name: "Frigid Sapphire", amount: 1, chance: 15, average: 0.3 * 0.15 },
-                { name: "Amethyst Tablet", amount: 1, chance: 7, average: 0.3 * 0.07 },
-                { name: "Crystallized Sunset", amount: 1, chance: 2, average: 0.3 * 0.02 }
+                { name: "Foggy Crystal", amount: 1, chance: 51 },
+                { name: "Jade Eye", amount: 1, chance: 25 },
+                { name: "Frigid Sapphire", amount: 1, chance: 15 },
+                { name: "Amethyst Tablet", amount: 1, chance: 7 },
+                { name: "Crystallized Sunset", amount: 1, chance: 2 }
             ]}
         ]
     },
     { name: "Oceanic Material Crate", icon: "/openables/oceanic.png", crate: "material", type: "oceanic",
         rewards: [
-            { name: "Material Dust", chance: 100, pool: [50, 100], currency: true, average: 75 },
+            { name: "Material Dust", chance: 100, pool: [50, 100], currency: true },
             { name: "Materials", chance: 100, pool: [
-                { name: "Bland Water", amount: 1, chance: 51, average: 0.3 * 0.51 },
-                { name: "Seaweed Goo", amount: 1, chance: 25, average: 0.3 * 0.25 },
-                { name: "Deep Brine", amount: 1, chance: 15, average: 0.3 * 0.15 },
-                { name: "Virulent Vial", amount: 1, chance: 7, average: 0.3 * 0.07 },
-                { name: "Bottled Sunrise", amount: 1, chance: 2, average: 0.3 * 0.02 }
+                { name: "Bland Water", amount: 1, chance: 51 },
+                { name: "Seaweed Goo", amount: 1, chance: 25 },
+                { name: "Deep Brine", amount: 1, chance: 15 },
+                { name: "Virulent Vial", amount: 1, chance: 7 },
+                { name: "Bottled Sunrise", amount: 1, chance: 2 }
             ]}
         ]
     },
     { name: "Mechanical Material Crate", icon: "/openables/mechanical.png", crate: "material", type: "mechanical",
         rewards: [
-            { name: "Material Dust", chance: 100, pool: [50, 100], currency: true, average: 75 },
+            { name: "Material Dust", chance: 100, pool: [50, 100], currency: true },
             { name: "Materials", chance: 100, pool: [
-                { name: "Iron Bolt", amount: 1, chance: 51, average: 0.3 * 0.51 },
-                { name: "Copper Chunk", amount: 1, chance: 25, average: 0.3 * 0.25 },
-                { name: "Cobalt Rod", amount: 1, chance: 15, average: 0.3 * 0.15 },
-                { name: "Titanium Plate", amount: 1, chance: 7, average: 0.3 * 0.07 },
-                { name: "Solarflame Bar", amount: 1, chance: 2, average: 0.3 * 0.02 }
+                { name: "Iron Bolt", amount: 1, chance: 51 },
+                { name: "Copper Chunk", amount: 1, chance: 25 },
+                { name: "Cobalt Rod", amount: 1, chance: 15 },
+                { name: "Titanium Plate", amount: 1, chance: 7 },
+                { name: "Solarflame Bar", amount: 1, chance: 2 }
             ]}
         ]
     },
     { name: "Natural Material Crate", icon: "/openables/natural.png", crate: "material", type: "natural",
         rewards: [
-            { name: "Material Dust", chance: 100, pool: [50, 100], currency: true, average: 75 },
+            { name: "Material Dust", chance: 100, pool: [50, 100], currency: true },
             { name: "Materials", chance: 100, pool: [
-                { name: "Pale Bloom", amount: 1, chance: 51, average: 0.3 * 0.51 },
-                { name: "Verdant Moss", amount: 1, chance: 25, average: 0.3 * 0.25 },
-                { name: "Sky Poppy", amount: 1, chance: 15, average: 0.3 * 0.15 },
-                { name: "Nightshade Lily", amount: 1, chance: 7, average: 0.3 * 0.07 },
-                { name: "Sparkling Sunflower", amount: 1, chance: 2, average: 0.3 * 0.02 }
+                { name: "Pale Bloom", amount: 1, chance: 51 },
+                { name: "Verdant Moss", amount: 1, chance: 25 },
+                { name: "Sky Poppy", amount: 1, chance: 15 },
+                { name: "Nightshade Lily", amount: 1, chance: 7 },
+                { name: "Sparkling Sunflower", amount: 1, chance: 2 }
             ]}
         ]
     },

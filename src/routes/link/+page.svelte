@@ -6,11 +6,13 @@
     import { PUBLIC_DISCORD_LOGIN_URL } from "$env/static/public";
 
     $: dark = $theme === 'dark';
+    let username = "";
 
     export let data;
+    export let form;
 </script>
 
-<main class={`flex flex-col min-h-screen ${dark ? "dark" : ""} bg-neutral-50 dark:bg-neutral-900 duration-100`}>
+<div class={`flex flex-col min-h-screen ${dark ? "dark" : ""} bg-neutral-50 dark:bg-neutral-900 duration-100`}>
     <div class="flex flex-row justify-center w-full py-4 bg-red-500 dark:bg-red-500/40 border-b border-red-600 dark:border-red-500/40">
         <div class="flex flex-row justify-between w-4/5 sm:w-3/5">
             <a href="/" class="flex flex-row gap-x-2">
@@ -19,20 +21,9 @@
             </a>
     
             <div class="flex flex-row gap-x-2">
-                {#if data.user}
-                    <a class="self-center" href={data.user.minecraft ? `/player/${data.user.minecraft.username}` : "/api/link"}>
-                        <img src={data.user.minecraft ? `https://mc-heads.net/avatar/${data.user.minecraft.uuid}/128` : "/no-pfp.webp"} alt="" class="w-10 h-10 self-center rounded-md" />
-                    </a>
-                {:else}
-                    <a class="text-md border border-neutral-300 dark:border-neutral-800 p-2 px-4 rounded-md dark:text-neutral-100 bg-neutral-50 dark:bg-neutral-950 hover:bg-neutral-200 dark:hover:bg-neutral-800 duration-100" href={PUBLIC_DISCORD_LOGIN_URL}>
-                        Login
-                    </a>
-                {/if}
-
                 <form method="POST" action="?/lookup" class="hidden sm:flex">
                     <input class="focus:outline dark:focus:outline-neutral-100 text-md dark:text-neutral-100 dark:bg-neutral-950 border border-neutral-300 dark:border-neutral-800 rounded-md px-3 py-2" name="username" type="text" placeholder="Search" />
                 </form>
-                
                 <button on:click={() => dark ? theme.set('light') : theme.set('dark')} class="flex text-md border border-neutral-300 dark:border-neutral-800 p-2 rounded-md dark:text-neutral-100 bg-neutral-50 dark:bg-neutral-950 hover:bg-neutral-200 dark:hover:bg-neutral-800 duration-100">
                     {#if dark}
                         <span class="w-6 h-6 self-center"><Moon /></span>
@@ -44,9 +35,28 @@
         </div>
     </div>
 
-    <div class="flex-1 mx-4 sm:mx-44">
-        <slot />
+    <div class="flex-1 mx-4 sm:mx-44 my-4">
+        <div class="flex flex-col items-center gap-y-4 py-4 border border-neutral-300 dark:border-neutral-800 rounded-md">
+            {#if data.loggedIn}
+                <p class="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">Enter your Minecraft username</p>
+                {#if data.linked}
+                    <p class="text-neutral-900 dark:text-neutral-100">This account is already linked to <span class="font-semibold">{data.account.username}</span>, enter a new username below to update it!</p>
+                {/if}
+                <div class="flex flex-row gap-x-2">
+                    <form method="POST" action="?/link" class="flex flex-row gap-x-2">
+                        {#if form}
+                            <p>{form.error}</p>
+                        {/if}
+                        <input class="px-3 py-2 rounded-md text-neutral-900 dark:text-neutral-100 bg-neutral-50 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800" name="username" type="text" placeholder="Username" minlength="3" maxlength="16" bind:value={username} />
+                        <button type="submit" class="bg-red-500 hover:bg-red-700 dark:bg-red-500/80 dark:hover:bg-red-500/60 px-4 py-2 rounded-md">Link</button>
+                    </form>
+                </div>
+            {:else}
+                <p class="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">You must be logged in to access this page!</p>
+                <a class="bg-red-500 dark:bg-red-500/40 text-neutral-900 dark:text-neutral-100 px-3 py-2 rounded-md" href={PUBLIC_DISCORD_LOGIN_URL}>Login</a>
+            {/if}
+        </div>
     </div>
 
     <Footer />
-</main>
+</div>

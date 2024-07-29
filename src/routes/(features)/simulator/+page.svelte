@@ -94,7 +94,7 @@
 
             <div class="flex flex-row gap-x-4 gap-y-2 sm:gap-y-0">
                 <div class="flex-1 self-center text-lg rounded-md bg-white dark:bg-neutral-800 py-1.5 pl-3 pr-10 text-leftshadow-sm ring-1 ring-inset ring-neutral-300 dark:ring-neutral-700 focus:ring-2 focus:ring-red-500">
-                    <input class="focus:outline-none w-full bg-white dark:bg-neutral-800" name="amount" type="number" placeholder="Amount" max="10000" min="1" bind:value={amount} />
+                    <input class="focus:outline-none w-full bg-white dark:bg-neutral-800" name="amount" type="number" placeholder="Amount" max="10_000_000" min="1" bind:value={amount} />
                 </div>
     
                 <button on:click={open} class="flex flex-row justify-center items-center text-center self-center text-lg rounded-md bg-red-500 py-1.5 pl-3 pr-10 text-slate-50 shadow-sm hover:bg-red-600">

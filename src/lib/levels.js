@@ -51,7 +51,7 @@ export function calculateNextEvolution(level, trophies) {
 
 export function getIcon(level) {
     const current = levels.find((tier) => level >= tier.range[0] && level <= tier.range[1]);
-    return current.icon;
+    return current?.icon;
 }
 
 export function getColour(level) {

@@ -10,7 +10,7 @@
         <div>
             <p>Games Won: <span class="font-semibold">{stats.wins.toLocaleString()}</span></p>
             <p>Games Lost: <span class="font-semibold">{(stats.games_played - stats.wins).toLocaleString()}</span></p>
-            <p>WLR: <span class="font-semibold">{(Math.floor((stats.wins / (stats.games_played - stats.wins)) * 100) / 100 || 0).toLocaleString()}</span> <span class="text-slate-500">({calculatePercentage(stats.wins, stats.games_played)}%)</span></p>
+            <p>WLR: <span class="font-semibold">{(Math.floor((stats.wins / (stats.games_played - stats.wins)) * 100) / 100 || 0).toLocaleString() || "Infinity"}</span> <span class="text-slate-500">({calculatePercentage(stats.wins, stats.games_played)}%)</span></p>
         </div>
         <div>
             <p>Kills: <span class="font-semibold">{stats.kills.toLocaleString()}</span></p>

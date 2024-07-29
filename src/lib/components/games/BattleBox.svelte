@@ -10,17 +10,17 @@
         <div>
             <p>Rounds Won: <span class="font-semibold">{stats.rounds_won.toLocaleString()}</span></p>
             <p>Rounds Lost: <span class="font-semibold">{((stats.games_played * 3) - stats.rounds_won).toLocaleString()}</span></p>
-            <p>Round WLR: <span class="font-semibold">{(Math.floor((stats.rounds_won / ((stats.games_played * 3) - stats.rounds_won)) * 100) / 100 || 0).toLocaleString()}</span> <span class="text-slate-500">({calculatePercentage(stats.rounds_won, stats.games_played * 3)}%)</span></p>
+            <p>Round WLR: <span class="font-semibold">{(Math.floor((stats.rounds_won / ((stats.games_played * 3) - stats.rounds_won)) * 100) / 100 || 0).toLocaleString() || "Infinity"}</span> <span class="text-slate-500">({calculatePercentage(stats.rounds_won, stats.games_played * 3)}%)</span></p>
         </div>
         <div>
             <p>Games Won: <span class="font-semibold">{stats.team_first_place.toLocaleString()}</span></p>
             <p>Games Lost: <span class="font-semibold">{(stats.games_played - stats.team_first_place).toLocaleString()}</span></p>
-            <p>Game WLR: <span class="font-semibold">{(Math.floor((stats.team_first_place / (stats.games_played - stats.team_first_place)) * 100) / 100 || 0).toLocaleString()}</span> <span class="text-slate-500">({calculatePercentage(stats.team_first_place, stats.games_played)}%)</span></p>
+            <p>Game WLR: <span class="font-semibold">{(Math.floor((stats.team_first_place / (stats.games_played - stats.team_first_place)) * 100) / 100 || 0).toLocaleString() || "Infinity"}</span> <span class="text-slate-500">({calculatePercentage(stats.team_first_place, stats.games_played)}%)</span></p>
         </div>
         <div>
             <p>Kills: <span class="font-semibold">{stats.kills.toLocaleString()}</span></p>
             <p>Deaths: <span class="font-semibold">{stats.deaths.toLocaleString()}</span></p>
-            <p>KDR: <span class="font-semibold">{(Math.floor((stats.kills / stats.deaths) * 100) / 100 || 0).toLocaleString()}</span></p>
+            <p>KDR: <span class="font-semibold">{(Math.floor((stats.kills / stats.deaths) * 100) / 100 || 0).toLocaleString() || "Infinity"}</span></p>
         </div>
         <div>
             <p>Games Played: <span class="font-semibold">{stats.games_played.toLocaleString()}</span></p>

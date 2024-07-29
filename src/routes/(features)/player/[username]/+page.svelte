@@ -32,7 +32,7 @@
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="https://unpkg.com/tippy.js@6"></script>
 </svelte:head>
-<div>
+<div class="my-4">
     {#if data.success === false}
         <div class="border border-neutral-300 dark:border-neutral-800 rounded-lg py-2 mx-auto">
             <p class="text-center text-xl text-neutral-900 dark:text-neutral-100 py-2">I couldn't find any data for that player!</p>
@@ -48,6 +48,12 @@
                     <p><span class="font-semibold">Not seeing your stats?</span> Make sure to set your API preferences on Island from your in-game settings!</p>
                     <p><span class="font-semibold">Found a bug or have a suggestion?</span> Let me know on the <a href="https://discord.gg/JXdQ54DPtd" class="text-blue-500 underline">Discord server</a>!</p>
                 </div>
+
+                {#if data.user && data.user.minecraft.username === data.name}
+                    <a href="/api/logout" class="flex flex-col items-center gap-y-2 rounded-md text-md font-semibold text-neutral-900 dark:text-neutral-100 bg-red-500 hover:bg-red-700 dark:bg-red-500/40 dark:hover:bg-red-500/60 p-2 shadow-md">
+                        Logout
+                    </a>
+                {/if}
             </div>
 
             <div class="lg:basis-3/4 flex flex-col border border-neutral-300 dark:border-neutral-800 text-neutral-900 dark:text-neutral-100 rounded-md shadow-md">

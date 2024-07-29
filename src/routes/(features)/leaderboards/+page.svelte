@@ -1,88 +1,35 @@
 <script>
-    import Footer from "$lib/components/Footer.svelte";
+    const leaderboards = [
+        { name: "Trophies", page: "trophies", icon: "https://cdn.islandstats.xyz/icons/trophies/yellow.png" },
+        { name: "Battle Box", page: "battlebox", icon: "https://cdn.islandstats.xyz/games/battle_box/icon.png" },
+        { name: "Sky Battle", page: "skybattle", icon: "https://cdn.islandstats.xyz/games/sky_battle/icon.png" },
+        { name: "TGTTOS", page: "tgttos", icon: "https://cdn.islandstats.xyz/games/tgttos/icon.png" },
+        { name: "Hole in the Wall", page: "hitw", icon: "https://cdn.islandstats.xyz/games/hitw/icon.png" },
+        { name: "Dynaball", page: "dynaball", icon: "https://cdn.islandstats.xyz/games/dynaball/icon.png" },
+        { name: "Parkour Warrior Dojo", page: "dojo", icon: "https://cdn.islandstats.xyz/games/parkour_warrior/solo/icon.png" },
+        { name: "Parkour Warrior Survivor", page: "survivor", icon: "https://cdn.islandstats.xyz/games/parkour_warrior/icon.png" },
+        { name: "Rocket Spleef Rush", page: "rsr", icon: "https://cdn.islandstats.xyz/games/rocket_spleef/icon.png" },
+        { name: "Miscellaneous", page: "misc", icon: "https://cdn.islandstats.xyz/icons//currency/royal_reputation.png" }
+    ];
 </script>
 
 <svelte:head>
-    <title>Leaderboards</title>
-    <meta name="description" content="Leaderboards for the MCC Island Minecraft server" />
+    <title>Leaderboards • Lighthouse</title>
+    <link rel="icon" href="%sveltekit.assets%/favicon.png" type="image/png" />
+    <meta name="description" content="Leaderboards for MCC Island • Lighthouse by SirArchibald" />
 
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="https://unpkg.com/tippy.js@6"></script>
 </svelte:head>
-<div class="flex flex-col mb-8 flex-1">
-    <p class="text-center text-4xl font-semibold my-6 mx-4 sm:mx-44">Leaderboards</p>
-    
-    <div class="grid grid-cols-1 md:grid-cols-3 mx-4 gap-4 md:mx-32">
-        <form method="post" action="?/trophyleaderboards" class="flex flex-col gap-y-3 bg-white rounded-md border-2 border-slate-300 hover:bg-slate-100 hover:scale-105 duration-100">
-            <button type="submit" class="flex flex-col gap-y-3 p-4">
-                <img src="https://cdn.islandstats.xyz/icons/trophies/yellow.png" class="w-16 h-16 self-center" alt="Trophy Icon" />
-                <p class="text-2xl font-semibold self-center ml-2">Trophies</p>
-            </button>
-        </form>
+<div class="flex flex-col flex-1">
+    <p class="text-center text-4xl text-neutral-900 dark:text-neutral-100 font-semibold mx-4 my-6 sm:mx-44">Leaderboards</p>
 
-        <form method="post" action="?/bbleaderboards" class="flex flex-col gap-y-3 bg-white rounded-md border-2 border-slate-300 hover:bg-slate-100 hover:scale-105 duration-100">
-            <button type="submit" class="flex flex-col gap-y-3 p-4">
-                <img src="https://cdn.islandstats.xyz/games/battle_box/icon.png" class="w-16 h-16 self-center" alt="Battle Box Icon" />
-                <p class="text-2xl font-semibold self-center ml-2">Battle Box</p>
-            </button>
-        </form>
-
-        <form method="post" action="?/sbleaderboards" class="flex flex-col gap-y-3 bg-white rounded-md border-2 border-slate-300 hover:bg-slate-100 hover:scale-105 duration-100">
-            <button type="submit" class="flex flex-col gap-y-3 p-4">
-                <img src="https://cdn.islandstats.xyz/games/sky_battle/icon.png" class="w-16 h-16 self-center" alt="Battle Box Icon" />
-                <p class="text-2xl font-semibold self-center ml-2">Sky Battle</p>
-            </button>
-        </form>
-
-        <form method="post" action="?/tgttosleaderboards" class="flex flex-col gap-y-3 bg-white rounded-md border-2 border-slate-300 hover:bg-slate-100 hover:scale-105 duration-100">
-            <button type="submit" class="flex flex-col gap-y-3 p-4">
-                <img src="https://cdn.islandstats.xyz/games/tgttos/icon.png" class="w-16 h-16 self-center" alt="Battle Box Icon" />
-                <p class="text-2xl font-semibold self-center ml-2">TGTTOS</p>
-            </button>
-        </form>
-
-        <form method="post" action="?/hitwleaderboards" class="flex flex-col gap-y-3 bg-white rounded-md border-2 border-slate-300 hover:bg-slate-100 hover:scale-105 duration-100">
-            <button type="submit" class="flex flex-col gap-y-3 p-4">
-                <img src="https://cdn.islandstats.xyz/games/hitw/icon.png" class="w-16 h-16 self-center" alt="Battle Box Icon" />
-                <p class="text-2xl font-semibold self-center ml-2">Hole in the Wall</p>
-            </button>
-        </form>
-
-        <form method="post" action="?/dynaballleaderboards" class="flex flex-col gap-y-3 bg-white rounded-md border-2 border-slate-300 hover:bg-slate-100 hover:scale-105 duration-100">
-            <button type="submit" class="flex flex-col gap-y-3 p-4">
-                <img src="https://cdn.islandstats.xyz/games/dynaball/icon.png" class="w-16 h-16 self-center" alt="Battle Box Icon" />
-                <p class="text-2xl font-semibold self-center ml-2">Dynaball</p>
-            </button>
-        </form>
-
-        <form method="post" action="?/dojoleaderboards" class="flex flex-col gap-y-3 bg-white rounded-md border-2 border-slate-300 hover:bg-slate-100 hover:scale-105 duration-100">
-            <button type="submit" class="flex flex-col gap-y-3 p-4">
-                <img src="https://cdn.islandstats.xyz/games/parkour_warrior/solo/icon.png" class="w-16 h-16 self-center" alt="Battle Box Icon" />
-                <p class="text-2xl font-semibold self-center ml-2">Parkour Warrior Dojo</p>
-            </button>
-        </form>
-
-        <form method="post" action="?/survivorleaderboards" class="flex flex-col gap-y-3 bg-white rounded-md border-2 border-slate-300 hover:bg-slate-100 hover:scale-105 duration-100">
-            <button type="submit" class="flex flex-col gap-y-3 p-4">
-                <img src="https://cdn.islandstats.xyz/games/parkour_warrior/icon.png" class="w-16 h-16 self-center" alt="Battle Box Icon" />
-                <p class="text-2xl font-semibold self-center ml-2">Parkour Warrior Survivor</p>
-            </button>
-        </form>
-
-        <form method="post" action="?/rsrleaderboards" class="flex flex-col gap-y-3 bg-white rounded-md border-2 border-slate-300 hover:bg-slate-100 hover:scale-105 duration-100">
-            <button type="submit" class="flex flex-col gap-y-3 p-4">
-                <img src="https://cdn.islandstats.xyz/games/rocket_spleef/icon.png" class="w-16 h-16 self-center" alt="Rocket Spleef Rush Icon" />
-                <p class="text-2xl font-semibold self-center ml-2">Rocket Spleef Rush</p>
-            </button>
-        </form>
-
-        <form method="post" action="?/miscleaderboards" class="flex flex-col gap-y-3 bg-white rounded-md border-2 border-slate-300 hover:bg-slate-100 hover:scale-105 duration-100">
-            <button type="submit" class="flex flex-col gap-y-3 p-4">
-                <img src="https://cdn.islandstats.xyz/icons//currency/royal_reputation.png" class="w-16 h-16 self-center" alt="Battle Box Icon" />
-                <p class="text-2xl font-semibold self-center ml-2">Miscellaneous</p>
-            </button>
-        </form>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {#each leaderboards as leaderboard}
+            <a href={`/leaderboards/${leaderboard.page}`} class="flex flex-col gap-y-3 py-2 rounded-sm border border-neutral-300 dark:border-neutral-800 hover:bg-neutral-300 dark:hover:bg-neutral-800 duration-100">
+                <img src={leaderboard.icon} class="w-16 h-16 self-center" alt="Leaderboard Icon" />
+                <p class="text-2xl text-neutral-900 dark:text-neutral-100 font-semibold self-center ml-2">{leaderboard.name}</p>
+            </a>
+        {/each}
     </div>
 </div>
-
-<Footer />

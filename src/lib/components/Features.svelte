@@ -7,8 +7,8 @@
 
 <div class="flex flex-col px-4 sm:px-24 2xl:px-96 py-8 pb-4 sm:pb-12">
     <p class="text-slate-800 dark:text-slate-200 text-2xl sm:text-3xl pb-4 text-center font-semibold">Features</p>
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-12">
-        <a href="/leaderboards" class="flex flex-col gap-y-2 hover:bg-neutral-200 dark:hover:bg-neutral-700 dark:bg-neutral-700 border border-neutral-200 dark:border-neutral-600 duration-100 p-3 rounded-md text-neutral-900 dark:text-neutral-100">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+        <a href="/leaderboards" class="flex flex-col gap-y-2 border border-neutral-300 dark:border-neutral-800 hover:bg-neutral-300 dark:hover:bg-neutral-800 duration-100 p-3 rounded-md text-neutral-900 dark:text-neutral-100">
             <div class="flex flex-row gap-4">
                 <span class="w-12 h-12"><Globe /></span>
             </div>
@@ -16,7 +16,7 @@
             <p class="text-lg">View where you place on the global leaderboards in a huge selection of game stats, badges and more!</p>
         </a>
 
-        <a href="/simulator" class="flex flex-col gap-y-2 hover:bg-neutral-200 dark:hover:bg-neutral-700 dark:bg-neutral-700 border border-neutral-200 dark:border-neutral-700 duration-100 p-3 rounded-md text-neutral-900 dark:text-neutral-100">
+        <a href="/simulator" class="flex flex-col gap-y-2 border border-neutral-300 dark:border-neutral-800 hover:bg-neutral-300 dark:hover:bg-neutral-800 duration-100 p-3 rounded-md text-neutral-900 dark:text-neutral-100">
             <div class="flex flex-row gap-4">
                 <span class="w-12 h-12"><Gift /></span>
                 <span class="self-center py-1 px-3 rounded-full text-neutral-900 bg-green-200 border-1 border-green-300">New</span>
@@ -25,7 +25,7 @@
             <p class="text-lg">Let your gambling urges run wild and simulate the opening of up to 1000s of crates and chests!</p>
         </a>
 
-        <div href="/" class="flex flex-col gap-y-2 hover:bg-neutral-200 dark:hover:bg-neutral-700 dark:bg-neutral-700 border border-neutral-200 dark:border-neutral-700 duration-100 p-3 rounded-md text-neutral-900 dark:text-neutral-100">
+        <div href="/" class="flex flex-col gap-y-2 border border-neutral-300 dark:border-neutral-800 hover:bg-neutral-300 dark:hover:bg-neutral-800 duration-100 p-3 rounded-md text-neutral-900 dark:text-neutral-100">
             <div class="flex flex-row gap-4">
                 <span class="w-12 h-12"><LineGraph /></span>
                 <span class="self-center py-1 px-3 rounded-full text-neutral-900 bg-yellow-200 border-1 border-yellow-300">Coming Soon</span>
@@ -34,7 +34,7 @@
             <p class="text-lg">Track how your stats have changed over time across every gamemode!</p>
         </div>
 
-        <div href="/" class="flex flex-col gap-y-2 hover:bg-neutral-200 dark:hover:bg-neutral-700 dark:bg-neutral-700 border border-neutral-200 dark:border-neutral-700 duration-100 p-3 rounded-md text-neutral-900 dark:text-neutral-100">
+        <div href="/" class="flex flex-col gap-y-2 border border-neutral-300 dark:border-neutral-800 hover:bg-neutral-300 dark:hover:bg-neutral-800 duration-100 p-3 rounded-md text-neutral-900 dark:text-neutral-100">
             <div class="flex flex-row gap-4">
                 <span class="w-12 h-12"><CompareArrows /></span>
                 <span class="self-center py-1 px-3 rounded-full text-neutral-900 bg-yellow-200 border-1 border-yellow-300">Coming Soon</span>

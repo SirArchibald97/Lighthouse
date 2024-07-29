@@ -75,8 +75,8 @@
             <img src={`https://cdn.islandstats.xyz/icons/crowns/${getIcon(data.player.level)}.png`} alt={`Crown Level ${data.player.level} Icon`} class="w-7 h-7 self-center" />
             <span class="self-center font-bold text-xl">{data.player.level}</span>
 
-            <div class="h-4 w-full self-center rounded-full bg-neutral-200 dark:bg-neutral-700 transition-all duration-500">
-                <div class="flex flex-col h-full left-0 right-0 rounded-md text-center transition-all duration-500 group" style={`width: calc(100% * ${calculateProgress(data.player.level, data.player.trophies.total)}); ${getColour(data.player.level)}`}></div>
+            <div class="h-4 w-full self-center rounded-full bg-neutral-200 dark:bg-neutral-700">
+                <div class="flex flex-col h-full left-0 right-0 rounded-md text-center group" style={`width: calc(100% * ${calculateProgress(data.player.level, data.player.trophies.total)}); ${getColour(data.player.level)}`}></div>
             </div>
 
             <span class="self-center font-bold text-xl">{data.player.level + 1}</span>

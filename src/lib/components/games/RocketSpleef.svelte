@@ -10,12 +10,12 @@
         <div>
             <p>Games Won: <span class="font-semibold">{stats.first_place.toLocaleString()}</span></p>
             <p>Games Lost: <span class="font-semibold">{stats.losses.toLocaleString()}</span></p>
-            <p>WLR: <span class="font-semibold">{stats.wlr.toLocaleString()}</span> <span class="text-slate-500">({calculatePercentage(stats.first_place, stats.games_played)}%)</span></p>
+            <p>WLR: <span class="font-semibold">{stats.wlr?.toLocaleString() || "Infinity"}</span> <span class="text-slate-500">({calculatePercentage(stats.first_place, stats.games_played)}%)</span></p>
         </div>
         <div>
             <p>Kills: <span class="font-semibold">{stats.kills.toLocaleString()}</span></p>
             <p>Deaths: <span class="font-semibold">{stats.deaths.toLocaleString()}</span></p>
-            <p>KDR: <span class="font-semibold">{stats.kdr.toLocaleString()}</span></p>
+            <p>KDR: <span class="font-semibold">{stats.kdr?.toLocaleString() || "Infinity"}</span></p>
         </div>
         <div>
             <p>Rockets Fired: <span class="font-semibold">{stats.rockets_fired.toLocaleString()}</span></p>

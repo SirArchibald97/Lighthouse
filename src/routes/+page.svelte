@@ -5,6 +5,7 @@
     import Sun from "$lib/svgs/Sun.svelte";
     import Moon from "$lib/svgs/Moon.svelte";
     import theme from '$lib/stores/theme.js';
+    import { PUBLIC_DISCORD_LOGIN_URL } from "$env/static/public";
 
     $: dark = $theme === 'dark';
 
@@ -21,6 +22,17 @@
 </svelte:head>
 <main class={`${dark ? "dark" : ""} bg-neutral-50 dark:bg-neutral-900 duration-100`}>
     <div class="flex flex-row bg-red-500 dark:bg-red-500/40 place-content-end">
+        {#if data.user}
+            <a href={data.user.minecraft ? `/player/${data.user.minecraft.username}` : "/api/link"} class="flex flex-row gap-x-2 rounded-md bg-neutral-50 dark:bg-neutral-950 my-2 pl-3">
+                <p class="self-center text-neutral-900 dark:text-neutral-100">{data.user.minecraft ? data.user.minecraft.username : "Not Linked"}</p>
+                <img src={data.user.minecraft ? `https://mc-heads.net/avatar/${data.user.minecraft.uuid}/128` : "/no-pfp.webp"} alt="" class="w-11 h-11 self-center rounded-md" />
+            </a>
+        {:else}
+            <a class="my-2 text-md border border-neutral-300 dark:border-neutral-800 p-2 px-4 rounded-md dark:text-neutral-100 bg-neutral-50 dark:bg-neutral-950 hover:bg-neutral-200 dark:hover:bg-neutral-800 duration-100" href={PUBLIC_DISCORD_LOGIN_URL}>
+                Login
+            </a>
+        {/if}
+
         <button class="flex m-2 text-md border border-neutral-300 dark:border-neutral-800 p-2 rounded-md dark:text-neutral-100 bg-neutral-50 dark:bg-neutral-950 hover:bg-neutral-200 dark:hover:bg-neutral-800 duration-100" on:click={() => dark ? theme.set('light') : theme.set('dark')}>
             {#if dark}<span class="w-6 h-6 self-center"><Moon /></span>{:else}<span class="w-6 h-6 self-center"><Sun /></span>{/if}
         </button> 
