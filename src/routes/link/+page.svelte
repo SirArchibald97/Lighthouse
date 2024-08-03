@@ -12,6 +12,9 @@
     export let form;
 </script>
 
+<svelte:head>
+    <title>Link your Minecraft profile</title>
+</svelte:head>
 <div class={`flex flex-col min-h-screen ${dark ? "dark" : ""} bg-neutral-50 dark:bg-neutral-900 duration-100`}>
     <div class="flex flex-row justify-center w-full py-4 bg-red-500 dark:bg-red-500/40 border-b border-red-600 dark:border-red-500/40">
         <div class="flex flex-row justify-between w-4/5 sm:w-3/5">
@@ -21,6 +24,22 @@
             </a>
     
             <div class="flex flex-row gap-x-2">
+                {#if data.loggedIn}
+                    {#if data.linked}
+                        <a class="self-center" href={`/player/${data.account.username}`}>
+                            <img src={`https://mc-heads.net/avatar/${data.account.uuid}/128`} alt="" class="w-10 h-10 self-center rounded-md" />
+                        </a>
+                    {:else}
+                        <a class="self-center text-md border border-neutral-300 dark:border-neutral-800 p-2 px-4 rounded-md dark:text-neutral-100 bg-neutral-50 dark:bg-neutral-950 hover:bg-neutral-200 dark:hover:bg-neutral-800 duration-100" href="/link">
+                            Not linked!
+                        </a>
+                    {/if}
+
+                {:else}
+                    <a class="text-md border border-neutral-300 dark:border-neutral-800 p-2 px-4 rounded-md dark:text-neutral-100 bg-neutral-50 dark:bg-neutral-950 hover:bg-neutral-200 dark:hover:bg-neutral-800 duration-100" href={PUBLIC_DISCORD_LOGIN_URL}>
+                        Login
+                    </a>
+                {/if}
                 <form method="POST" action="?/lookup" class="hidden sm:flex">
                     <input class="focus:outline dark:focus:outline-neutral-100 text-md dark:text-neutral-100 dark:bg-neutral-950 border border-neutral-300 dark:border-neutral-800 rounded-md px-3 py-2" name="username" type="text" placeholder="Search" />
                 </form>

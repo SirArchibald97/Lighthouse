@@ -49,10 +49,14 @@
                     <p><span class="font-semibold">Found a bug or have a suggestion?</span> Let me know on the <a href="https://discord.gg/JXdQ54DPtd" class="text-blue-500 underline">Discord server</a>!</p>
                 </div>
 
-                {#if data.user && data.user.minecraft.username === data.player.username}
-                    <a href="/api/logout" class="flex flex-col items-center gap-y-2 rounded-md text-md font-semibold text-neutral-900 dark:text-neutral-100 bg-red-500 hover:bg-red-700 dark:bg-red-500/40 dark:hover:bg-red-500/60 p-2 shadow-md">
-                        Logout
-                    </a>
+                {#if data.user && data.user?.minecraft?.username === data.player.username}
+                    {#if data.user.minecraft}
+                        {#if data.user.minecraft.username === data.player.username}
+                            <a href="/api/logout" class="flex flex-col items-center gap-y-2 rounded-md text-md font-semibold text-neutral-900 dark:text-neutral-100 bg-red-500 hover:bg-red-700 dark:bg-red-500/40 dark:hover:bg-red-500/60 p-2 shadow-md">
+                                Logout
+                            </a>
+                        {/if}
+                    {/if}
                 {/if}
             </div>
 
