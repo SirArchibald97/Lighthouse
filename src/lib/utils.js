@@ -41,8 +41,8 @@ export function getStatusGame(game) {
         "BATTLE_BOX": "Battle Box",
         "TGTTOS": "TGTTOS",
         "HOLE_IN_THE_WALL": "Hole in the Wall",
-        "PARKOUR_WARRIOR": "Parkour Warrior Dojo",
-        "PARKOUR_WARRIOR_SURVIVOR": "Parkour Warrior Survivor",
+        "PARKOUR_WARRIOR": "PKW Dojo",
+        "PARKOUR_WARRIOR_SURVIVOR": "PKW Survivor",
         "DYNABALL": "Dynaball",
         "ROCKET_SPLEEF": "Rocket Spleef Rush",
     };

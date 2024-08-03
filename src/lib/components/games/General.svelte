@@ -1,8 +1,8 @@
 <script>
     import { calculatePercentage } from "$lib/utils.js";
     import { badges, calculateTrophies, calculateMaxTrophies } from "$lib/badges.js";
-    import { slide } from "svelte/transition";
     import { Confetti } from "svelte-confetti";
+    import tooltip from "$lib/tooltip.js";
     import Pie from "$lib/svgs/Pie.svelte";
     import TrendingUpArrow from "$lib/svgs/TrendingUpArrow.svelte";
 
@@ -15,6 +15,9 @@
         player.statistics.pkw.survivor.wins +
         player.statistics.rocket_spleef.first_place;
 
+    let overall = true;
+    function toggleOverall() { overall = !overall; }
+
     const games = [
         { icon: "battle_box", trophies: calculateTrophies(player.statistics.battle_box, badges.battle_box.concat(badges.battle_box_tiered)), maxTrophies: calculateMaxTrophies(badges.battle_box.concat(badges.battle_box_tiered)) },
         { icon: "sky_battle", trophies: calculateTrophies(player.statistics.sky_battle.quads, badges.sky_battle.concat(badges.sky_battle_tiered)), maxTrophies: calculateMaxTrophies(badges.sky_battle.concat(badges.sky_battle_tiered)) },
@@ -24,10 +27,8 @@
         { icon: "parkour_warrior/solo", trophies: calculateTrophies(player.statistics.pkw.dojo, badges.dojo_tiered), maxTrophies: calculateMaxTrophies(badges.dojo_tiered) },
         { icon: "parkour_warrior", trophies: calculateTrophies(player.statistics.pkw.survivor, badges.survivor_tiered), maxTrophies: calculateMaxTrophies(badges.survivor_tiered) },
         { icon: "rocket_spleef", trophies: calculateTrophies(player.statistics.rocket_spleef, badges.rocket_spleef.concat(badges.rocket_spleef_tiered)), maxTrophies: calculateMaxTrophies(badges.rocket_spleef.concat(badges.rocket_spleef_tiered)) },
-    ].sort((a, b) => b.trophies - a.trophies);
-
-    let overall = false;
-    function toggleOverall() { overall = !overall; }
+    ];
+    const totalTrophies = games.reduce((a, b) => a + b.trophies, 0);
 </script>
 
 <div class="flex flex-col gap-y-8">
@@ -39,7 +40,7 @@
         </div>
         <div>
             <p>Games Played: <span class="font-semibold">{player.statistics.games_played.toLocaleString()}</span></p>
-            <p>Games Won: <span class="font-semibold">{gamesWon.toLocaleString()}</span> <span class="text-slate-500">({calculatePercentage(player.statistics.faction_game_xp, player.statistics.faction_total_xp)}%)</span></p>
+            <p>Games Won: <span class="font-semibold">{gamesWon.toLocaleString()}</span></p>
             <p>Overall WLR: <span class="font-semibold">{(Math.floor((gamesWon / (player.statistics.games_played - gamesWon)) * 100) / 100 || 0).toLocaleString()}</span> <span class="text-slate-500">({calculatePercentage(gamesWon, player.statistics.games_played)}%)</span></p>
         </div>
         <div>
@@ -47,8 +48,8 @@
         </div>
     </div>
     
-    <div class="flex flex-col gap-y-1">
-        <div class="flex flex-row justify-between">
+    <div class="flex flex-col gap-y-2">
+        <div class="flex flex-col gap-y-3 md:flex-row md:justify-between">
             <div class="flex flex-col gap-y-1">
                 <p class="text-xl font-bold leading-none text-neutral-900 dark:text-neutral-100">Skill Trophy Breakdown</p>
                 <p class="text-sm text-neutral-600 dark:text-neutral-400">{overall ? "Which games do your trophies come from?" : "How many trophies do you have in each game?"}</p>
@@ -66,34 +67,40 @@
                 </button> 
             </div>
         </div>
+
         {#if games.reduce((a, b) => a + b.trophies, 0) === games.reduce((a, b) => a + b.maxTrophies, 0)}
             <div class="flex flex-row justify-between">
                 <Confetti />
                 <Confetti />
             </div>
         {/if}
+
         <div class="flex flex-col gap-y-2">
-            {#each games as game}
+            {#each games.sort((a, b) => {
+                if (overall) {
+                    return (b.trophies / totalTrophies) - (a.trophies / totalTrophies);
+                } else {
+                    return (b.trophies / b.maxTrophies) - (a.trophies / a.maxTrophies);
+                }
+            }) as game}
                 <div class="flex flex-row gap-x-2">
                     <img src={`https://cdn.islandstats.xyz/games/${game.icon}/icon.png`} class="w-8 h-8 self-center" alt="Game Icon" />
                     <div class="group h-6 w-full self-center rounded-full bg-neutral-200 dark:bg-neutral-700">
                         {#if overall}
-                            {#if game.trophies === 0}
-                                <span class="ml-2 self-center flex text-nowrap">{calculatePercentage(game.trophies, games.reduce((a, b) => a + b.trophies, 0))}%</span>
-                            {:else}
-                                <div class={`flex flex-col h-full left-0 right-0 rounded-full text-center text-neutral-900 ${game.trophies === game.maxTrophies ? "bg-green-500 dark:bg-green-500" : "bg-neutral-300 dark:bg-neutral-100"}`} style={`width: calc(100% * ${game.trophies / games.reduce((a, b) => a + b.trophies, 0)});`}>
-                                    <span class="self-center flex text-nowrap">{calculatePercentage(game.trophies, games.reduce((a, b) => a + b.trophies, 0))}%</span>
+                            {#if calculatePercentage(game.trophies, totalTrophies) > 5}
+                                <div class={`flex flex-col h-full left-0 right-0 rounded-full text-center text-neutral-900 ${game.trophies === game.maxTrophies ? "bg-green-500 dark:bg-green-500" : "bg-neutral-300 dark:bg-neutral-100"}`} style={`width: calc(100% * ${game.trophies / totalTrophies});`}>
+                                    <span>{calculatePercentage(game.trophies, totalTrophies)}%</span>
                                 </div>
+                            {:else}
+                                <div use:tooltip title={`${calculatePercentage(game.trophies, totalTrophies)}%`} class={`flex flex-col h-full left-0 right-0 rounded-full text-center text-neutral-900 ${game.trophies === game.maxTrophies ? "bg-green-500 dark:bg-green-500" : "bg-neutral-300 dark:bg-neutral-100"}`} style={`width: calc(100% * ${game.trophies / totalTrophies});`}></div>
                             {/if}
                         {:else}
-                            {#if game.trophies === 0}
-                                <span class="ml-2 self-center flex text-nowrap group-hover:hidden">{calculatePercentage(game.trophies, game.maxTrophies)}%</span>
-                                <span class="ml-2 self-center hidden text-nowrap group-hover:flex">{game.trophies.toLocaleString()} / {game.maxTrophies.toLocaleString()}</span>
-                            {:else}
-                                <div class={`flex flex-col h-full left-0 right-0 rounded-full text-center text-neutral-900 ${game.trophies === game.maxTrophies ? "bg-green-500 dark:bg-green-500" : "bg-neutral-300 dark:bg-neutral-100"}`} style={`width: calc(100% * ${game.trophies / game.maxTrophies < 0.05 ? 0.05 : game.trophies / game.maxTrophies});`}>
-                                    <span class="self-center flex text-nowrap group-hover:hidden">{calculatePercentage(game.trophies, game.maxTrophies)}%</span>
-                                    <span class="self-center hidden text-nowrap group-hover:flex">{game.trophies.toLocaleString()} / {game.maxTrophies.toLocaleString()}</span>
+                            {#if calculatePercentage(game.trophies, game.maxTrophies) > 5}
+                                <div class={`flex flex-col h-full left-0 right-0 rounded-full text-center text-neutral-900 ${game.trophies === game.maxTrophies ? "bg-green-500 dark:bg-green-500" : "bg-neutral-300 dark:bg-neutral-100"}`} style={`width: calc(100% * ${game.trophies / game.maxTrophies});`}>
+                                    <span>{calculatePercentage(game.trophies, game.maxTrophies)}%</span>
                                 </div>
+                            {:else}
+                                <div use:tooltip title={`${calculatePercentage(game.trophies, game.maxTrophies)}%`} class={`flex flex-col h-full left-0 right-0 rounded-full text-center text-neutral-900 ${game.trophies === game.maxTrophies ? "bg-green-500 dark:bg-green-500" : "bg-neutral-300 dark:bg-neutral-100"}`} style={`width: calc(100% * ${game.trophies / game.maxTrophies});`}></div>
                             {/if}
                         {/if}
                     </div>
