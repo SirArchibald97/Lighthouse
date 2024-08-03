@@ -1,5 +1,7 @@
 <script>
     import { badges, calculateBadgeTier, calculateMaxTrophies, calculateTrophies } from '$lib/badges.js';
+    import { calculatePercentage } from "$lib/utils.js";
+    import { Confetti } from "svelte-confetti";
     import tooltip from "$lib/tooltip.js";
 
     export let game;
@@ -24,16 +26,23 @@
 
 <div class="text-neutral-900 dark:text-neutral-100">
     <div class="flex flex-row mt-4 mb-2">
+        {#if calculatePercentage(calculateTrophies(stats, (badges[game] || []).concat(badges[`${game}_tiered`] || [])), calculateMaxTrophies((badges[game] || []).concat(badges[`${game}_tiered`] || []))) === 100}
+            <Confetti />
+        {/if}
         <span class="font-semibold text-xl">Badges</span>
         <span class="text-xl px-2 text-neutral-800 dark:text-neutral-500">•</span>
         <div class="flex flex-row gap-x-1 mb-2 self-center text-neutral-700 dark:text-neutral-200">
             <img src="https://cdn.islandstats.xyz/icons/trophies/red.png" alt="Trophies" class="w-5 h-5 self-center" />
-            <span class="self-center text-lg font-semibold">
-                {calculateTrophies(stats, (badges[game] || []).concat(badges[`${game}_tiered`] || []))?.toLocaleString() || 0}<span class="font-normal">
-                    /{calculateMaxTrophies((badges[game] || []).concat(badges[`${game}_tiered`] || []))?.toLocaleString() || 0} ({Math.round((calculateTrophies(stats, (badges[game] || []).concat(badges[`${game}_tiered`] || [])) / calculateMaxTrophies((badges[game] || []).concat(badges[`${game}_tiered`] || []))) * 100)}%)
-                </span>
+            <span class="self-center flex flex-row gap-x-1 text-lg font-semibold">
+                <span>{calculateTrophies(stats, (badges[game] || []).concat(badges[`${game}_tiered`] || []))?.toLocaleString() || 0}</span>
+                <span class="font-normal">/</span>
+                <span class="font-normal">{calculateMaxTrophies((badges[game] || []).concat(badges[`${game}_tiered`] || []))?.toLocaleString() || 0}</span>
+                <span class="font-normal text-neutral-500">({calculatePercentage(calculateTrophies(stats, (badges[game] || []).concat(badges[`${game}_tiered`] || [])), calculateMaxTrophies((badges[game] || []).concat(badges[`${game}_tiered`] || [])))}%)</span>
             </span>
         </div>
+        {#if calculatePercentage(calculateTrophies(stats, (badges[game] || []).concat(badges[`${game}_tiered`] || [])), calculateMaxTrophies((badges[game] || []).concat(badges[`${game}_tiered`] || []))) === 100}
+            <Confetti />
+        {/if}
     </div>
     {#if badges[game]}
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">

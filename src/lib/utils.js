@@ -3,7 +3,7 @@ export async function formatUUID(uuid) {
 }
 
 export function calculatePercentage(value, total) {
-    return value / total * 100 < 1 && value / total * 100 > 0 ? "<1" : Math.round(value / total * 100);
+    return ((value / total) * 100) < 1 && ((value / total) * 100) > 0 ? "<1" : Math.round((value / total) * 100);
 }
 
 export function getRankIcon(ranks) {

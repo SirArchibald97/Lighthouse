@@ -1,22 +1,10 @@
-import { redirect } from '@sveltejs/kit';
-import { SAD_API_KEY, DEV } from "$env/static/private";
+import { SAD_API_KEY, DEV_MODE } from "$env/static/private";
 
 export async function load({ cookies }) {
-    throw redirect(301, "/");
 
-    const favourites = cookies.get("favourites") ? JSON.parse(cookies.get("favourites")) : [];
-    return { favourites };
 }
 
 export const actions = {
-    home: async () => {
-        throw redirect(301, "/");
-    },
-
-    compare: async () => {
-        throw redirect(301, "/compare");
-    },
-
     comparelookup: async ({ request, cookies }) => {
         const data = await request.formData();
         const playerIndex = await data.get("player");
@@ -24,7 +12,7 @@ export const actions = {
         
         const cookie = cookies.get("compare") ? JSON.parse(cookies.get("compare")) : [];
         
-        const res = await fetch(`${DEV === "true" ? "http://localhost:3000" : "https://api.sirarchibald.dev"}/islandstats/${uuid}`, { headers: { "auth": `${SAD_API_KEY}` } });
+        const res = await fetch(`${DEV_MODE === "true" ? "http://localhost:3000" : "https://api.sirarchibald.dev"}/islandstats/${uuid}`, { headers: { "auth": `${SAD_API_KEY}` } });
         const { player } = await res.json();
 
         if (!player) {

@@ -12,19 +12,19 @@
 </script>
 
 <svelte:head>
-    <title>{data.player.username ? `${data.player.username} • Lighthouse` : "Unknown Player"}</title>
-    <link rel="icon" href={`https://mc-heads.net/avatar/${data.uuid}/128`} />    
-    <meta name="description" content={`View ${data.player.username}'s stats on Lighthouse by SirArchibald, including game stats, currency, socials and more!`} />
-    <meta name="og:title" content={`${data.player.username} • Lighthouse`} />
+    <title>{data.player?.username ? `${data.player?.username} • Lighthouse` : "Unknown Player"}</title>
+    <link rel="icon" href={`https://mc-heads.net/avatar/${data.player?.uuid}/128`} />    
+    <meta name="description" content={`View ${data.player?.username}'s stats on Lighthouse by SirArchibald, including game stats, currency, socials and more!`} />
+    <meta name="og:title" content={`${data.player?.username} • Lighthouse`} />
 	<meta
 		name="og:description"
 		content={[
-			`Rank: ${getRankName(data.player.ranks)}`,
+			`Rank: ${getRankName(data.player?.ranks)}`,
 			"", // Empty line
-			`Crown Level: ${data.player.level?.toLocaleString()}`,
-			`Total Trophies: ${data.player.trophies?.total?.toLocaleString()}`,
-			`Skill Trophies: ${data.player.trophies?.skill.total?.toLocaleString()}`,
-			`Style Trophies: ${data.player.trophies?.style.total?.toLocaleString()}`
+			`Crown Level: ${data.player?.level?.toLocaleString()}`,
+			`Total Trophies: ${data.player?.trophies?.total?.toLocaleString()}`,
+			`Skill Trophies: ${data.player?.trophies?.skill.total?.toLocaleString()}`,
+			`Style Trophies: ${data.player?.trophies?.style.total?.toLocaleString()}`
 		].join("\n")}
 	/>
     <meta name="theme-color" content="#ef4444" />
@@ -33,23 +33,23 @@
     <script src="https://unpkg.com/tippy.js@6"></script>
 </svelte:head>
 <div class="my-4">
-    {#if data.success === false}
+    {#if !data.success}
         <div class="border border-neutral-300 dark:border-neutral-800 rounded-lg py-2 mx-auto">
             <p class="text-center text-xl text-neutral-900 dark:text-neutral-100 py-2">I couldn't find any data for that player!</p>
         </div>
     {:else}
         <!-- page container -->
-        <div class="flex flex-col sm:flex-row gap-4">
+        <div class="flex flex-col lg:flex-row gap-4">
             <div class="lg:basis-1/4 flex flex-col gap-y-4">
-                <PlayerCard {data} />
-                <SocialCard {data} />
+                <PlayerCard player={data.player} />
+                <SocialCard player={data.player} />
 
                 <div class="flex flex-col gap-y-2 border border-neutral-300 dark:border-neutral-800 rounded-md text-sm text-neutral-900 dark:text-neutral-100 p-2 shadow-md">
                     <p><span class="font-semibold">Not seeing your stats?</span> Make sure to set your API preferences on Island from your in-game settings!</p>
                     <p><span class="font-semibold">Found a bug or have a suggestion?</span> Let me know on the <a href="https://discord.gg/JXdQ54DPtd" class="text-blue-500 underline">Discord server</a>!</p>
                 </div>
 
-                {#if data.user && data.user.minecraft.username === data.name}
+                {#if data.user && data.user.minecraft.username === data.player.username}
                     <a href="/api/logout" class="flex flex-col items-center gap-y-2 rounded-md text-md font-semibold text-neutral-900 dark:text-neutral-100 bg-red-500 hover:bg-red-700 dark:bg-red-500/40 dark:hover:bg-red-500/60 p-2 shadow-md">
                         Logout
                     </a>

@@ -5,9 +5,8 @@
     import theme from '$lib/stores/theme.js';
     import { PUBLIC_DISCORD_LOGIN_URL } from "$env/static/public";
 
-    $: dark = $theme === 'dark';
-
     export let data;
+    $: dark = $theme === 'dark';
 </script>
 
 <main class={`flex flex-col min-h-screen ${dark ? "dark" : ""} bg-neutral-50 dark:bg-neutral-900 duration-100`}>
@@ -20,9 +19,16 @@
     
             <div class="flex flex-row gap-x-2">
                 {#if data.user}
-                    <a class="self-center" href={data.user.minecraft ? `/player/${data.user.minecraft.username}` : "/api/link"}>
-                        <img src={data.user.minecraft ? `https://mc-heads.net/avatar/${data.user.minecraft.uuid}/128` : "/no-pfp.webp"} alt="" class="w-10 h-10 self-center rounded-md" />
-                    </a>
+                    {#if data.user.minecraft}
+                        <a class="self-center" href={`/player/${data.user.minecraft.username}`}>
+                            <img src={`https://mc-heads.net/avatar/${data.user.minecraft.uuid}/128`} alt="" class="w-10 h-10 self-center rounded-md" />
+                        </a>
+                    {:else}
+                        <a class="self-center text-md border border-neutral-300 dark:border-neutral-800 p-2 px-4 rounded-md dark:text-neutral-100 bg-neutral-50 dark:bg-neutral-950 hover:bg-neutral-200 dark:hover:bg-neutral-800 duration-100" href="/link">
+                            Not linked!
+                        </a>
+                    {/if}
+
                 {:else}
                     <a class="text-md border border-neutral-300 dark:border-neutral-800 p-2 px-4 rounded-md dark:text-neutral-100 bg-neutral-50 dark:bg-neutral-950 hover:bg-neutral-200 dark:hover:bg-neutral-800 duration-100" href={PUBLIC_DISCORD_LOGIN_URL}>
                         Login
@@ -44,7 +50,7 @@
         </div>
     </div>
 
-    <div class="flex-1 mx-4 sm:mx-44">
+    <div class="flex-1 mx-4 2xl:mx-44">
         <slot />
     </div>
 

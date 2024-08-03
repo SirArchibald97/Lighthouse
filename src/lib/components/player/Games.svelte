@@ -1,4 +1,5 @@
 <script>
+    import General from "$lib/components/games/General.svelte";
     import BattleBox from "$lib/components/games/BattleBox.svelte";
     import SkyBattle from "$lib/components/games/SkyBattle.svelte";
     import Tgttos from "$lib/components/games/Tgttos.svelte";
@@ -19,6 +20,19 @@
     {#if data.player.statistics}
         <p class="text-3xl font-bold mb-4">Games</p>
         <div class="flex flex-col gap-y-3">
+
+            <!-- GENERAL -->
+            <div class="flex flex-col items-start rounded-md border border-neutral-300 dark:border-neutral-800 p-3">
+                <button on:click={() => switchCategory(expandedCategory === "general" ? null : "general")} class="flex flex-row w-full">
+                    <img class="w-8 h-8 mr-2" src="https://cdn.islandstats.xyz/emojis/crown.png" alt="General Icon" />
+                    <p class="text-xl font-semibold">General</p>
+                </button>
+                {#if expandedCategory === "general"}
+                    <div transition:slide={{ duration: 400 }}>
+                        <General player={data.player} />
+                    </div>
+                {/if}
+            </div>
 
             <!--  BATTLE BOX -->
             <div class="flex flex-col items-start rounded-md border border-neutral-300 dark:border-neutral-800 p-3">

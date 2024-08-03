@@ -1,5 +1,5 @@
 import { redirect } from '@sveltejs/kit';
-import { SAD_API_KEY, DEV } from "$env/static/private";
+import { SAD_API_KEY, DEV_MODE } from "$env/static/private";
 import { formatUUID, getRankIcon } from "$lib/utils.js";
 import db from "$lib/db.js";
 
@@ -10,22 +10,25 @@ export async function load({ params, cookies }) {
     if (!id) return { success: false, player: {} };
     if (params.username !== name) throw redirect(301, `/player/${name}`);
     
+    return fetchPlayer(cookies, await formatUUID(id), name);
+}
+
+async function fetchPlayer(cookies, uuid, name) {
     // fetch player data from the MCC Island API
-    const res = await fetch(`${DEV === "true" ? "http://localhost:3000" : "https://api.sirarchibald.dev"}/islandstats/player/${await formatUUID(id)}`, {
+    const res = await fetch(`${DEV_MODE === "true" ? "http://localhost:3000" : "https://api.sirarchibald.dev"}/islandstats/player/${uuid}`, {
         method: "GET",
         headers: { "Content-Type": "application/json", "Accept": "application/json", "auth": `${SAD_API_KEY}` },
     });
     const data = await res.json();
     const player = data?.player || null;
 
-    // if the player exists, update requests in the database and return data to client
     if (player) {
         const result = await db.collection("requests").findOne({ username: name });
-        const isFavourite = cookies.get("favourites") ? JSON.parse(cookies.get("favourites")).find(f => f.username === name) : false;
         const user = cookies.get("user") ? JSON.parse(cookies.get("user")) : null;
-
-        return { uuid: player.uuid, name: player.username, player, rank: getRankIcon(player.ranks), views: result?.requests || 0, favourite: isFavourite, user };
-    } else return { success: false, player: {} };
+        return { success: data.success, player, views: result?.requests || 0, user };
+    } else {
+        return { success: false };
+    }
 }
 
 export const actions = {
