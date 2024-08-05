@@ -10,7 +10,8 @@ const games = {
             { name: "Total Trophies", stat: "trophies.total", icon: "https://cdn.islandstats.xyz/icons/trophies/yellow.png" },
             { name: "Skill Trophies", stat: "trophies.skill.total", icon: "https://cdn.islandstats.xyz/icons/trophies/red.png" },
             { name: "Style Trophies", stat: "trophies.style.total", icon: "https://cdn.islandstats.xyz/icons/trophies/purple.png" },
-            { name: "Bonus Trophies", stat: "trophies.bonus", icon: "https://cdn.islandstats.xyz/icons/trophies/silver.png" }
+            { name: "Bonus Trophies", stat: "trophies.bonus", icon: "https://cdn.islandstats.xyz/icons/trophies/silver.png" },
+            { name: "Rankless Total Trophies", stat: "trophies.total", icon: "https://cdn.islandstats.xyz/icons/trophies/yellow.png", f2p: true },
         ]
     },
     "battlebox": { 
