@@ -141,8 +141,6 @@ const games = {
 
 export async function load({ params }) {
     if (!games[params.game]) return { game: null, players: [] };
-
-
     return { game: games[params.game], players: await getLeaderboard(params.game) };
 }
 
@@ -150,10 +148,18 @@ async function getLeaderboard(game) {
     const fields = { uuid: 1, "player.username": 1, "player.ranks": 1 };
     for (let stat of games[game].stats) fields[stat] = 1;
 
-    const players = await db.collection("players")
+    let players = [];
+    if (game === "trophies") {
+        players = await db.collection("players")
+        .find({})
+        .project(fields)
+        .toArray();
+    } else {
+        players = await db.collection("players")
         .find({ [`player.statistics`]: { $exists: true } })
         .project(fields)
         .toArray();
+    }
     for (let player of players) player._id = player._id.toString();
     return players;
 }

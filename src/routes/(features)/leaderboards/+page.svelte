@@ -21,8 +21,8 @@
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="https://unpkg.com/tippy.js@6"></script>
 </svelte:head>
-<div class="flex flex-col flex-1">
-    <p class="text-center text-4xl text-neutral-900 dark:text-neutral-100 font-semibold mx-4 my-6 sm:mx-44">Leaderboards</p>
+<div class="flex flex-col flex-1 my-4">
+    <p class="text-center text-4xl text-neutral-900 dark:text-neutral-100 font-semibold mx-4 mb-4 sm:mx-44">Leaderboards</p>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         {#each leaderboards as leaderboard}
