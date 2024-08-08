@@ -4,6 +4,7 @@
     import tooltip from "$lib/tooltip.js";
     import ChevronLeft from "$lib/svgs/LeftChevron.svelte";
     import ChevronRight from "$lib/svgs/RightChevron.svelte";
+    import Plus from "$lib/svgs/Plus.svelte";
 
     export let name;
     export let stat;
@@ -59,22 +60,29 @@
 </script>
 
 <div class="flex flex-col border border-neutral-300 dark:border-neutral-800 rounded-sm py-1">
-    <div class="flex flex-row gap-x-2 m-3">
-        {#if icon && !title}<img src={icon} alt="Leadboard Icon" class="w-8 sm:w-10 h-8 sm:h-10 self-center" />{:else if icon && title}<img src={icon} alt="Leadboard Icon" class="w-10 h-10 self-center" use:tooltip title={title} />{/if}
-        <p class={`text-xl sm:text-2xl text-neutral-909 dark:text-neutral-100 font-semibold self-center ${icon ? "" : "ml-2"}`}>{name}</p>
+    <div class="flex flex-row justify-between m-3">
+        <div class="flex flex-row gap-x-2">
+            {#if icon && !title}<img src={icon} alt="Leadboard Icon" class="w-8 sm:w-10 h-8 sm:h-10 self-center" />{:else if icon && title}<img src={icon} alt="Leadboard Icon" class="w-10 h-10 self-center" use:tooltip title={title} />{/if}
+            <p class={`text-xl sm:text-2xl text-neutral-909 dark:text-neutral-100 font-semibold self-center ${icon ? "" : "ml-2"}`}>{name}</p>
+        </div>
+        <a href={`/leaderboards/webhook`} class="group flex flex-row gap-x-2 px-2 rounded-md border-2 border-neutral-300 dark:border-neutral-700 hover:bg-neutral-300 dark:hover:bg-neutral-700">
+            <span class="hidden group-hover:flex duration-100 text-neutral-900 dark:text-neutral-100 self-center">Add to Discord</span><span class="w-6 h-6 self-center text-neutral-900 dark:text-neutral-100"><Plus /></span>
+        </a>
     </div>
-    <table class="flex-1 shrink-0 table-auto w-full border-separate border-spacing-y-1 border-spacing-x-2 px-2 text-md sm:text-lg">
-        <tbody>
-            {#each leaderboard.filter(p => { 
+    <table class="flex-1 table-auto border-separate border-spacing-y-1 border-spacing-x-2 px-2 text-md sm:text-lg">
+        <tbody class="">
+            {#each leaderboard.filter(p => {
                 if (username.length > 0) return p.player.username.toLowerCase().includes(username.toLowerCase());
                 return true;
             }).slice(page * 10, (page + 1) * 10) as player, index}
                 <tr>
-                    <td class="text-neutral-909 dark:text-neutral-100">{leaderboard.indexOf(player) + 1}</td>
-                    <td class="flex flex-row gap-x-2">
-                        <img class="w-6 sm:w-8 h-6 sm:h-8 self-center bg-slate-400 rounded-sm" src={`https://mc-heads.net/avatar/${player.uuid}/128`} alt={`${player.username}'s Rank`} />
-                        <img class="hidden sm:flex w-8 h-8 self-center bg-slate-400 rounded-sm" src={`https://cdn.islandstats.xyz/ranks/${getRankIcon(player.player.ranks)}`} alt={`${player.username}'s Rank`} />
-                        <a href={`/player/${player.player.username}`} class="text-neutral-909 dark:text-neutral-100 hover:underline self-center">{player.player.username}</a>
+                    <td class="text-neutral-909 dark:text-neutral-100">{index + 1}</td>
+                    <td>
+                        <div class="flex flex-row gap-x-2">
+                            <img class="w-6 sm:w-8 h-6 sm:h-8 self-center bg-slate-400 rounded-sm" src={`https://mc-heads.net/avatar/${player.uuid}/128`} alt={`${player.username}'s Rank`} />
+                            <img class="hidden sm:flex w-8 h-8 self-center bg-slate-400 rounded-sm" src={`https://cdn.islandstats.xyz/ranks/${getRankIcon(player.player.ranks)}`} alt={`${player.username}'s Rank`} />
+                            <a href={`/player/${player.player.username}`} class="text-neutral-909 dark:text-neutral-100 hover:underline self-center">{player.player.username}</a>
+                        </div>
                     </td>
                     <td>
                         <div class="flex flex-row gap-x-2">
@@ -87,7 +95,7 @@
         </tbody>
     </table>
 
-    <div class="sticky my-3 place-self-center flex flex-col sm:flex-row gap-x-2 gap-y-2">
+    <div class="my-3 place-self-center flex flex-col sm:flex-row gap-x-2 gap-y-2">
         <input type="text" name="ign" placeholder="Username" bind:value={username} class="self-center text-neutral-900 dark:text-neutral-100 bg-neutral-100 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 rounded-sm px-2 py-1" />
         <div class="flex flex-row gap-x-2 justify-center">
             <button on:click={prevPage} class="h-8 w-8 self-center p-1 bg-neutral-100 dark:bg-neutral-900 hover:bg-neutral-300 dark:hover:bg-neutral-700 border border-neutral-300 dark:border-neutral-800 duration-100 rounded-sm text-neutral-900 dark:text-neutral-100"><ChevronLeft /></button>
