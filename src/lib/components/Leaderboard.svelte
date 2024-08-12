@@ -17,18 +17,24 @@
     let username = "";
 
     let page = 0;
-    function nextPage() { 
-        if (page + 1 < Math.ceil(leaderboard.length / 10))
-            page++;
-        else
-            page = 0;
+    function nextPage() {
+        if (username.length > 0) {
+            if (page + 1 < Math.ceil(leaderboard.filter(p => p.player.username.toLowerCase().includes(username.toLowerCase())).length / 10)) page++;
+            else page = 0;
+        } else {
+            if (page + 1 < Math.ceil(leaderboard.length / 10)) page++;
+            else page = 0;
+        }
         sort();
     }
     function prevPage() {
-        if (page - 1 >= 0)
-            page--;
-        else
-            page = Math.ceil(leaderboard.length / 10) - 1;
+        if (username.length > 0) {
+            if (page - 1 > -1) page--;
+            else page = Math.ceil(leaderboard.filter(p => p.player.username.toLowerCase().includes(username.toLowerCase())).length / 10) - 1;
+        } else {
+            if (page - 1 >= 0) page--;
+            else page = Math.ceil(leaderboard.length / 10) - 1;
+        }
         sort();
     }
 
@@ -57,6 +63,12 @@
             })
     }
     sort();
+
+    function reset() {
+        page = 0;
+        sort();
+    }
+    $: username, reset();
 </script>
 
 <div class="flex flex-col border border-neutral-300 dark:border-neutral-800 rounded-sm py-1">
@@ -76,7 +88,7 @@
                 return true;
             }).slice(page * 10, (page + 1) * 10) as player}
                 <tr>
-                    <td class="text-neutral-909 dark:text-neutral-100">{players.indexOf(players.find(p => p.player.username === player.player.username)) + 1}</td>
+                    <td class="text-neutral-909 dark:text-neutral-100">{(players.indexOf(players.find(p => p.player.username === player.player.username)) + 1).toLocaleString()}</td>
                     <td>
                         <div class="flex flex-row gap-x-2">
                             <img class="w-6 sm:w-8 h-6 sm:h-8 self-center bg-slate-400 rounded-sm" src={`https://mc-heads.net/avatar/${player.uuid}/128`} alt={`${player.player.username}'s Rank`} />
@@ -99,7 +111,12 @@
         <input type="text" name="ign" placeholder="Username" bind:value={username} class="self-center text-neutral-900 dark:text-neutral-100 bg-neutral-100 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 rounded-sm px-2 py-1" />
         <div class="flex flex-row gap-x-2 justify-center">
             <button on:click={prevPage} class="h-8 w-8 self-center p-1 bg-neutral-100 dark:bg-neutral-900 hover:bg-neutral-300 dark:hover:bg-neutral-700 border border-neutral-300 dark:border-neutral-800 duration-100 rounded-sm text-neutral-900 dark:text-neutral-100"><ChevronLeft /></button>
-            <span class="text-neutral-909 dark:text-neutral-100 self-center">{page + 1}/{Math.ceil(leaderboard.length / 10)}</span>
+            <span class="text-neutral-909 dark:text-neutral-100 self-center">
+                {page + 1}/{Math.ceil(leaderboard.filter(p => {
+                    if (username.length > 0) return p.player.username.toLowerCase().includes(username.toLowerCase());
+                    return true;
+                }).length / 10)}
+            </span>
             <button on:click={nextPage} class="h-8 w-8 self-center p-1 bg-neutral-100 dark:bg-neutral-900 hover:bg-neutral-300 dark:hover:bg-neutral-700 border border-neutral-300 dark:border-neutral-800 duration-100 rounded-sm text-neutral-900 dark:text-neutral-100"><ChevronRight /></button>
         </div>
     </div>
