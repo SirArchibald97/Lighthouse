@@ -74,13 +74,13 @@
             {#each leaderboard.filter(p => {
                 if (username.length > 0) return p.player.username.toLowerCase().includes(username.toLowerCase());
                 return true;
-            }).slice(page * 10, (page + 1) * 10) as player, index}
+            }).slice(page * 10, (page + 1) * 10) as player}
                 <tr>
-                    <td class="text-neutral-909 dark:text-neutral-100">{index + 1}</td>
+                    <td class="text-neutral-909 dark:text-neutral-100">{players.indexOf(players.find(p => p.player.username === player.player.username)) + 1}</td>
                     <td>
                         <div class="flex flex-row gap-x-2">
-                            <img class="w-6 sm:w-8 h-6 sm:h-8 self-center bg-slate-400 rounded-sm" src={`https://mc-heads.net/avatar/${player.uuid}/128`} alt={`${player.username}'s Rank`} />
-                            <img class="hidden sm:flex w-8 h-8 self-center bg-slate-400 rounded-sm" src={`https://cdn.islandstats.xyz/ranks/${getRankIcon(player.player.ranks)}`} alt={`${player.username}'s Rank`} />
+                            <img class="w-6 sm:w-8 h-6 sm:h-8 self-center bg-slate-400 rounded-sm" src={`https://mc-heads.net/avatar/${player.uuid}/128`} alt={`${player.player.username}'s Rank`} />
+                            <img class="hidden sm:flex w-8 h-8 self-center bg-slate-400 rounded-sm" src={`https://cdn.islandstats.xyz/ranks/${getRankIcon(player.player.ranks)}`} alt={`${player.player.username}'s Rank`} />
                             <a href={`/player/${player.player.username}`} class="text-neutral-909 dark:text-neutral-100 hover:underline self-center">{player.player.username}</a>
                         </div>
                     </td>
