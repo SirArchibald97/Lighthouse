@@ -88,7 +88,7 @@
                 return true;
             }).slice(page * 10, (page + 1) * 10) as player}
                 <tr>
-                    <td class="text-neutral-909 dark:text-neutral-100">{(leaderboard.indexOf(leaderboard.find(p => p.player.username === player.player.username)) + 1).toLocaleString()}</td>
+                    <td class="text-neutral-909 dark:text-neutral-100">{((username.length > 0 ? players : leaderboard).indexOf(leaderboard.find(p => p.player.username === player.player.username)) + 1).toLocaleString()}</td>
                     <td>
                         <div class="flex flex-row gap-x-2">
                             <img class="w-6 sm:w-8 h-6 sm:h-8 self-center bg-slate-400 rounded-sm" src={`https://mc-heads.net/avatar/${player.uuid}/128`} alt={`${player.player.username}'s Rank`} />
