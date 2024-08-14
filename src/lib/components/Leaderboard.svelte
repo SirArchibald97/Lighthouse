@@ -78,7 +78,7 @@
             <p class={`text-xl sm:text-2xl text-neutral-909 dark:text-neutral-100 font-semibold self-center ${icon ? "" : "ml-2"}`}>{name}</p>
         </div>
         <a href={`/leaderboards/webhook`} class="group flex flex-row gap-x-2 px-2 rounded-md border-2 border-neutral-300 dark:border-neutral-700 hover:bg-neutral-300 dark:hover:bg-neutral-700">
-            <span class="hidden group-hover:flex duration-100 text-neutral-900 dark:text-neutral-100 self-center">Add to Discord</span><span class="w-6 h-6 self-center text-neutral-900 dark:text-neutral-100"><Plus /></span>
+            <span class="w-6 h-6 self-center text-neutral-900 dark:text-neutral-100"><Plus /></span>
         </a>
     </div>
     <table class="flex-1 table-auto border-separate border-spacing-y-1 border-spacing-x-2 px-2 text-md sm:text-lg">
@@ -88,7 +88,7 @@
                 return true;
             }).slice(page * 10, (page + 1) * 10) as player}
                 <tr>
-                    <td class="text-neutral-909 dark:text-neutral-100">{(players.indexOf(players.find(p => p.player.username === player.player.username)) + 1).toLocaleString()}</td>
+                    <td class="text-neutral-909 dark:text-neutral-100">{(leaderboard.indexOf(leaderboard.find(p => p.player.username === player.player.username)) + 1).toLocaleString()}</td>
                     <td>
                         <div class="flex flex-row gap-x-2">
                             <img class="w-6 sm:w-8 h-6 sm:h-8 self-center bg-slate-400 rounded-sm" src={`https://mc-heads.net/avatar/${player.uuid}/128`} alt={`${player.player.username}'s Rank`} />

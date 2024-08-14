@@ -122,7 +122,7 @@ export const games = [
             { name: "Rockets Fired", stat: "statistics.rocket_spleef.rockets_fired" },
             { name: "Rockets Hit", stat: "statistics.rocket_spleef.rockets_hit" },
         ]
-        .concat(badges.rocket_spleef.map(b => { return { name: b.name, stat: `statistics.rocket_spleef.badges.${b.stat}`, icon: `https://cdn.islandstats.xyz/badges/rocket_spleef/${b.icon}.png`, tooltip: b.description } }))
+        .concat(badges.rocket_spleef.map(b => { return { name: b.name, stat: b.stat.startsWith("!") ? `statistics.rocket_spleef.${b.stat.slice(1, b.stat.length)}` : `statistics.rocket_spleef.badges.${b.stat}`, icon: `https://cdn.islandstats.xyz/badges/rocket_spleef/${b.icon}.png`, tooltip: b.description } }))
     },
     { 
         name: "misc", stats: ["player.statistics", "player.collections"], title: "Miscellaneous", icon: "https://cdn.islandstats.xyz/icons/currency/royal_reputation.png",
