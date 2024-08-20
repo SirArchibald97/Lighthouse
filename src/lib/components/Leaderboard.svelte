@@ -77,9 +77,6 @@
             {#if icon && !title}<img src={icon} alt="Leadboard Icon" class="w-8 sm:w-10 h-8 sm:h-10 self-center" />{:else if icon && title}<img src={icon} alt="Leadboard Icon" class="w-10 h-10 self-center" use:tooltip title={title} />{/if}
             <p class={`text-xl sm:text-2xl text-neutral-909 dark:text-neutral-100 font-semibold self-center ${icon ? "" : "ml-2"}`}>{name}</p>
         </div>
-        <a href={`/leaderboards/webhook`} class="group flex flex-row gap-x-2 px-2 rounded-md border-2 border-neutral-300 dark:border-neutral-700 hover:bg-neutral-300 dark:hover:bg-neutral-700">
-            <span class="w-6 h-6 self-center text-neutral-900 dark:text-neutral-100"><Plus /></span>
-        </a>
     </div>
     <table class="flex-1 table-auto border-separate border-spacing-y-1 border-spacing-x-2 px-2 text-md sm:text-lg">
         <tbody class="">

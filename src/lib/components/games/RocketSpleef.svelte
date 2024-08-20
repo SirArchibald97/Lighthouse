@@ -6,7 +6,7 @@
 </script>
 
 <div>
-    <div class="grid grid-cols-1 sm:grid-cols-3 items-start gap-y-4 mt-2 text-md gap-x-24">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-4 mt-2 text-md">
         <div>
             <p>Games Won: <span class="font-semibold">{stats.first_place.toLocaleString()}</span></p>
             <p>Games Lost: <span class="font-semibold">{stats.losses.toLocaleString()}</span></p>

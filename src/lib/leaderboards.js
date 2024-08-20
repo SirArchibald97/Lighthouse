@@ -78,6 +78,8 @@ export const games = [
             { name: "Wins", stat: "statistics.dynaball.wins" },
             { name: "Losses", stat: "statistics.dynaball.losses" },
             { name: "WLR", stat: "statistics.dynaball.wlr", ratio: "statistics.dynaball.games_played" },
+            { name: "Kills", stat: "statistics.dynaball.kills" },
+            { name: "KDR", stat: "statistics.dynaball.kdr", ratio: "statistics.dynaball.kills" },
             { name: "Players Stuck", stat: "statistics.dynaball.players_stuck" },
             { name: "Spawners Broken", stat: "statistics.dynaball.spawners_destroyed" },
             { name: "Blocks Destroyed", stat: "statistics.dynaball.blocks_destroyed" },

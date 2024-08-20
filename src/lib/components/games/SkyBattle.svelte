@@ -14,7 +14,7 @@
         <button on:click={() => switchCategory("quads")} class={`hover:bg-neutral-200 dark:hover:bg-neutral-700 border border-neutral-300 dark:border-neutral-800 duration-100 px-3 py-1 rounded-sm ${category === "quads" ? "bg-neutral-300 dark:bg-neutral-700" : ""}`}>Quads</button>
         <button on:click={() => switchCategory("summer")} class={`hover:bg-neutral-200 dark:hover:bg-neutral-700 border border-neutral-300 dark:border-neutral-800 duration-100 px-3 py-1 rounded-sm ${category === "summer" ? "bg-neutral-300 dark:bg-neutral-700" : ""}`}>Summer</button>
     </div>
-    <div class="grid grid-cols-1 sm:grid-cols-3 items-start gap-y-4 mt-2 text-md gap-x-24">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-4 mt-2 text-md">
         <div>
             <p>Games Won: <span class="font-semibold">{stats.solo_first_place.toLocaleString()}</span></p>
             <p>Games Lost: <span class="font-semibold">{(stats.games_played - stats.solo_first_place).toLocaleString()}</span></p>

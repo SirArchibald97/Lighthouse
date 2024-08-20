@@ -6,7 +6,7 @@
 </script>
 
 <div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-3 items-start gap-y-4 mt-2 text-md gap-x-12">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-4 mt-2 text-md">
         <div>
             <p>Survivor Wins: <span class="font-semibold">{stats.wins.toLocaleString()}</span></p>
             <p>Survivor Losses: <span class="font-semibold">{(stats.games_played - stats.wins).toLocaleString()}</span></p>

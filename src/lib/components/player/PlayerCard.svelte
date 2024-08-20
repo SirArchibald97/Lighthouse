@@ -16,11 +16,13 @@
         firstJoin = `${firstJoinDate.day < 10 ? `0${firstJoinDate.day}`: firstJoinDate.day}/${firstJoinDate.month < 10 ? `0${firstJoinDate.month}`: firstJoinDate.month}/${firstJoinDate.year} @ ${firstJoinDate.hour < 10 ? `0${firstJoinDate.hour}`: firstJoinDate.hour}:${firstJoinDate.minute < 10 ? `0${firstJoinDate.minute}` : firstJoinDate.minute}`;
     }
 
-    function calculateLastOnline() {
+    function calculateTimeAgo(time) {
         if (player?.status) {
-            const lastJoinDate = DateTime.fromISO(player.status.lastJoin.toLocaleString());
+            const lastJoinDate = DateTime.fromISO(time);
             // calculate how many seconds/minutes/hours/days ago the player was last online
-            const diff = DateTime.now().diff(lastJoinDate, ["days", "hours", "minutes", "seconds"]);
+            const diff = DateTime.now().diff(lastJoinDate, ["months", "weeks", "days", "hours", "minutes", "seconds"]);
+            if (diff.months > 0) return `${diff.months} month${diff.months === 1 ? "" : "s"} ago`;
+            if (diff.weeks > 0) return `${diff.days} week${diff.days === 1 ? "" : "s"} ago`;
             if (diff.days > 0) return `${diff.days} day${diff.days === 1 ? "" : "s"} ago`;
             if (diff.hours > 0) return `${diff.hours} hour${diff.hours === 1 ? "" : "s"} ago`;
             if (diff.minutes > 0) return `${diff.minutes} minute${diff.minutes === 1 ? "" : "s"} ago`;
@@ -63,7 +65,7 @@
                             {/if}
                         </div>
                     {:else}
-                        <p class="text-neutral-900 dark:text-neutral-100">Last online: {calculateLastOnline()}</p>
+                        <p class="text-neutral-900 dark:text-neutral-100">Last online: {calculateTimeAgo(player.status.lastJoin.toLocaleString())}</p>
                     {/if}
                 {/if}
             </div>
@@ -99,10 +101,10 @@
         </div>
     </div>
 
-    <div class="flex flex-row">
-        <div class="basis-3/5 flex flex-col border-r border-neutral-300 dark:border-neutral-800 px-4 py-2">
+    <div class={`flex flex-row ${player.status ? "border-b" : "border-0"} border-neutral-300 dark:border-neutral-800`}>
+        <div class="basis-7/12 flex flex-col border-r border-neutral-300 dark:border-neutral-800 px-3 py-2">
             <p class="text-neutral-900 dark:text-neutral-100 font-semibold text-xl mb-1">Trophies</p>
-            <div class="flex flex-col gap-y-2 text-md">
+            <div class="flex flex-col gap-y-2 text-md font-semibold">
                 <div class="flex flex-row">
                     <img src="https://cdn.islandstats.xyz/icons/trophies/yellow.png" class="w-8 h-8 self-center mr-1" alt="Total Trophies" use:tooltip title="Total Trophies" />
                     <span class="self-center">{player.trophies.total.toLocaleString()}</span>
@@ -128,7 +130,7 @@
             </div>
         </div>
 
-        <div class="basis-2/5 flex flex-col px-4 py-2">
+        <div class="basis-5/12 flex flex-col px-3 py-2">
             <p class="text-neutral-900 dark:text-neutral-100 font-semibold text-xl mb-1">Wallet</p>
             {#each [
                 { stat: "coins", icon: "coin", name: "Coins" },
@@ -137,11 +139,17 @@
                 { stat: "materialDust", icon: "material_dust", name: "Material Dust" },
                 { stat: "royalReputation", icon: "royal_reputation", name: "Royal Reputation" }
             ] as currency}
-                <div class="flex flex-row sm:gap-1 my-1">
-                    <img src={`https://cdn.islandstats.xyz/icons/currency/${currency.icon}.png`} class="w-6 h-6" alt="Coins" use:tooltip title={currency.name} />
+                <div class="flex flex-row sm:gap-1 my-1 font-semibold tracking-wider">
+                    <img src={`https://cdn.islandstats.xyz/icons/currency/${currency.icon}.png`} class="w-6 h-6" alt={currency.name} use:tooltip title={currency.name} />
                     <p class="text-md ml-1 sm:ml-0 2xl:text-md">{player.collections?.currency[currency.stat].toLocaleString() || "Unknown"}</p>
                 </div>
             {/each}
         </div>
     </div>
+
+    {#if player.status}
+        <div class="p-3">
+            <p>First joined: <span use:tooltip title={firstJoin} class="font-semibold tracking-wider">{calculateTimeAgo(player.status.firstJoin.toLocaleString())}</span></p>
+        </div>
+    {/if}
 </div>

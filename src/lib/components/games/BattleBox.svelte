@@ -5,8 +5,8 @@
     export let stats;
 </script>
 
-<div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-2 text-md">
+<div class="flex flex-col gap-y-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-4 mt-2 text-md">
         <div>
             <p>Rounds Won: <span class="font-semibold">{stats.rounds_won.toLocaleString()}</span></p>
             <p>Rounds Lost: <span class="font-semibold">{((stats.games_played * 3) - stats.rounds_won).toLocaleString()}</span></p>

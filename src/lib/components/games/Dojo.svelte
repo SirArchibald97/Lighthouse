@@ -5,7 +5,7 @@
 </script>
 
 <div>
-    <div class="grid grid-cols-1 sm:grid-cols-3 2xl:grid-cols-3 items-start gap-y-4 mt-2 text-md gap-x-12">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-4 mt-2 text-md">
         <div>
             <p>Unique Medals: <span class="font-semibold">{stats.unique_medals.toLocaleString()}</span></p>
             <p>Total Medals: <span class="font-semibold">{stats.total_medals.toLocaleString()}</span></p>

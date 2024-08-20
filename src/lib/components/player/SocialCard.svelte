@@ -93,13 +93,13 @@
                 </div>
             {:else}
                 <div class="flex justify-center items-center my-auto">
-                    <p class="text-neutral-600 dark:text-neutral-400 text-md 2xl:text-lg py-2">Not currently partied!</p>
+                    <p class="text-neutral-600 dark:text-neutral-400 text-md 2xl:text-lg py-2 tracking-wide">Not currently partied!</p>
                 </div>
             {/if}
         {/if}
     {:else}
         <div class="flex justify-center items-center my-auto">
-            <p class="text-neutral-600 dark:text-neutral-400 text-md 2xl:text-lg my-4">Social information is disabled!</p>
+            <p class="text-neutral-600 dark:text-neutral-400 text-md 2xl:text-lg my-4 tracking-wide">Social information is disabled!</p>
         </div>
     {/if}
 </div>

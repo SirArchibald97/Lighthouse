@@ -44,6 +44,15 @@
         "legendary": "border-legendary bg-legendary/10",
         "mythic": "border-mythic bg-mythic/10",
     };
+
+    import { onMount } from "svelte";
+    onMount(() => {
+        document.addEventListener("click", (event) => {
+            if (!event.target.closest(".relative")) {
+                showMenu = false;
+            }
+        });
+    });
 </script>
 
 <svelte:head>

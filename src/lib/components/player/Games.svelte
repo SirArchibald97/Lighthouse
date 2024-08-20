@@ -18,9 +18,11 @@
 
 <div class="rounded-sm p-4">
     {#if data.player.statistics}
-        <p class="text-3xl font-bold mb-4">Games</p>
-        <div class="flex flex-col gap-y-3">
+        <div class="flex flex-col gap-y-1 mb-4">
+            <p class="text-3xl font-bold">Games</p>
+        </div>
 
+        <div class="flex flex-col gap-y-3">
             <!-- GENERAL -->
             <div class="flex flex-col items-start rounded-md border border-neutral-300 dark:border-neutral-800 p-3">
                 <button on:click={() => switchCategory(expandedCategory === "general" ? null : "general")} class="flex flex-row w-full">

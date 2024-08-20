@@ -1,29 +1,27 @@
 <script>
     import Leaderboard from "$lib/components/Leaderboard.svelte";
+	import NumberedList from "$lib/svgs/NumberedList.svelte";
 
     export let data;
 </script>
 
 <svelte:head>
-    <title>{data.game.title} Leaderboards • Lighthouse</title>
-    <meta name="description" content={`${data.game.title} Leaderboards for MCC Island • Lighthouse by SirArchibald`} />
+    <title>{data.game?.title ? `${data.game.title} Leaderboards` : `Unknown Game`} • Lighthouse</title>
+    <meta name="description" content={`${data.game?.title} Leaderboards for MCC Island • Lighthouse by SirArchibald`} />
     <link rel="icon" href="%sveltekit.assets%/favicon.png" type="image/png" />
 
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="https://unpkg.com/tippy.js@6"></script>
 </svelte:head>
-<div class="flex flex-col mb-8 gap-y-8">
-    {#if data.game}
-        <div class="flex flex-col sm:flex-row gap-y-4 justify-between mt-6 mx-4 sm:mx-44">
-            <a href="/leaderboards" class="px-3 border text-neutral-900 dark:text-neutral-100 border-neutral-300 dark:border-neutral-800 hover:bg-neutral-300 dark:hover:bg-neutral-700 duration-100 py-1 rounded-sm self-center">Go Back</a>
-            <div class="flex flex-row gap-x-2 self-center flex-grow justify-center">
-                <img src={data.game.icon} alt="Royal Reputation Icon" class="w-8 sm:w-12 h-8 sm:h-12 self-center" />
-                <p class="text-center text-xl sm:text-3xl text-neutral-900 dark:text-neutral-100 font-semibold self-center">{data.game.title} Leaderboards</p>
-            </div>
+<div class="flex flex-col gap-y-4">
+    {#if data.game !== null}
+        <div class="flex flex-row gap-x-2 justify-center text-2xl text-neutral-900 dark:text-neutral-100">
+            <img src={data.game.icon} alt={data.game.title} class="w-10 h-10 self-center" />
+            <p class="font-semibold self-center">{data.game.title} Leaderboards</p>
         </div>
 
-        <div class="flex flex-col mb-8 gap-y-8">
-            <div class="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-8 mx-4 sm:mx-24 md:mx-4 lg:mx-32">
+        <div class="flex flex-col mb-8 gap-y-4">
+            <div class="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-4 mx-4 sm:mx-24 md:mx-4 lg:mx-32">
                 {#each data.game.boards as board}
                     <Leaderboard name={board.name} stat={board.stat} display={board.display || null} ratio={board.ratio || null} icon={board.icon || null} title={board.tooltip} f2p={board.f2p}
                         players={board.f2p ? 
