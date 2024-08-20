@@ -50,11 +50,11 @@
     </div>
 
     {#if badges[game]}
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 *:border *:border-neutral-300 *:dark:border-neutral-800 *:p-2 *:rounded-md">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 *:p-2 *:rounded-md">
             {#each badges[game] as badge}
-                <div class={`flex flex-col gap-y-2 text-md ${hasCompleted(badge) > 0 ? "bg-green-500/40" : ""}`}>
+                <div class={`flex flex-col gap-y-2 text-md border-2 ${hasCompleted(badge) > 0 ? "bg-green-500/40 border-green-600" : "dark:border-neutral-800 border-neutral-300"}`}>
                     <div class="flex flex-row gap-x-2">
-                        <img use:tooltip title={badge.description} class="w-16 h-16" src={`https://cdn.islandstats.xyz/badges/${icons[game] || game}/${badge.icon}.png`} alt={badge.name} />
+                        <img class="w-16 h-16" src={`https://cdn.islandstats.xyz/badges/${icons[game] || game}/${badge.icon}.png`} alt={badge.name} />
                         <div class="flex flex-col items-start mt-2 sm:mt-0 self-center">
                             <p class={`flex flex-row font-semibold ${(badge.stat.startsWith("!") ? stats[badge.stat.slice(1, badge.stat.length)] : stats.badges[badge.stat]) > 0 ? "text-green-500" : "text-red-500"}`}>
                                 {badge.name}
@@ -81,26 +81,20 @@
     {/if}
     
     {#if badges[`${game}_tiered`]}
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-5 *:border *:border-neutral-300 *:dark:border-neutral-800 *:p-2 *:rounded-md">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-5 *:p-2 *:rounded-md">
             {#each badges[`${game}_tiered`] as badge}
-                <div class="relative bg-green-500/40" style={`width: calc(100% * ${stats[badge.stat] / badge.tiers.reduce((a, b) => a + b.amount, 0)})`}>
-                    <div class="absolute inset-0 z-10 p-2">
-                        <div class="flex flex-row gap-x-2">
-                            <img class="w-16 h-16" src={`https://cdn.islandstats.xyz/badges/${icons[game] || game}/${badge.icon}.png`} alt={badge.name} />
-                            <div class="flex flex-col items-start mt-2 sm:mt-0 self-center">
-                                <p class={`flex flex-row font-semibold ${(badge.stat.startsWith("!") ? stats[badge.stat.slice(1, badge.stat.length)] : stats.badges[badge.stat]) > 0 ? "text-green-500" : "text-red-500"}`}>
-                                    {badge.name}
-                                </p>
-                                <p>{badge.description}</p>
-                            </div>
+                <div class={`flex flex-col gap-y-2 text-md border-2 ${calculateTrophies(stats, [badge]) === calculateMaxTrophies([badge]) ? "border-green-500 bg-green-500/40" : "dark:border-neutral-800 border-neutral-300"}`}>
+                    <div class="flex flex-row gap-x-2">
+                        <img class="w-16 h-16" src={`https://cdn.islandstats.xyz/badges/${icons[game] || game}/${badge.icon}.png`} alt={badge.name} />
+                        <div class="flex flex-col items-start mt-2 sm:mt-0 self-center">
+                            <p class={`flex flex-row font-semibold`}>
+                                {badge.name}
+                            </p>
+                            <p>{badge.description}</p>
                         </div>
                     </div>
-                </div>
-
-                <div class="flex flex-col text-md bg-green-500/40" style={`width: calc(100% * ${stats[badge.stat] / badge.tiers.reduce((a, b) => a + b.amount, 0)})`}>
-                    
-                    <div class="flex flex-row justify-between my-auto px-2">
-                        <p>
+                    <div class="flex flex-col gap-y-2">
+                        <p class="mx-2">
                             {#if estimates}
                                 {#if stats[badge.stat] >= badge.tiers[badge.tiers.length - 1].amount}
                                     <span class="text-green-500">Completed!</span>
@@ -126,12 +120,16 @@
                                 {/each}
                             {/if}
                         </p>
+                        <p class="flex flex-row gap-x-1">
+                            <img src="https://cdn.islandstats.xyz/icons/trophies/red.png" alt="Trophies Icon" class="w-6 h-6 self-center" />
+                            <span class="font-semibold">{calculateTrophies(stats, [badge])}</span> / <span>{calculateMaxTrophies([badge])}</span>
+                        </p>
                     </div>
                 </div>
             {/each}
         </div>
 
-        <div class="flex flex-row gap-x-2">
+        <div class="flex flex-row gap-x-2 mt-4">
             <p class="self-center text-neutral-800 dark:text-neutral-300">Toggle estimates</p>
             <button type="button" on:click={toggleEstimates} class="self-center group relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer items-center justify-center rounded-full" role="switch" aria-checked="false">
                 <span class="sr-only">Use setting</span>
