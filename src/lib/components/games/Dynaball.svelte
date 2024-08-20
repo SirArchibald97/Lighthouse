@@ -5,7 +5,7 @@
     export let stats;
 </script>
 
-<div>
+<div class="flex flex-col gap-y-4">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-4 mt-2 text-md">
         <div>
             <p>Games Played: <span class="font-semibold">{stats.games_played.toLocaleString()}</span></p>

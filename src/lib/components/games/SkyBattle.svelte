@@ -9,7 +9,7 @@
     $: stats = ostats[category];
 </script>
 
-<div>
+<div class="flex flex-col gap-y-4">
     <div class="flex flex-row gap-x-2 mt-4 mb-2">
         <button on:click={() => switchCategory("quads")} class={`hover:bg-neutral-200 dark:hover:bg-neutral-700 border border-neutral-300 dark:border-neutral-800 duration-100 px-3 py-1 rounded-sm ${category === "quads" ? "bg-neutral-300 dark:bg-neutral-700" : ""}`}>Quads</button>
         <button on:click={() => switchCategory("summer")} class={`hover:bg-neutral-200 dark:hover:bg-neutral-700 border border-neutral-300 dark:border-neutral-800 duration-100 px-3 py-1 rounded-sm ${category === "summer" ? "bg-neutral-300 dark:bg-neutral-700" : ""}`}>Summer</button>
