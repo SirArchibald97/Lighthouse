@@ -25,8 +25,4 @@ export const actions = {
         const { name } = await mj_res.json();
         throw redirect(301, `/player/${name || username}`);
     },
-
-    leaderboards: async () => {
-        throw redirect(301, "/leaderboards");
-    },
 }

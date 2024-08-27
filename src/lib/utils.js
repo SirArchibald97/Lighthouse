@@ -3,7 +3,13 @@ export async function formatUUID(uuid) {
 }
 
 export function calculatePercentage(value, total) {
-    return ((value / total) * 100) < 1 && ((value / total) * 100) > 0 ? "<1" : Math.round((value / total) * 100);
+    return ((value / total) * 100) < 1 && ((value / total) * 100) > 0 ? "<1" : Math.floor((value / total) * 100);
+}
+
+export function shortenNumber(number) {
+    if (number >= 1e6) return (number / 1e6).toFixed(1).replace(/\.0$/, '') + "M";
+    if (number >= 1e3) return (number / 1e3).toFixed(1).replace(/\.0$/, '') + "K";
+    return number.toLocaleString();
 }
 
 export function getRankIcon(ranks) {

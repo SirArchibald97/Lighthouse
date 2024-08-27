@@ -22,14 +22,14 @@
     function toggleMenu() { showMenu = !showMenu; }
 </script>
 
-<main class="font-inter">
-    <div class={`${dark ? "dark" : ""} flex flex-col min-h-screen font-inter bg-neutral-50 dark:bg-neutral-900 duration-100`}>
+<main class="font-inter tracking-wide">
+    <div class={`${dark ? "dark" : ""} flex flex-col min-h-screen bg-neutral-50 dark:bg-neutral-900 duration-100`}>
         <!-- NAVBAR -->
-        <div class="bg-red-500 dark:bg-red-500/40 py-2">
+        <div class="bg-red-500 dark:bg-red-500/40 px-2 py-2">
             <div class="flex flex-row justify-between items-center p-2 text-sm text-neutral-100">
                 <a on:click={() => { if (showMenu) toggleMenu() }} href="/" class="flex flex-row gap-x-2 font-semibold duration-100 px-2 rounded-md self-center">Lighthouse</a>
     
-                <div class="hidden md:flex flex-col md:flex-row gap-x-4 gap-y-2 text-neutral-100">
+                <div class="hidden lg:flex flex-col md:flex-row gap-x-4 gap-y-2 text-neutral-100">
                     <a href="/leaderboards" class="flex flex-row gap-x-2 font-semibold duration-100 px-2 rounded-md hover:bg-neutral-200/30 dark:hover:bg-neutral-800/50">
                         <span class="h-6 w-6 self-center"><NumberedList /></span><span class="self-center">Leaderboards</span>
                     </a>
@@ -42,12 +42,12 @@
                 </div>
         
                 <div class="flex flex-row gap-x-2">
-                    <button on:click={toggleMenu} class="flex md:hidden self-center text-md border border-neutral-300 dark:border-neutral-800 p-2 rounded-md text-neutral-900 dark:text-neutral-100 bg-neutral-50 dark:bg-neutral-950 hover:bg-neutral-200 dark:hover:bg-neutral-800 duration-100">
+                    <button on:click={toggleMenu} class="flex lg:hidden self-center text-md border border-neutral-300 dark:border-neutral-800 p-2 rounded-md text-neutral-900 dark:text-neutral-100 bg-neutral-50 dark:bg-neutral-950 hover:bg-neutral-200 dark:hover:bg-neutral-800 duration-100">
                         {#if showMenu}<span class="w-4 md:w-6 h-4 sm:h-6 self-center"><Cross /></span>{:else}<span class="w-4 md:w-6 h-4 sm:h-6 self-center"><Menu /></span>{/if}
                     </button>
                     <div class="flex flex-row gap-x-2">
                         {#if $page.url.pathname !== "/"}
-                            <form method="POST" action="?/lookup" class="hidden md:flex font-semibold text-md py-2 flex-row gap-x-2 border border-neutral-300 dark:border-neutral-800 dark:text-neutral-100 bg-neutral-50 dark:bg-neutral-950 duration-100 rounded-md shadow-lg">
+                            <form method="POST" action="?/lookup" class="hidden lg:flex font-semibold text-md py-2 flex-row gap-x-2 border border-neutral-300 dark:border-neutral-800 dark:text-neutral-100 bg-neutral-50 dark:bg-neutral-950 duration-100 rounded-md shadow-lg">
                                 <input class="text-neutral-900 dark:text-neutral-100 bg-neutral-50 dark:bg-neutral-950 focus:outline-none mx-3 duration-100 text-center" name="username" placeholder="Find a player" />
                             </form>
                         {/if}
@@ -58,7 +58,7 @@
                 </div>
             </div>
             {#if showMenu}
-                <div transition:slide={{ duration: 200 }} class="md:hidden flex flex-col gap-y-2 px-2 text-neutral-100 *:border *:border-neutral-300 *:py-1">
+                <div transition:slide={{ duration: 200 }} class="lg:hidden flex flex-col gap-y-2 px-2 text-neutral-100 *:border *:border-neutral-300 *:py-1">
                     <a on:click={toggleMenu} href="/leaderboards" class="flex flex-row gap-x-2 font-semibold duration-100 px-2 rounded-md hover:bg-neutral-200/30 dark:hover:bg-neutral-800/50">
                         <span class="h-6 w-6 self-center"><NumberedList /></span><span class="self-center">Leaderboards</span>
                     </a>

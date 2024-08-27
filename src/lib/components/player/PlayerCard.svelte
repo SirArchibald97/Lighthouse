@@ -32,7 +32,7 @@
 </script>
 
 <div class="flex flex-col text-neutral-900 dark:text-neutral-100 border border-neutral-300 dark:border-neutral-800 rounded-md shadow-md">
-    <div class="flex flex-row gap-x-2 border-b border-neutral-300 dark:border-neutral-800 p-4">
+    <div class="flex flex-row gap-x-2 border-b border-neutral-300 dark:border-neutral-800 p-3">
         <img class="w-12 h-12 rounded-sm bg-neutral-400 dark:bg-neutral-600 self-center" src={`https://mc-heads.net/avatar/${player.uuid}/128`} alt={`${player.username}'s Rank'`} />
         <img class="w-12 h-12 rounded-sm bg-neutral-400 dark:bg-neutral-600 self-center" src={`https://cdn.islandstats.xyz/ranks/${getRankIcon(player.ranks)}`} alt="" />
 
@@ -48,19 +48,15 @@
                         <div class="flex flex-col text-sm 2xl:text-md">
                             {#if player.status.server?.category === "GAME"}
                                 <p class="flex flex-row gap-x-1">
-                                    Playing 
-                                    <span class="flex flex-row gap-x-1 font-semibold">
-                                        <img class="w-4 h-4 2xl:w-6 2xl:h-6 self-center" src={`https://cdn.islandstats.xyz/games/${getStatusIcon(player.status.server?.associatedGame)}/icon.png`} alt={``} />
-                                        {getStatusGame(player.status.server?.associatedGame)}
-                                    </span>
+                                    Playing
+                                    <img class="w-4 h-4 2xl:w-6 2xl:h-6 self-center" src={`https://cdn.islandstats.xyz/games/${getStatusIcon(player.status.server?.associatedGame)}/icon.png`} alt={``} />
+                                    <span class="font-semibold">{getStatusGame(player.status.server?.associatedGame)}</span>
                                 </p>
                             {:else if player.status.server?.category === "LOBBY"}
                                 <p class="flex flex-row gap-x-1">
                                     In the 
-                                    <span class="flex flex-row gap-x-1 font-semibold">
-                                        <img class="w-4 h-4 2xl:w-6 2xl:h-6 self-center" src={`https://cdn.islandstats.xyz/games/${getStatusIcon(player.status.server?.associatedGame) || "lobby"}/icon.png`} alt={``} />
-                                        {getStatusGame(player.status.server?.associatedGame) || "Main"} Lobby
-                                    </span>
+                                    <img class="w-4 h-4 2xl:w-6 2xl:h-6 self-center" src={`https://cdn.islandstats.xyz/games/${getStatusIcon(player.status.server?.associatedGame) || "lobby"}/icon.png`} alt={``} />
+                                    <span class="font-semibold">{getStatusGame(player.status.server?.associatedGame) || "Main"} Lobby</span>
                                 </p>
                             {/if}
                         </div>
@@ -78,7 +74,7 @@
             <span class="self-center font-bold text-xl">{player.level}</span>
 
             <div class="h-4 w-full self-center rounded-full bg-neutral-200 dark:bg-neutral-700">
-                <div class="flex flex-col h-full left-0 right-0 rounded-full text-center group" style={`width: calc(100% * ${calculateProgress(player.level, player.trophies.total)}); ${getColour(player.level)}`}></div>
+                <div class="flex flex-col h-full left-0 right-0 rounded-l-full text-center group" style={`width: calc(100% * ${calculateProgress(player.level, player.trophies.total)}); ${getColour(player.level)}`}></div>
             </div>
 
             <span class="self-center font-bold text-xl">{player.level + 1}</span>
@@ -102,7 +98,7 @@
     </div>
 
     <div class={`flex flex-row ${player.status ? "border-b" : "border-0"} border-neutral-300 dark:border-neutral-800`}>
-        <div class="basis-7/12 flex flex-col border-r border-neutral-300 dark:border-neutral-800 px-3 py-2">
+        <div class="basis-1/2 flex flex-col border-r border-neutral-300 dark:border-neutral-800 px-3 py-2">
             <p class="text-neutral-900 dark:text-neutral-100 font-semibold text-xl mb-1">Trophies</p>
             <div class="flex flex-col gap-y-2 text-md font-semibold">
                 <div class="flex flex-row">
@@ -130,7 +126,7 @@
             </div>
         </div>
 
-        <div class="basis-5/12 flex flex-col px-3 py-2">
+        <div class="flex flex-col px-3 py-2">
             <p class="text-neutral-900 dark:text-neutral-100 font-semibold text-xl mb-1">Wallet</p>
             {#each [
                 { stat: "coins", icon: "coin", name: "Coins" },

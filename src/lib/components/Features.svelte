@@ -15,8 +15,8 @@
         title: "Total Trophies",
         players: [
             { uuid: "19f9fd28-558c-4959-98c2-fb1a18bed0a1", username: "SirArchibald97", ranks: ["MODERATOR"], level: 35, trophies: { total: 23219 } },
-            { uuid: "db6f2b90-762c-4ec9-82b1-9a2392cf409a", username: "Centranos", ranks: ["GRAND_CHAMP_ROYALE"], level: 9, trophies: { total: 3850 } },
-            { uuid: "3e7a89ee-c4e2-4392-a317-444b861b0794", username: "Noxite", ranks: ["NOXCREW"], level: 4, trophies: { total: 1865 } },
+            { uuid: "db6f2b90-762c-4ec9-82b1-9a2392cf409a", username: "Steve", ranks: ["GRAND_CHAMP_ROYALE"], level: 28, trophies: { total: 3850 } },
+            { uuid: "3e7a89ee-c4e2-4392-a317-444b861b0794", username: "Alex", ranks: ["CHAMP"], level: 11, trophies: { total: 1865 } },
         ]
     };
 
@@ -67,7 +67,7 @@
                             <span class="self-center font-bold text-xl">35</span>
                 
                             <div class="h-4 w-full self-center rounded-full bg-neutral-200 dark:bg-neutral-700">
-                                <div class="flex flex-col h-full left-0 right-0 rounded-full text-center group" style={`width: calc(100% * 0.22); background-color: #a855f7`}></div>
+                                <div class="flex flex-col h-full left-0 right-0 rounded-l-full text-center group" style={`width: calc(100% * 0.22); background-color: #a855f7`}></div>
                             </div>
                 
                             <span class="self-center font-bold text-xl">36</span>
@@ -150,7 +150,7 @@
         </div>
 
         <!-- COMPARE -->
-        <div class="flex flex-row justify-center bg-neutral-300/10 dark:bg-neutral-800/10">
+        <div class="flex flex-row justify-center bg-neutral-300/80 dark:bg-neutral-800/10">
             <div class="flex flex-col gap-y-4 ">
                 <div class="flex flex-row gap-x-4">
                     <span class="w-12 h-12 self-center"><CompareArrows /></span>

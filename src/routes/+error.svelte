@@ -1,7 +1,3 @@
-<script>
-    import { page } from "$app/stores";
-</script>
-
 <head>
     <title>Oops, something went wrong!</title>
 </head>

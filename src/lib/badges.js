@@ -2,12 +2,12 @@ export const badges = {
     battle_box: [
         { name: "Ace in the Box", description: "Eliminate all 4 members of the opposing team", icon: "ace_in_the_box", stat: "ace", trophies: 70 },
         { name: "Ace From Afar", description: "Eliminate all 4 members of the opposing team using ranged weapons", icon: "ace_from_afar", stat: "ace_from_afar", trophies: 100 },
-        { name: "Aerial Assault", description: "Eliminate a player using a ranged weapon whilst levitating", icon: "aerial_assault", stat: "aerial_assault", trophies: 50 },
+        { name: "Aerial Assault", description: "Eliminate a player using a ranged weapon whilst levitating", icon: "aerial_assault", stat: "aerial_assault", trophies: 50, secret: true },
         { name: "Blind Brawl", description: "Eliminate a player whilst blind", icon: "blind_brawl", stat: "blind_brawl", trophies: 30 },
         { name: "Demolitions Expert", description: "Eliminate 3 enemies with explosives in a single round", icon: "demolitions_expert", stat: "demolitions_expert", trophies: 100 },
         { name: "Flawless Battle", description: "Place 1st as a team without any member of your team dying", icon: "flawless_battle", stat: "flawless_battle", trophies: 70 },
-        { name: "Savior Ace", description: "Eliminate all 4 enemies as the last player standing", icon: "savior_ace", stat: "leave_it_to_me", trophies: 100 },
-        { name: "Stealthy Takedown", description: "Eliminate an enemy whilst invisible", icon: "stealthy_takedown", stat: "stealthy_takedown", trophies: 30 },
+        { name: "Savior Ace", description: "Eliminate all 4 enemies as the last player standing", icon: "savior_ace", stat: "leave_it_to_me", trophies: 100, secret: true },
+        { name: "Stealthy Takedown", description: "Eliminate an enemy whilst invisible", icon: "stealthy_takedown", stat: "stealthy_takedown", trophies: 30, secret: true },
         { name: "Ultimate Ace", description: "Eliminate all 12 enemies in a game", icon: "ultimate_ace", stat: "ultimate_ace", trophies: 150 },
         { name: "Untouchable Assassin", description: "Place 1st as a team whilst taking no damage and getting at least 4 eliminations", icon: "untouchable_assassin", stat: "untouchable_assassin", trophies: 70 },
     ],
@@ -50,14 +50,14 @@ export const badges = {
         ]}
     ],
     sky_battle: [
-        { name: "Creeper Coffin", description: "Get an elimination using a Creeper you spawned", icon: "creeper_coffin", stat: "creeper_coffin", trophies: 30 },
-        { name: "Fallen Warrior", description: "Die after getting 8 eliminations in a single game", icon: "fallen_warrior", stat: "fallen_warrior", trophies: 50 },
-        { name: "Personal Feast", description: "Eat 12 or more pieces of steak in a single game", icon: "personal_feast", stat: "personal_feast", trophies: 70 },
+        { name: "Creeper Coffin", description: "Get an elimination using a Creeper you spawned", icon: "creeper_coffin", stat: "creeper_coffin", trophies: 30, secret: true },
+        { name: "Fallen Warrior", description: "Die after getting 8 eliminations in a single game", icon: "fallen_warrior", stat: "fallen_warrior", trophies: 50, secret: true },
+        { name: "Personal Feast", description: "Eat 12 or more pieces of steak in a single game", icon: "personal_feast", stat: "personal_feast", trophies: 70, secret: true },
         { name: "Sky Lord", description: "Get at least 10 eliminations in a single game", icon: "sky_lord", stat: "sky_lord", trophies: 70 },
         { name: "Sky Sniper", description: "Get an elimination with a ranged weapon from over 50 blocks away", icon: "sky_sniper", stat: "sky_sniper", trophies: 70 },
         { name: "Team Crusher", description: "Eliminate all 4 members of an enemy team", icon: "team_crusher", stat: "team_crusher", trophies: 30 },
         { name: "Untouchable Champion", description: "Reach a survival placement of 1st without taking damage", icon: "untouchable_champion", stat: "untouchable_champion", trophies: 150 },
-        { name: "Wings to Fly", description: "Don't touch the ground for 30s after using a levitation spark", icon: "wings_to_fly", stat: "wings_to_fly", trophies: 30 },
+        { name: "Wings to Fly", description: "Don't touch the ground for 30s after using a levitation spark", icon: "wings_to_fly", stat: "wings_to_fly", trophies: 30, secret: true },
     ],
     sky_battle_tiered: [
         { name: "Sky Battle Player", description: "Survive for at least 60s in games of Sky Battle", icon: "sky_battle_player", stat: "survived_minute", suggestionStat: "survived_minute/games_played", tiers: [
@@ -99,7 +99,7 @@ export const badges = {
     ],
     tgttos: [
         { name: "Got the Worm", description: "Place 1st with the Early Birds modifier active", icon: "got_the_worm", stat: "got_the_worm", trophies: 30 },
-        { name: "Jackpot", description: "Place 7th in every round of a TGTTOS game", icon: "jackpot", stat: "jackpot", trophies: 50 },
+        { name: "Jackpot", description: "Place 7th in every round of a TGTTOS game", icon: "jackpot", stat: "jackpot", trophies: 50, secret: true },
         { name: "Pave the Way", description: "Place 1st without placing blocks on a map where you can place blocks", icon: "pave_the_way", stat: "pave_the_way", trophies: 50 },
         { name: "Slapdown", description: "Punch a chicken with a slapstick", icon: "slapdown", stat: "slapdown", trophies: 10 },
         { name: "Triple Champion", description: "Place 1st in every round of TGTTOS game", icon: "triple_champion", stat: "triple_champion", trophies: 100 },
@@ -111,7 +111,7 @@ export const badges = {
         { name: "Chicken Puncher", description: "Punch chickens in games of TGTTOS", icon: "chicken_puncher", stat: "chickens_punched", suggestionStat: "chickens_punched/games_played", tiers: [
             { name: "I", amount: 50, trophies: 10 },
             { name: "II", amount: 150, trophies: 20 },
-            { name: "III", amount: 320, trophies: 30 },
+            { name: "III", amount: 325, trophies: 30 },
             { name: "IV", amount: 700, trophies: 50 },
             { name: "V", amount: 1300, trophies: 75 },
             { name: "VI", amount: 2250, trophies: 100 },
@@ -157,9 +157,9 @@ export const badges = {
     hitw: [
         { name: "Blaze of Glory", description: "Finish 3rd or higher in a game where you punched a blaze", icon: "blaze_of_glory", stat: "blaze_of_glory", trophies: 50 },
         { name: "Bullet Time", description: "Survive being hit by the matrix trap", icon: "bullet_time", stat: "bullet_time", trophies: 30 },
-        { name: "Something in the Waves", description: "Catch a fish during a game of HITW", icon: "something_in_the_waves", stat: "fish_catcher", trophies: 70 },
+        { name: "Something in the Waves", description: "Catch a fish during a game of HITW", icon: "something_in_the_waves", stat: "fish_catcher", trophies: 70, secret: true },
         { name: "Barely Broiled", description: "Survive being launched by a hot potato", icon: "barely_broiled", stat: "hot_potato_survivor", trophies: 50 },
-        { name: "Monster Catch", description: "Hook a guardian with a fishing rod", icon: "monster_catch", stat: "monster_catcher", trophies: 100 },
+        { name: "Monster Catch", description: "Hook a guardian with a fishing rod", icon: "monster_catch", stat: "monster_catcher", trophies: 100, secret: true },
         { name: "Slimey Rivalry", description: "Survival all 4 minutes of a game of HITW", icon: "slimey_rivalry", stat: "slimey_rivalry", trophies: 70 },
     ],
     hitw_tiered: [
@@ -342,9 +342,9 @@ export const badges = {
         ]},
     ],
     rocket_spleef: [
-        { name: "Advanced Tactics", description: "Survive 60 seconds without deploying your elytra", icon: "advanced_tactics", stat: "survive_60s_without_gliding", trophies: 50 },
-        { name: "Careful Glider", description: "Win a game without dropping below 50% elytra durability", icon: "careful_glider", stat: "win_above_half_durability", trophies: 70 },
-        { name: "Flawless Rocketeer", description: "Win without using any updrafts", icon: "flawless_rocketeer", stat: "win_without_updraft", trophies: 50 },
+        { name: "Advanced Tactics", description: "Survive 60 seconds without deploying your elytra", icon: "advanced_tactics", stat: "survive_60s_without_gliding", trophies: 50, secret: true },
+        { name: "Careful Glider", description: "Win a game without dropping below 50% elytra durability", icon: "careful_glider", stat: "win_above_half_durability", trophies: 70, secret: true },
+        { name: "Flawless Rocketeer", description: "Win without using any updrafts", icon: "flawless_rocketeer", stat: "win_without_updraft", trophies: 50, secret: true },
         { name: "Rocket Brawler", description: "Punch 3 players within 10 seconds", icon: "rocket_brawler", stat: "fast_punch", trophies: 30 },
         { name: "Rocket Rush", description: "Eliminate 3 players within 20 seconds", icon: "rocket_rush", stat: "fast_triple_kill", trophies: 100 },
         { name: "Spleef Sniper", description: "Land a direct hit with a rocket on a player at least 40 blocks away", icon: "rocket_spleef_sniper", stat: "distant_direct", trophies: 70 },

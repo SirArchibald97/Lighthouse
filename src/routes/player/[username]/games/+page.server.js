@@ -1,9 +1,5 @@
 import { redirect } from '@sveltejs/kit';
 
-export async function load({ params }) {
-    throw redirect(301, `/player/${params.username}/games`);
-}
-
 export const actions = {
     // redirects to the provided player's profile page
     lookup: async ({ request }) => {

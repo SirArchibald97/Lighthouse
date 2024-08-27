@@ -55,17 +55,15 @@
                 <p class="text-sm text-neutral-600 dark:text-neutral-400">{overall ? "Which games do your trophies come from?" : "How many trophies do you have in each game?"}</p>
             </div>
 
-            <div class="flex flex-row gap-x-2">
-                <button class="flex flex-row gap-x-1 text-md border border-neutral-300 dark:border-neutral-800 px-2 py-1 rounded-md dark:text-neutral-100 bg-neutral-50 dark:bg-neutral-950 hover:bg-neutral-200 dark:hover:bg-neutral-800 duration-100" on:click={toggleOverall}>
-                    {#if overall}
-                        <span class="w-6 h-6 self-center"><Pie /></span>
-                        <span class="self-center">Overall</span>
-                    {:else}
-                        <span class="w-6 h-6 self-center"><TrendingUpArrow /></span>
-                        <span class="self-center">Progress</span>
-                    {/if}
-                </button> 
-            </div>
+            <button class="flex flex-row gap-x-1 text-md border border-neutral-300 dark:border-neutral-800 px-2 py-1 rounded-md dark:text-neutral-100 bg-neutral-50 dark:bg-neutral-950 hover:bg-neutral-200 dark:hover:bg-neutral-800 duration-100" on:click={toggleOverall}>
+                {#if overall}
+                    <span class="w-6 h-6 self-center"><Pie /></span>
+                    <span class="self-center">Overall</span>
+                {:else}
+                    <span class="w-6 h-6 self-center"><TrendingUpArrow /></span>
+                    <span class="self-center">Progress</span>
+                {/if}
+            </button>
         </div>
 
         {#if games.reduce((a, b) => a + b.trophies, 0) === games.reduce((a, b) => a + b.maxTrophies, 0)}
@@ -88,19 +86,19 @@
                     <div class="group h-6 w-full self-center rounded-full bg-neutral-200 dark:bg-neutral-700">
                         {#if overall}
                             {#if calculatePercentage(game.trophies, totalTrophies) > 5}
-                                <div class={`flex flex-col h-full left-0 right-0 rounded-full text-center text-neutral-900 ${game.trophies === game.maxTrophies ? "bg-green-500 dark:bg-green-500" : "bg-neutral-300 dark:bg-neutral-100"}`} style={`width: calc(100% * ${game.trophies / totalTrophies});`}>
+                                <div class={`flex flex-col h-full left-0 right-0 rounded-l-full text-center text-neutral-900 ${game.trophies === game.maxTrophies ? "bg-green-500 dark:bg-green-500" : "bg-neutral-400 dark:bg-neutral-100 rounded-l-full"}`} style={`width: calc(100% * ${game.trophies / totalTrophies});`}>
                                     <span>{calculatePercentage(game.trophies, totalTrophies)}%</span>
                                 </div>
                             {:else}
-                                <div use:tooltip title={`${calculatePercentage(game.trophies, totalTrophies)}%`} class={`flex flex-col h-full left-0 right-0 rounded-full text-center text-neutral-900 ${game.trophies === game.maxTrophies ? "bg-green-500 dark:bg-green-500" : "bg-neutral-300 dark:bg-neutral-100"}`} style={`width: calc(100% * ${game.trophies / totalTrophies});`}></div>
+                                <div use:tooltip title={`${calculatePercentage(game.trophies, totalTrophies)}%`} class={`flex flex-col h-full left-0 right-0 rounded-l-full text-center text-neutral-900 ${game.trophies === game.maxTrophies ? "bg-green-500 dark:bg-green-500" : "bg-neutral-400 dark:bg-neutral-100"}`} style={`width: calc(100% * ${game.trophies / totalTrophies});`}></div>
                             {/if}
                         {:else}
                             {#if calculatePercentage(game.trophies, game.maxTrophies) > 5}
-                                <div class={`flex flex-col h-full left-0 right-0 rounded-full text-center text-neutral-900 ${game.trophies === game.maxTrophies ? "bg-green-500 dark:bg-green-500" : "bg-neutral-300 dark:bg-neutral-100"}`} style={`width: calc(100% * ${game.trophies / game.maxTrophies});`}>
+                                <div class={`flex flex-col h-full left-0 right-0 text-center text-neutral-900 ${game.trophies === game.maxTrophies ? "bg-green-500 dark:bg-green-500 rounded-full" : "bg-neutral-400 dark:bg-neutral-100 rounded-l-full"}`} style={`width: calc(100% * ${game.trophies / game.maxTrophies});`}>
                                     <span>{calculatePercentage(game.trophies, game.maxTrophies)}%</span>
                                 </div>
                             {:else}
-                                <div use:tooltip title={`${calculatePercentage(game.trophies, game.maxTrophies)}%`} class={`flex flex-col h-full left-0 right-0 rounded-full text-center text-neutral-900 ${game.trophies === game.maxTrophies ? "bg-green-500 dark:bg-green-500" : "bg-neutral-300 dark:bg-neutral-100"}`} style={`width: calc(100% * ${game.trophies / game.maxTrophies});`}></div>
+                                <div use:tooltip title={`${calculatePercentage(game.trophies, game.maxTrophies)}%`} class={`flex flex-col h-full left-0 right-0 rounded-l-full text-center text-neutral-900 ${game.trophies === game.maxTrophies ? "bg-green-500 dark:bg-green-500" : "bg-neutral-400 dark:bg-neutral-100"}`} style={`width: calc(100% * ${game.trophies / game.maxTrophies});`}></div>
                             {/if}
                         {/if}
                     </div>

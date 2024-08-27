@@ -20,8 +20,7 @@ export default {
     }
   },
   plugins: [
-    flowbitePlugin
+      flowbitePlugin
   ],
   darkMode: "selector"
 }
-

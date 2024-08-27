@@ -103,7 +103,7 @@
 
             <div class="flex flex-row gap-x-4 gap-y-2 sm:gap-y-0">
                 <div class="flex-1 self-center text-lg rounded-md bg-white dark:bg-neutral-800 py-1.5 pl-3 pr-10 text-leftshadow-sm ring-1 ring-inset ring-neutral-300 dark:ring-neutral-700 focus:ring-2 focus:ring-red-500">
-                    <input class="focus:outline-none w-full bg-white dark:bg-neutral-800" name="amount" type="number" placeholder="Amount" max="10_000_000" min="1" bind:value={amount} />
+                    <input class="focus:outline-none w-full bg-white dark:bg-neutral-800" name="amount" placeholder="Amount" max="10_000_000" min="1" bind:value={amount} />
                 </div>
     
                 <button on:click={open} class="flex flex-row justify-center items-center text-center self-center text-lg rounded-md bg-red-500 py-1.5 pl-3 pr-10 text-slate-50 shadow-sm hover:bg-red-600">
@@ -116,21 +116,24 @@
 
         <div class="mt-4">
             {#if rewards.length > 0}
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
                     {#each rewards as reward}
-                        <div class={`flex flex-row gap-x-2 border-2 ${colours[items.find(i => i.name === reward.item)?.rarity] || "border-common bg-common/10"} p-2 rounded-md shadow-md`}>
-                            <img src={items.find(i => i.name === reward.item)?.icon || ""} alt="" class="place-self-center h-12 w-12 sm:h-16 sm:w-16" />
-                            <div class="flex flex-col text-sm md:text-lg">
-                                <p class="font-semibold">{reward.amount.toLocaleString()}x {reward.item}{reward.amount > 1 && reward.item !== "Coins" && reward.item !== "Silver" && reward.item !== "Material Dust" ? "s" : ""}</p>
+                        <div class={`flex flex-row gap-x-4 border-2 ${colours[items.find(i => i.name === reward.item)?.rarity] || "border-common bg-common/10"} p-2 rounded-md shadow-md`}>
+                            <div class="flex flex-col gap-y-1">
+                                <img src={items.find(i => i.name === reward.item)?.icon || ""} alt="" class="place-self-center h-12 w-12 sm:h-16 sm:w-16" />
+                                <p class="text-sm md:text-lg font-semibold self-center">{reward.amount.toLocaleString()}x</p>
+                            </div>
+                            <div class="flex flex-col text-sm md:text-lg self-center">
+                                <p class="font-semibold">{reward.item}{reward.amount > 1 && reward.item !== "Coins" && reward.item !== "Silver" && reward.item !== "Material Dust" ? "s" : ""}</p>
                                 <p class="flex flex-col">
                                     <span class="flex flex-row gap-x-1 leading-tight">
                                         {#if reward.average * fixedAmount < reward.amount}
-                                            <span class="w-4 h-4 self-center"><UpArrow /></span> {reward.amount / fixedAmount} per open (above average)
+                                            <span class="w-4 h-4 self-center"><UpArrow /></span> {(reward.amount / fixedAmount).toFixed(2).toLocaleString()} per open (above average)
                                         {:else}
-                                            <span class="w-4 h-4 self-center"><DownArrow /></span> {reward.amount / fixedAmount} per open (below average)
+                                            <span class="w-4 h-4 self-center"><DownArrow /></span> {(reward.amount / fixedAmount).toFixed(2).toLocaleString()} per open (below average)
                                         {/if}
                                     </span>
-                                    <span>Expected {reward.average.toLocaleString()} per open</span>
+                                    <span>Expected {reward.average.toFixed(2).toLocaleString()} per open</span>
                                 </p>
                             </div>
                         </div>
