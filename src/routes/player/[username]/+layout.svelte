@@ -3,6 +3,7 @@
     import PlayerCard from "$lib/components/player/PlayerCard.svelte";
     import SocialCard from "$lib/components/player/SocialCard.svelte";
     import { getRankName } from "$lib/utils.js";
+	import Ad from "$lib/components/Ad.svelte";
     
     export let data;
 
@@ -58,7 +59,7 @@
                     {/if}
                 {/if}
 
-                <div>
+                <Ad>
                     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5229589229491714" crossorigin="anonymous"></script>
                     <!-- Player Side Banner -->
                     <ins class="adsbygoogle"
@@ -69,7 +70,7 @@
                         data-full-width-responsive="true">
                     </ins>
                     <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-                </div>
+                </Ad>
             </div>
 
             <div class="lg:basis-3/4 flex flex-col gap-y-4 text-neutral-900 dark:text-neutral-100">
