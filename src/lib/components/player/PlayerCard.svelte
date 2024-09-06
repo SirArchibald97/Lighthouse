@@ -97,30 +97,30 @@
         </div>
     </div>
 
-    <div class={`flex flex-row ${player.status ? "border-b" : "border-0"} border-neutral-300 dark:border-neutral-800`}>
+    <div class={`flex flex-col lg:flex-row ${player.status ? "border-b" : "border-0"} border-neutral-300 dark:border-neutral-800`}>
         <div class="basis-1/2 flex flex-col border-r border-neutral-300 dark:border-neutral-800 px-3 py-2">
             <p class="text-neutral-900 dark:text-neutral-100 font-semibold text-xl mb-1">Trophies</p>
-            <div class="flex flex-col gap-y-2 text-md font-semibold">
+            <div class="flex flex-col gap-y-2 text-sm 2xl:text-md font-semibold">
                 <div class="flex flex-row">
-                    <img src="https://cdn.islandstats.xyz/icons/trophies/yellow.png" class="w-8 h-8 self-center mr-1" alt="Total Trophies" use:tooltip title="Total Trophies" />
+                    <img src="https://cdn.islandstats.xyz/icons/trophies/yellow.png" class="w-7 h-7 self-center mr-1" alt="Total Trophies" use:tooltip title="Total Trophies" />
                     <span class="self-center">{player.trophies.total.toLocaleString()}</span>
                     <span class="self-center px-1 text-neutral-400 dark:text-neutral-600">/</span>
                     <span class="self-center text-neutral-400 dark:text-neutral-600">{player.trophies.max.toLocaleString()}</span>
                 </div>
                 <div class="flex flex-row">
-                    <img src="https://cdn.islandstats.xyz/icons/trophies/red.png" class="w-8 h-8 self-center mr-1" alt="Total Trophies" use:tooltip title="Skill Trophies" />
+                    <img src="https://cdn.islandstats.xyz/icons/trophies/red.png" class="w-7 h-7 self-center mr-1" alt="Total Trophies" use:tooltip title="Skill Trophies" />
                     <span class="self-center">{player.trophies.skill.total.toLocaleString()}</span>
                     <span class="self-center px-1 text-neutral-400 dark:text-neutral-600">/</span>
                     <span class="self-center text-neutral-400 dark:text-neutral-600">{player.trophies.skill.max.toLocaleString()}</span>
                 </div>
                 <div class="flex flex-row">
-                    <img src="https://cdn.islandstats.xyz/icons/trophies/purple.png" class="w-8 h-8 self-center mr-1" alt="Total Trophies" use:tooltip title="Style Trophies" />
+                    <img src="https://cdn.islandstats.xyz/icons/trophies/purple.png" class="w-7 h-7 self-center mr-1" alt="Total Trophies" use:tooltip title="Style Trophies" />
                     <span class="self-center">{player.trophies.style.total.toLocaleString()}</span>
                     <span class="self-center px-1 text-neutral-400 dark:text-neutral-600">/</span>
                     <span class="self-center text-neutral-400 dark:text-neutral-600">{player.trophies.style.max.toLocaleString()}</span>
                 </div>
                 <div class="flex flex-row">
-                    <img src="https://cdn.islandstats.xyz/icons/trophies/silver.png" class="w-8 h-8 self-center mr-1" alt="Total Trophies" use:tooltip title="Bonus Trophies" />
+                    <img src="https://cdn.islandstats.xyz/icons/trophies/silver.png" class="w-7 h-7 self-center mr-1" alt="Total Trophies" use:tooltip title="Bonus Trophies" />
                     <span class="self-center">{player.trophies.bonus.toLocaleString()}</span>
                 </div>
             </div>
@@ -137,7 +137,7 @@
             ] as currency}
                 <div class="flex flex-row sm:gap-1 my-1 font-semibold tracking-wider">
                     <img src={`https://cdn.islandstats.xyz/icons/currency/${currency.icon}.png`} class="w-6 h-6" alt={currency.name} use:tooltip title={currency.name} />
-                    <p class="text-md ml-1 sm:ml-0 2xl:text-md">{player.collections?.currency[currency.stat].toLocaleString() || "Unknown"}</p>
+                    <p class="text-sm 2xl:text-md ml-1 sm:ml-0 2xl:text-md">{player.collections?.currency[currency.stat].toLocaleString() || "Unknown"}</p>
                 </div>
             {/each}
         </div>

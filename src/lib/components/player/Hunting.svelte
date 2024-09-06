@@ -6,11 +6,7 @@
 	import RightChevron from "$lib/svgs/RightChevron.svelte";
     import { onMount } from "svelte";
 
-
     export let data;
-
-    let expandedCategory = null;
-    function switchCategory(category) { expandedCategory = category; }
 
     const allTieredBadges = [
         { stats: data.player.statistics?.battle_box, icons: "battle_box", badges: badges.battle_box_tiered }, 
@@ -18,8 +14,8 @@
         { stats: data.player.statistics?.tgttos, icons: "tgttos", badges: badges.tgttos_tiered}, 
         { stats: data.player.statistics?.hitw, icons: "hitw", badges: badges.hitw_tiered },
         { stats: data.player.statistics?.dynaball, icons: "dynaball", badges: badges.dynaball_tiered }, 
-        { stats: data.player.statistics?.pkw.dojo, icons: "parkour_warrior", icon: "parkour_warrior/solo", badges: badges.dojo_tiered },
-        { stats: data.player.statistics?.pkw.survivor, icons: "parkour_warrior", badges: badges.survivor_tiered }, 
+        { stats: data.player.statistics?.pkw.dojo, icons: "parkour_warrior", icon: "parkour_warrior/solo", filter: "dojo", badges: badges.dojo_tiered },
+        { stats: data.player.statistics?.pkw.survivor, icons: "parkour_warrior", filter: "survivor", badges: badges.survivor_tiered }, 
         { stats: data.player.statistics?.rocket_spleef, icons: "rocket_spleef", badges: badges.rocket_spleef_tiered }
     ];
 
@@ -67,14 +63,16 @@
 
     let badgeList = [];
     if (data.player.statistics) {
-        for (const { stats, icons, badges } of allTieredBadges) {
+        for (const { stats, icon, icons, filter, badges } of allTieredBadges) {
             for (const badge of badges) {
                 if (badge.suggestionStat) {
                     const components = badge.suggestionStat.split("/");
                     const averagePerGame = (stats[components[0]] / stats[components[1]]) || 0;
                     badgeList.push({ 
-                        stats, 
-                        icons, 
+                        stats,
+                        icon, 
+                        icons,
+                        filter,
                         badge, 
                         average: Math.round(averagePerGame * 10) / 10,
                         total: {
@@ -110,7 +108,7 @@
         }
 
         if (currentFilter.name !== "All") {
-            sortedBadges = sortedBadges.filter(badge => badge.icons === currentFilter.filter);
+            sortedBadges = sortedBadges.filter(badge => (badge.filter || badge.icons) === currentFilter.filter);
         }
     }
     sortBadges();
@@ -137,7 +135,7 @@
                 <p class="text-md font-normal text-neutral-700 dark:text-neutral-300">How long will it take to <span class="font-semibold">reach the {totalMode ? "final tier" : "next tier"}</span> of each tiered badge based on your current averages?</p>
             </div>
         
-            <div class="flex flex-row gap-x-2">
+            <div class="flex flex-col lg:flex-row gap-x-2">
                 <button class="my-auto flex flex-row gap-x-1 text-md border border-neutral-300 dark:border-neutral-800 p-2 rounded-md dark:text-neutral-100 bg-neutral-50 dark:bg-neutral-950 hover:bg-neutral-200 dark:hover:bg-neutral-800 duration-100" on:click={toggleMode}>
                     {#if totalMode}
                         <span class="w-6 h-6 self-center"><DoubleRightChevron /></span>
