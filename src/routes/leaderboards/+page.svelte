@@ -1,4 +1,6 @@
 <script>
+    import Ad from "$lib/components/Ad.svelte";
+
     const leaderboards = [
         { name: "Trophies", page: "trophies", icon: "https://cdn.islandstats.xyz/icons/trophies/yellow.png" },
         { name: "Battle Box", page: "battlebox", icon: "https://cdn.islandstats.xyz/games/battle_box/icon.png" },
@@ -31,4 +33,16 @@
             </a>
         {/each}
     </div>
+    <Ad>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5229589229491714" crossorigin="anonymous"></script>
+        <ins class="adsbygoogle"
+            style="display:block"
+            data-ad-client="ca-pub-5229589229491714"
+            data-ad-slot="6242704329"
+            data-ad-format="auto"
+            data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </Ad>
 </div>

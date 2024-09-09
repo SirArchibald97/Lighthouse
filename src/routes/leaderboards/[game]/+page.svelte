@@ -1,6 +1,6 @@
 <script>
     import Leaderboard from "$lib/components/Leaderboard.svelte";
-	import NumberedList from "$lib/svgs/NumberedList.svelte";
+	import Ad from "$lib/components/Ad.svelte";
 
     export let data;
 </script>
@@ -20,7 +20,7 @@
             <p class="font-semibold self-center">{data.game.title} Leaderboards</p>
         </div>
 
-        <div class="flex flex-col mb-8 gap-y-4">
+        <div class="flex flex-col gap-y-4">
             <div class="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-4 mx-4 sm:mx-24 md:mx-4 lg:mx-32">
                 {#each data.game.boards as board}
                     <Leaderboard name={board.name} stat={board.stat} display={board.display || null} ratio={board.ratio || null} icon={board.icon || null} title={board.tooltip} f2p={board.f2p}
@@ -37,4 +37,17 @@
             <p class="text-xl text-neutral-600 dark:text-neutral-400">Game not found!</p>
         </div>
     {/if}
+    <Ad>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5229589229491714" crossorigin="anonymous"></script>
+        <!-- Leaderboards Page -->
+        <ins class="adsbygoogle"
+            style="display:block"
+            data-ad-client="ca-pub-5229589229491714"
+            data-ad-slot="6242704329"
+            data-ad-format="auto"
+            data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </Ad>
 </div>
