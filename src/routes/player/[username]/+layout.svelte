@@ -6,9 +6,6 @@
 	import Ad from "$lib/components/Ad.svelte";
     
     export let data;
-
-    let infoTab = "games";
-    function switchInfoTab(newTab) { infoTab = newTab; }
 </script>
 
 <svelte:head>
@@ -34,13 +31,12 @@
 </svelte:head>
 <div>
     {#if !data.success}
-        <div class="border border-neutral-300 dark:border-neutral-800 rounded-lg py-2 mx-auto">
+        <div class="border-2 border-neutral-300 dark:border-neutral-800 rounded-lg py-2 mx-auto">
             <p class="text-center text-xl text-neutral-900 dark:text-neutral-100 py-2">I couldn't find any data for that player!</p>
         </div>
     {:else}
-        <!-- page container -->
         <div class="flex flex-col lg:flex-row gap-4">
-            <div class="lg:basis-1/4 flex flex-col gap-y-4">
+            <div class="lg:w-1/4 flex flex-col gap-y-4">
                 <PlayerCard player={data.player} />
                 <SocialCard player={data.player} />
 
@@ -59,9 +55,9 @@
                     {/if}
                 {/if}
 
+                <!--
                 <Ad>
                     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5229589229491714" crossorigin="anonymous"></script>
-                    <!-- Player Side Banner -->
                     <ins class="adsbygoogle"
                         style="display:block"
                         data-ad-client="ca-pub-5229589229491714"
@@ -71,28 +67,32 @@
                     </ins>
                     <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
                 </Ad>
+                -->
             </div>
 
-            <div class="lg:basis-3/4 flex flex-col gap-y-4 text-neutral-900 dark:text-neutral-100">
-                <div class="flex flex-row justify-center sm:justify-normal gap-x-2 text-md *:rounded-md *:py-2">
-                    <a href={`/player/${data.player.username}/games`} class={`flex flex-row gap-x-2 hover:bg-neutral-200 dark:hover:bg-neutral-700 border border-neutral-200 dark:border-neutral-800 duration-100 px-3 py-1 rounded-sm ${$page.url.pathname.endsWith("/games") ? "bg-neutral-200 dark:bg-neutral-700" : ""}`}>
+            <div class="lg:w-3/4 flex flex-col gap-y-2 text-neutral-900 dark:text-neutral-100">
+                <div class="flex flex-row justify-center sm:justify-normal gap-x-2 text-md *:rounded-md *:py-2 *:flex-grow *:justify-center *:border-2 *:border-neutral-300 *:dark:border-neutral-800">
+                    <a href={`/player/${data.player.username}/games`} class={`flex flex-row gap-x-2 hover:bg-neutral-200 dark:hover:bg-neutral-700 duration-100 px-3 py-1 rounded-sm ${$page.url.pathname.endsWith("/games") ? "bg-neutral-300 dark:bg-neutral-700" : ""}`}>
                         <img class="w-6 h-6 self-center" src="https://cdn.islandstats.xyz/games/battle_box/icon.png" alt="Games Icon" /><span class="self-center hidden sm:flex">Games</span>
                     </a>
-                    <a href={`/player/${data.player.username}/hunting`} class={`flex flex-row gap-x-2 hover:bg-neutral-200 dark:hover:bg-neutral-700 border border-neutral-200 dark:border-neutral-800 duration-100 px-3 py-1 rounded-sm ${$page.url.pathname.endsWith("/hunting") ? "bg-neutral-200 dark:bg-neutral-700" : ""}`}>
+                    <a href={`/player/${data.player.username}/hunting`} class={`flex flex-row gap-x-2 hover:bg-neutral-200 dark:hover:bg-neutral-700 duration-100 px-3 py-1 rounded-sm ${$page.url.pathname.endsWith("/hunting") ? "bg-neutral-200 dark:bg-neutral-700" : ""}`}>
                         <img class="w-6 h-6 self-center" src="https://cdn.islandstats.xyz/icons/trophies/yellow.png" alt="Games Icon" /><span class="self-center hidden sm:flex">Trophy Hunting</span>
                     </a>
-                    <div class={`flex flex-row gap-x-2 hover:bg-neutral-200 dark:hover:bg-neutral-700 border border-neutral-200 dark:border-neutral-800 duration-100 px-3 py-1 rounded-sm ${$page.url.pathname.endsWith("/fishing") ? "bg-neutral-200 dark:bg-neutral-700" : ""}`}>
+                    <a href={`/player/${data.player.username}/fishing`} class={`flex flex-row gap-x-2 hover:bg-neutral-200 dark:hover:bg-neutral-700 duration-100 px-3 py-1 rounded-sm ${$page.url.pathname.endsWith("/fishing") ? "bg-neutral-200 dark:bg-neutral-700" : ""}`}>
                         <img class="w-6 h-6 self-center" src="/icons/cod.webp" alt="Games Icon" /><span class="self-center hidden sm:flex">Fishing</span>
-                    </div>
-                    <div class={`flex flex-row gap-x-2 hover:bg-neutral-200 dark:hover:bg-neutral-700 border border-neutral-200 dark:border-neutral-800 duration-100 px-3 py-1 rounded-sm ${$page.url.pathname.endsWith("/questing") ? "bg-neutral-200 dark:bg-neutral-700" : ""}`}>
+                    </a>
+                    <a href={`/player/${data.player.username}/questing`} class={`flex flex-row gap-x-2 hover:bg-neutral-200 dark:hover:bg-neutral-700 duration-100 px-3 py-1 rounded-sm ${$page.url.pathname.endsWith("/questing") ? "bg-neutral-200 dark:bg-neutral-700" : ""}`}>
                         <img class="w-6 h-6 self-center" src="/icons/questing.png" alt="Games Icon" /><span class="self-center hidden sm:flex">Questing</span>
-                    </div>
-                    <div class={`flex flex-row gap-x-2 hover:bg-neutral-200 dark:hover:bg-neutral-700 border border-neutral-200 dark:border-neutral-800 duration-100 px-3 py-1 rounded-sm ${$page.url.pathname.endsWith("/crafting") ? "bg-neutral-200 dark:bg-neutral-700" : ""}`}>
-                        <img class="w-6 h-6 self-center" src="/icons/crafting.png" alt="Games Icon" /><span class="self-center hidden sm:flex">Crafting</span>
-                    </div>
+                    </a>
+                    <a href={`/player/${data.player.username}/crafting`} class={`flex flex-row gap-x-2 hover:bg-neutral-200 dark:hover:bg-neutral-700 duration-100 px-3 py-1 rounded-sm ${$page.url.pathname.endsWith("/crafting") ? "bg-neutral-200 dark:bg-neutral-700" : ""}`}>
+                        <img class="w-6 h-6 self-center" src="https://cdn.islandstats.xyz/icons/wardrobe/crafting.png" alt="Games Icon" /><span class="self-center hidden sm:flex">Crafting</span>
+                    </a>
+                    <a href={`/player/${data.player.username}/wardrobe`} class={`flex flex-row gap-x-2 hover:bg-neutral-200 dark:hover:bg-neutral-700 duration-100 px-3 py-1 rounded-sm ${$page.url.pathname.endsWith("/wardrobe") ? "bg-neutral-200 dark:bg-neutral-700" : ""}`}>
+                        <img class="w-6 h-6 self-center" src="/icons/crafting.png" alt="Games Icon" /><span class="self-center hidden sm:flex">Wardrobe</span>
+                    </a>
                 </div>
                 
-                <div class="border border-neutral-300 dark:border-neutral-800 rounded-md shadow-lg">
+                <div class="border-2 border-neutral-300 dark:border-neutral-800 rounded-lg shadow-lg">
                     <slot {data} />
                 </div>
             </div>

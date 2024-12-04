@@ -68,7 +68,7 @@
                     <td>
                         <div class="flex flex-row gap-x-2">
                             {#if inlineIcon === "level"}
-                                <img class="w-7 h-7 self-center" src={`https://cdn.islandstats.xyz/icons/crowns/${getIcon(player.player.level)}.png`} alt={`Crown Level Icon`} />
+                                <img class="w-7 h-7 self-center" src={`https://cdn.islandstats.xyz/icons/crowns/${getIcon(player.player.trophies.level)}.png`} alt={`Crown Level Icon`} />
                             {:else}
                                 <img class="w-7 h-7 self-center" src={`https://cdn.islandstats.xyz/${inlineIcon}.png`} alt={`Trophy Icon`} />
                             {/if}

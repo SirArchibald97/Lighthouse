@@ -56,7 +56,7 @@
                         <img class="w-7 h-7 rounded-sm bg-neutral-400 dark:bg-neutral-600" src={`https://mc-heads.net/avatar/${friend.uuid}/128`} alt={`${friend.username}'s Rank'`} />
                         <img class="w-7 h-7 rounded-sm bg-neutral-400 dark:bg-neutral-600" src={`https://cdn.islandstats.xyz/ranks/${getRankIcon(friend.ranks)}`} alt={`${friend.username}'s Rank'`} />
                         <p class="text-lg self-center">{friend.username}</p>
-                        {#if player.social.friends.find(f => f.username === friend.username)?.status?.online}<span class="ml-2 self-center w-3 h-3 rounded-full bg-green-500"></span>{/if}
+                        {#if player.social.friends.find(f => f.username === friend.username)?.status?.online}<span class="self-center w-3 h-3 rounded-full bg-green-500"></span>{/if}
                     </a>
                 {/each}
             </div>
