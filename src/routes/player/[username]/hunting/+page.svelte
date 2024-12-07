@@ -127,145 +127,150 @@
     }
 </script>
 
-<div class="flex flex-col p-4">
+<div class="flex flex-col">
     {#if data.player.statistics}
-        <div class="flex flex-col gap-y-2 gap-x-4 justify-between mb-4">
-            <div class="flex flex-col">
-                <p class="text-3xl font-bold">Badges</p>
-                <p class="text-md font-normal text-neutral-700 dark:text-neutral-300">How long will it take to <span class="font-semibold">reach the {totalMode ? "final tier" : "next tier"}</span> of each tiered badge based on your current averages?</p>
-            </div>
-        
-            <div class="flex flex-col lg:flex-row gap-x-2">
-                <button class="my-auto flex flex-row gap-x-1 text-md border border-neutral-300 dark:border-neutral-800 p-2 rounded-md dark:text-neutral-100 bg-neutral-50 dark:bg-neutral-950 hover:bg-neutral-200 dark:hover:bg-neutral-800 duration-100" on:click={toggleMode}>
-                    {#if totalMode}
-                        <span class="w-6 h-6 self-center"><DoubleRightChevron /></span>
-                        <span class="self-center">Final Tier</span>
-                    {:else}
-                        <span class="w-6 h-6 self-center"><RightChevron /></span>
-                        <span class="self-center">Next Tier</span>
-                    {/if}
-                </button>
-                <!-- SELECT MENU -->
-                <div class="flex-1 sm:w-56 sm:flex-none self-center">
-                    <div class="relative">
-                        <button type="button" on:click={toggleSortMenu} class="relative w-full cursor-default text-md border border-neutral-300 dark:border-neutral-800 py-2 px-3 rounded-md dark:text-neutral-100 bg-neutral-50 dark:bg-neutral-950 hover:bg-neutral-200 dark:hover:bg-neutral-800 duration-100">
-                            <span class="flex badges-center text-md">
-                                Sort by: {sortMode}
-                            </span>
-                            <span class="pointer-events-none absolute inset-y-0 right-0 ml-3 flex badges-center pr-2 self-center">
-                                <svg class="h-5 w-5 text-neutral-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                    <path fill-rule="evenodd" d="M10 3a.75.75 0 01.55.24l3.25 3.5a.75.75 0 11-1.1 1.02L10 4.852 7.3 7.76a.75.75 0 01-1.1-1.02l3.25-3.5A.75.75 0 0110 3zm-3.76 9.2a.75.75 0 011.06.04l2.7 2.908 2.7-2.908a.75.75 0 111.1 1.02l-3.25 3.5a.75.75 0 01-1.1 0l-3.25-3.5a.75.75 0 01.04-1.06z" clip-rule="evenodd" />
-                                </svg>
-                            </span>
-                        </button>
-                
-                        {#if showSortMenu}
-                            <ul class="absolute z-20 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white dark:bg-neutral-800 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm no-scrollbar">
-                                {#each sortModes as mode}
-                                    <button on:click={() => selectMode(mode)} class="w-full relative cursor-default select-none py-2 pl-3 pr-9 hover:bg-slate-200 dark:hover:bg-neutral-700 duration-75">
-                                        <div class="flex badges-center">
-                                            <span class="ml-3 block truncate font-normal text-md">{mode}</span>
-                                        </div>
-
-                                        {#if sortMode === mode}
-                                            <span class="absolute inset-y-0 right-0 flex badges-center pr-4 text-red-500 self-center">
-                                                <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
-                                                </svg>
-                                            </span>
-                                        {/if}
-                                    </button>
-                                {/each}
-                            </ul>
-                        {/if}
-                    </div>   
+        <div class="p-4">
+            <div class="flex flex-col gap-y-2 gap-x-4 justify-between mb-4">
+                <div class="flex flex-col">
+                    <p class="text-3xl font-bold">Badges</p>
+                    <p class="text-md font-normal text-neutral-700 dark:text-neutral-300">How long will it take to <span class="font-semibold">reach the {totalMode ? "final tier" : "next tier"}</span> of each tiered badge based on your current averages?</p>
                 </div>
-                <!-- SELECT MENU -->
-                <div class="flex-1 sm:w-72 sm:flex-none self-center">
-                    <div class="relative">
-                        <button type="button" on:click={toggleFilterMenu} class="relative w-full cursor-default text-md border border-neutral-300 dark:border-neutral-800 py-2 px-3 rounded-md dark:text-neutral-100 bg-neutral-50 dark:bg-neutral-950 hover:bg-neutral-200 dark:hover:bg-neutral-800 duration-100">
-                            <div class="flex flex-row gap-x-1 badges-center text-md">
-                                <span>Filter by:</span>
-                                <img class="w-6 h-6 self-center" src={`https://cdn.islandstats.xyz/games/${currentFilter.icon}/icon.png`} alt={`${currentFilter.name} Icon`} />
-                                <span>{currentFilter.name}</span>
-                            </div>
-                            <span class="pointer-events-none absolute inset-y-0 right-0 ml-3 flex badges-center pr-2 self-center">
-                                <svg class="h-5 w-5 text-neutral-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                    <path fill-rule="evenodd" d="M10 3a.75.75 0 01.55.24l3.25 3.5a.75.75 0 11-1.1 1.02L10 4.852 7.3 7.76a.75.75 0 01-1.1-1.02l3.25-3.5A.75.75 0 0110 3zm-3.76 9.2a.75.75 0 011.06.04l2.7 2.908 2.7-2.908a.75.75 0 111.1 1.02l-3.25 3.5a.75.75 0 01-1.1 0l-3.25-3.5a.75.75 0 01.04-1.06z" clip-rule="evenodd" />
-                                </svg>
-                            </span>
-                        </button>
-                
-                        {#if showFilterMenu}
-                            <ul class="absolute z-20 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white dark:bg-neutral-800 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm no-scrollbar">
-                                {#each filters as filter}
-                                    <button on:click={() => selectFilter(filter)} class="w-full relative cursor-default select-none py-2 pl-3 pr-9 hover:bg-slate-200 dark:hover:bg-neutral-700 duration-75">
-                                        <div class="flex flex-row gap-x-1 badges-center">
-                                            <img class="w-6 h-6 self-center" src={`https://cdn.islandstats.xyz/games/${filter.icon}/icon.png`} alt={`${filter.name} Icon`} />
-                                            <span class="ml-3 block truncate font-normal text-md">{filter.name}</span>
-                                        </div>
-
-                                        {#if currentFilter.name === filter.name}
-                                            <span class="absolute inset-y-0 right-0 flex badges-center pr-4 text-red-500 self-center">
-                                                <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
-                                                </svg>
-                                            </span>
-                                        {/if}
-                                    </button>
-                                {/each}
-                            </ul>
+            
+                <div class="flex flex-col lg:flex-row gap-x-2">
+                    <button class="my-auto flex flex-row gap-x-1 text-md border border-neutral-300 dark:border-neutral-800 p-2 rounded-md dark:text-neutral-100 bg-neutral-50 dark:bg-neutral-950 hover:bg-neutral-200 dark:hover:bg-neutral-800 duration-100" on:click={toggleMode}>
+                        {#if totalMode}
+                            <span class="w-6 h-6 self-center"><DoubleRightChevron /></span>
+                            <span class="self-center">Final Tier</span>
+                        {:else}
+                            <span class="w-6 h-6 self-center"><RightChevron /></span>
+                            <span class="self-center">Next Tier</span>
                         {/if}
-                    </div>   
-                </div>
-            </div>
-        </div>
-
-        <div class="flex flex-col gap-y-4">
-            {#if sortedBadges.filter(badge => badge.total.progress < 100).length > 0}
-                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-                    {#each sortedBadges.filter(badge => badge.total.progress < 100) as badge}
-                        <div class={`relative flex flex-col gap-y-4 text-md border-2 ${badge.total.gamesLeft > 0 ? "border-neutral-300 dark:border-neutral-800" : "border-green-500 bg-green-500/50"} rounded-md p-2`}>
-                            <img class="absolute -top-2 -right-2 w-8 h-8 z-10 bg-neutral-300 dark:bg-neutral-700 p-1 rounded-lg" src={`https://cdn.islandstats.xyz/games/${badge.icon || badge.icons}/icon.png`} alt="" />
-                            
-                            <div class="flex flex-row gap-x-2">
-                                <img class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/${badge.icons}/${badge.badge.icon}.png`} alt={badge.badge.name} />
-                                <div class="flex flex-col badges-start mt-2 sm:mt-0 self-center">
-                                    <p class="font-semibold">{badge.badge.name}</p>
-                                    <p class="text-neutral-600 dark:text-neutral-400">{badge.badge.description}</p>
+                    </button>
+                    <!-- SELECT MENU -->
+                    <div class="flex-1 sm:w-56 sm:flex-none self-center">
+                        <div class="relative">
+                            <button type="button" on:click={toggleSortMenu} class="relative w-full cursor-default text-md border border-neutral-300 dark:border-neutral-800 py-2 px-3 rounded-md dark:text-neutral-100 bg-neutral-50 dark:bg-neutral-950 hover:bg-neutral-200 dark:hover:bg-neutral-800 duration-100">
+                                <span class="flex badges-center text-md">
+                                    Sort by: {sortMode}
+                                </span>
+                                <span class="pointer-events-none absolute inset-y-0 right-0 ml-3 flex badges-center pr-2 self-center">
+                                    <svg class="h-5 w-5 text-neutral-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path fill-rule="evenodd" d="M10 3a.75.75 0 01.55.24l3.25 3.5a.75.75 0 11-1.1 1.02L10 4.852 7.3 7.76a.75.75 0 01-1.1-1.02l3.25-3.5A.75.75 0 0110 3zm-3.76 9.2a.75.75 0 011.06.04l2.7 2.908 2.7-2.908a.75.75 0 111.1 1.02l-3.25 3.5a.75.75 0 01-1.1 0l-3.25-3.5a.75.75 0 01.04-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </span>
+                            </button>
+                    
+                            {#if showSortMenu}
+                                <ul class="absolute z-20 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white dark:bg-neutral-800 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm no-scrollbar">
+                                    {#each sortModes as mode}
+                                        <button on:click={() => selectMode(mode)} class="w-full relative cursor-default select-none py-2 pl-3 pr-9 hover:bg-slate-200 dark:hover:bg-neutral-700 duration-75">
+                                            <div class="flex badges-center">
+                                                <span class="ml-3 block truncate font-normal text-md">{mode}</span>
+                                            </div>
+    
+                                            {#if sortMode === mode}
+                                                <span class="absolute inset-y-0 right-0 flex badges-center pr-4 text-red-500 self-center">
+                                                    <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                    <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+                                                    </svg>
+                                                </span>
+                                            {/if}
+                                        </button>
+                                    {/each}
+                                </ul>
+                            {/if}
+                        </div>   
+                    </div>
+                    <!-- SELECT MENU -->
+                    <div class="flex-1 sm:w-72 sm:flex-none self-center">
+                        <div class="relative">
+                            <button type="button" on:click={toggleFilterMenu} class="relative w-full cursor-default text-md border border-neutral-300 dark:border-neutral-800 py-2 px-3 rounded-md dark:text-neutral-100 bg-neutral-50 dark:bg-neutral-950 hover:bg-neutral-200 dark:hover:bg-neutral-800 duration-100">
+                                <div class="flex flex-row gap-x-1 badges-center text-md">
+                                    <span>Filter by:</span>
+                                    <img class="w-6 h-6 self-center" src={`https://cdn.islandstats.xyz/games/${currentFilter.icon}/icon.png`} alt={`${currentFilter.name} Icon`} />
+                                    <span>{currentFilter.name}</span>
                                 </div>
-                            </div>
-                            <div class="flex flex-col mt-auto">
-                                <div class="flex flex-row gap-x-2 mx-2">
-                                    <p class="font-bold">{calculateBadgeTier(badge.stats[badge.badge.stat], badge.badge.tiers).tier.name}</p>
-                                    <div class="h-4 w-full self-center rounded-full bg-neutral-200 dark:bg-neutral-700">
-                                        <div class={`flex flex-col h-full left-0 right-0 ${badge[totalMode ? "total" : "next"].progress > 98 ? "rounded-full" : "rounded-l-full"} text-center`} style={`width: calc(100% * ${badge[totalMode ? "total" : "next"].progress > 100 ? 1 : (badge[totalMode ? "total" : "next"].progress / 100)}); ${getColour(data.player.level)};`}></div>
+                                <span class="pointer-events-none absolute inset-y-0 right-0 ml-3 flex badges-center pr-2 self-center">
+                                    <svg class="h-5 w-5 text-neutral-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path fill-rule="evenodd" d="M10 3a.75.75 0 01.55.24l3.25 3.5a.75.75 0 11-1.1 1.02L10 4.852 7.3 7.76a.75.75 0 01-1.1-1.02l3.25-3.5A.75.75 0 0110 3zm-3.76 9.2a.75.75 0 011.06.04l2.7 2.908 2.7-2.908a.75.75 0 111.1 1.02l-3.25 3.5a.75.75 0 01-1.1 0l-3.25-3.5a.75.75 0 01.04-1.06z" clip-rule="evenodd" />
+                                    </svg>
+                                </span>
+                            </button>
+                    
+                            {#if showFilterMenu}
+                                <ul class="absolute z-20 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white dark:bg-neutral-800 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm no-scrollbar">
+                                    {#each filters as filter}
+                                        <button on:click={() => selectFilter(filter)} class="w-full relative cursor-default select-none py-2 pl-3 pr-9 hover:bg-slate-200 dark:hover:bg-neutral-700 duration-75">
+                                            <div class="flex flex-row gap-x-1 badges-center">
+                                                <img class="w-6 h-6 self-center" src={`https://cdn.islandstats.xyz/games/${filter.icon}/icon.png`} alt={`${filter.name} Icon`} />
+                                                <span class="ml-3 block truncate font-normal text-md">{filter.name}</span>
+                                            </div>
+    
+                                            {#if currentFilter.name === filter.name}
+                                                <span class="absolute inset-y-0 right-0 flex badges-center pr-4 text-red-500 self-center">
+                                                    <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                    <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+                                                    </svg>
+                                                </span>
+                                            {/if}
+                                        </button>
+                                    {/each}
+                                </ul>
+                            {/if}
+                        </div>   
+                    </div>
+                </div>
+            </div>
+    
+            <div class="flex flex-col gap-y-4">
+                {#if sortedBadges.filter(badge => badge.total.progress < 100).length > 0}
+                    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                        {#each sortedBadges.filter(badge => badge.total.progress < 100) as badge}
+                            <div class={`relative flex flex-col gap-y-4 text-md border-2 ${badge.total.gamesLeft > 0 ? "border-neutral-300 dark:border-neutral-800" : "border-green-500 bg-green-500/50"} rounded-md p-2`}>
+                                <img class="absolute -top-2 -right-2 w-8 h-8 z-10 bg-neutral-300 dark:bg-neutral-700 p-1 rounded-lg" src={`https://cdn.islandstats.xyz/games/${badge.icon || badge.icons}/icon.png`} alt="" />
+                                
+                                <div class="flex flex-row gap-x-2">
+                                    <img class="w-12 h-12" src={`https://cdn.islandstats.xyz/badges/${badge.icons}/${badge.badge.icon}.png`} alt={badge.badge.name} />
+                                    <div class="flex flex-col badges-start mt-2 sm:mt-0 self-center">
+                                        <p class="font-semibold">{badge.badge.name}</p>
+                                        <p class="text-neutral-600 dark:text-neutral-400">{badge.badge.description}</p>
                                     </div>
-                                    <p class="font-bold">{totalMode ? badge.badge.tiers[badge.badge.tiers.length - 1].name : calculateBadgeTier(badge.stats[badge.badge.stat], badge.badge.tiers).next.name}</p>
                                 </div>
-                                <div class="my-2 mx-4">
-                                    <p>Progress: <span class="font-semibold">{badge.stats[badge.badge.stat].toLocaleString()}</span> / {shortenNumber(totalMode ? badge.badge.tiers[badge.badge.tiers.length - 1].amount : calculateBadgeTier(badge.stats[badge.badge.stat], badge.badge.tiers).next.amount)} <span class="text-neutral-400 dark:text-neutral-600">({calculatePercentage(badge.stats[badge.badge.stat], totalMode ? badge.badge.tiers[badge.badge.tiers.length - 1].amount : calculateBadgeTier(badge.stats[badge.badge.stat], badge.badge.tiers).next.amount)}%)</span></p>
-                                    <p>Average <span class="font-semibold">{badge.average.toLocaleString()}</span> per {getCycleText(badge, true)}, <span class="font-semibold">~{totalMode ? (badge.total.gamesLeft === Infinity ? badge.badge.tiers.slice(-1)[0].amount : badge.total.gamesLeft).toLocaleString() : ((badge.next.gamesLeft === Infinity ? calculateBadgeTier(badge.stats[badge.badge.stat], badge.badge.tiers).next.amount : badge.next.gamesLeft)).toLocaleString()}</span> more {getCycleText(badge)}</p>
-                                    {#if badge.total.progress < 100}
-                                        <div class="flex flex-row gap-x-1 *:self-center">
-                                            <span>Earns</span>
-                                            <img src="https://cdn.islandstats.xyz/icons/trophies/red.png" alt="Skill Trophies" class="w-5 h-5 self-center" />
-                                            <span class="font-semibold">{totalMode ? (badge.badge.tiers.reduce((a, b) => a += b.trophies, 0) - calculateTrophies(badge.stats, [badge.badge])) : (calculateBadgeTier(badge.stats[badge.badge.stat], badge.badge.tiers).next.trophies) }</span>
+                                <div class="flex flex-col mt-auto">
+                                    <div class="flex flex-row gap-x-2 mx-2">
+                                        <p class="font-bold">{calculateBadgeTier(badge.stats[badge.badge.stat], badge.badge.tiers).tier.name}</p>
+                                        <div class="h-4 w-full self-center rounded-full bg-neutral-200 dark:bg-neutral-700">
+                                            <div class={`flex flex-col h-full left-0 right-0 ${badge[totalMode ? "total" : "next"].progress > 98 ? "rounded-full" : "rounded-l-full"} text-center`} style={`width: calc(100% * ${badge[totalMode ? "total" : "next"].progress > 100 ? 1 : (badge[totalMode ? "total" : "next"].progress / 100)}); ${getColour(data.player.level)};`}></div>
                                         </div>
-                                    {/if}
+                                        <p class="font-bold">{totalMode ? badge.badge.tiers[badge.badge.tiers.length - 1].name : calculateBadgeTier(badge.stats[badge.badge.stat], badge.badge.tiers).next.name}</p>
+                                    </div>
+                                    <div class="my-2 mx-4">
+                                        <p>Progress: <span class="font-semibold">{badge.stats[badge.badge.stat].toLocaleString()}</span> / {shortenNumber(totalMode ? badge.badge.tiers[badge.badge.tiers.length - 1].amount : calculateBadgeTier(badge.stats[badge.badge.stat], badge.badge.tiers).next.amount)} <span class="text-neutral-400 dark:text-neutral-600">({calculatePercentage(badge.stats[badge.badge.stat], totalMode ? badge.badge.tiers[badge.badge.tiers.length - 1].amount : calculateBadgeTier(badge.stats[badge.badge.stat], badge.badge.tiers).next.amount)}%)</span></p>
+                                        <p>Average <span class="font-semibold">{badge.average.toLocaleString()}</span> per {getCycleText(badge, true)}, <span class="font-semibold">~{totalMode ? (badge.total.gamesLeft === Infinity ? badge.badge.tiers.slice(-1)[0].amount : badge.total.gamesLeft).toLocaleString() : ((badge.next.gamesLeft === Infinity ? calculateBadgeTier(badge.stats[badge.badge.stat], badge.badge.tiers).next.amount : badge.next.gamesLeft)).toLocaleString()}</span> more {getCycleText(badge)}</p>
+                                        {#if badge.total.progress < 100}
+                                            <div class="flex flex-row gap-x-1 *:self-center">
+                                                <span>Earns</span>
+                                                <img src="https://cdn.islandstats.xyz/icons/trophies/red.png" alt="Skill Trophies" class="w-5 h-5 self-center" />
+                                                <span class="font-semibold">{totalMode ? (badge.badge.tiers.reduce((a, b) => a += b.trophies, 0) - calculateTrophies(badge.stats, [badge.badge])) : (calculateBadgeTier(badge.stats[badge.badge.stat], badge.badge.tiers).next.trophies) }</span>
+                                            </div>
+                                        {/if}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    {/each}
+                        {/each}
+                    </div>
+                {:else}
+                <div class="flex flex-row gap-x-2">
+                    <p class="text-lg">Nothing to show!</p>
+                    <img class="w-6 h-6 self-center" src="https://cdn.islandstats.xyz/emojis/nerd.png" alt="Nerd emoji" />
                 </div>
-            {:else}
-            <div class="flex flex-row gap-x-2">
-                <p class="text-lg">Nothing to show!</p>
-                <img class="w-6 h-6 self-center" src="https://cdn.islandstats.xyz/emojis/nerd.png" alt="Nerd emoji" />
+                {/if}
             </div>
-            {/if}
         </div>
     {:else}
-        <p class="text-xl">Statistics are disabled!</p>
+        <div class="flex flex-col gap-y-3 content-center bg-neutral-300/50 dark:bg-neutral-800/50 p-4">
+            <img class="w-12 h-12 self-center" src="https://cdn.islandstats.xyz/icons/warnings/yellow.png" alt="Yellow warning icon" />
+            <p class="text-xl text-center font-semibold">Statistics are disabled!</p>
+        </div>
     {/if}
 </div>

@@ -1,5 +1,5 @@
 export const levels = [
-    { range: [0, 9], icon: "0", colour: "background-color: #333436" },
+    { range: [0, 9], icon: "0", colour: "background-color: #202121" },
     { range: [10, 19], icon: "1", colour: "background-color: #9ca3af" },
     { range: [20, 29], icon: "2", colour: "background-color: #22c55e" },
     { range: [30, 39], icon: "3", colour: "background-color: #3b82f6" },
@@ -18,11 +18,11 @@ export function calculateNextEvolution(player) {
 }
 
 export function getIcon(level) {
-    const current = levels.find((tier) => level >= tier.range[0] && level <= tier.range[1]);
-    return current?.icon;
+    const current = levels.find((tier) => level >= tier.range[0] && level <= tier.range[1]) || levels[0];
+    return current.icon;
 }
 
 export function getColour(level) {
-    const current = levels.find((tier) => level >= tier.range[0] && level <= tier.range[1]);
+    const current = levels.find((tier) => level >= tier.range[0] && level <= tier.range[1]) || levels[0];
     return current.colour;
 }

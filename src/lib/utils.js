@@ -43,6 +43,7 @@ export function getRankName(ranks) {
 
 export function getStatusGame(game) {
     const games = {
+        "FISHING": "Fishing",
         "SKY_BATTLE": "Sky Battle",
         "BATTLE_BOX": "Battle Box",
         "TGTTOS": "TGTTOS",
@@ -61,7 +62,8 @@ export function getStatusIcon(game) {
         "BATTLE_BOX": "battle_box",
         "TGTTOS": "tgttos",
         "HOLE_IN_THE_WALL": "hitw",
-        "PARKOUR_WARRIOR": "parkour_warrior",
+        "PARKOUR_WARRIOR": "parkour_warrior/solo",
+        "PARKOUR_WARRIOR_SURVIVOR": "parkour_warrior",
         "DYNABALL": "dynaball",
         "ROCKET_SPLEEF": "rocket_spleef",
     };

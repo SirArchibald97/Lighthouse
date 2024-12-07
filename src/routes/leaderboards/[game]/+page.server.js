@@ -25,7 +25,7 @@ async function getLeaderboard(game) {
         .toArray();
     }
     for (let player of players) player._id = player._id.toString();
-    return players;
+    return players.slice(0, 5000);
 }
 
 export const actions = {

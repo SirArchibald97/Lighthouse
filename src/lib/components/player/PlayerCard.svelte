@@ -3,6 +3,8 @@
     import { getIcon, getColour, calculateNextEvolution } from "$lib/levels.js";
     import { DateTime } from "luxon";
     import tooltip from "$lib/tooltip.js";
+    import Info from "$lib/svgs/Info.svelte";
+    import { slide } from "svelte/transition";
 
     export let player;
 
@@ -29,52 +31,78 @@
             if (diff.seconds > 0) return `${diff.seconds} second${diff.seconds === 1 ? "" : "s"} ago`;
         }
     }
+
+    let showMeta = false;
+    function toggleMeta() { showMeta = !showMeta; }
 </script>
 
 <div class="flex flex-col gap-y-2 text-neutral-900 dark:text-neutral-100">
     <!-- head, rank and username -->
-    <div class="flex flex-row gap-x-2 border-2 border-neutral-300 dark:border-neutral-800 rounded-lg shadow-lg p-3">
-        <img class="w-14 h-14 rounded-sm bg-neutral-400 dark:bg-neutral-600 self-center" src={`https://mc-heads.net/avatar/${player.uuid}/128`} alt={`${player.username}'s Rank'`} />
-
-        {#if player.status}
-            <div class="flex flex-col gap-x-2">
-                <div class="flex flex-row gap-x-2">
-                    <img class="w-7 h-7 rounded-sm bg-neutral-400 dark:bg-neutral-600 self-center" src={`https://cdn.islandstats.xyz/ranks/${getRankIcon(player.ranks)}`} alt="" />
-                    <p class="text-2xl font-semibold self-center">{player.username}</p>
-
-                    {#if player.status?.online}
-                        <span class="ml-1 self-center mt-1 w-3 h-3 rounded-full bg-green-500"></span>
-                    {:else}
-                        <span class="ml-1 self-center mt-1 w-3 h-3 rounded-full bg-red-500"></span>
+     <div class="border-2 border-neutral-300 dark:border-neutral-800 rounded-lg shadow-lg p-3">
+        <div class="flex flex-row justify-between">
+            <div class="flex flex-row gap-x-3">
+                <div class="relative">
+                    <img class="w-14 h-14 rounded-sm bg-neutral-400 dark:bg-neutral-600 self-center" src={`https://mc-heads.net/avatar/${player.uuid}/128`} alt={`${player.username}'s Rank'`} />
+                    {#if player.status}
+                        <span class={`absolute z-10 -bottom-1 -right-2 w-5 h-5 rounded-full border-4 border-neutral-100 dark:border-neutral-900 ${player.status.online ? "bg-green-500" : "bg-red-500"}`}></span>
                     {/if}
                 </div>
-
-                <div class="flex flex-row gap-x-1 text-md">
-                    {#if player.status.online}
-                            <div class="flex flex-col text-sm 2xl:text-md">
-                                {#if player.status.server?.category === "GAME"}
-                                    <p class="flex flex-row gap-x-1">
-                                        Playing
-                                        <img class="w-4 h-4 2xl:w-6 2xl:h-6 self-center" src={`https://cdn.islandstats.xyz/games/${getStatusIcon(player.status.server?.associatedGame)}/icon.png`} alt={``} />
-                                        <span class="font-semibold">{getStatusGame(player.status.server?.associatedGame)}</span>
-                                    </p>
-                                {:else if player.status.server?.category === "LOBBY"}
-                                    <p class="flex flex-row gap-x-1">
-                                        In the 
-                                        <img class="w-4 h-4 2xl:w-6 2xl:h-6 self-center" src={`https://cdn.islandstats.xyz/games/${getStatusIcon(player.status.server?.associatedGame) || "lobby"}/icon.png`} alt={``} />
-                                        <span class="font-semibold">{getStatusGame(player.status.server?.associatedGame) || "Main"} Lobby</span>
-                                    </p>
+    
+                {#if player.status}
+                    <div class="flex flex-col gap-y-1 gap-x-2">
+                        <div class="flex flex-row gap-x-2">
+                            <img class="w-7 h-7 rounded-sm bg-neutral-400 dark:bg-neutral-600 self-center" src={`https://cdn.islandstats.xyz/ranks/${getRankIcon(player.ranks)}`} alt="" />
+                            <p class="text-2xl font-semibold self-center">{player.username}</p>
+                            {#if player.username === "CarnivalCow"}<span class="text-2xl self-center">🐮</span>{/if}
+                        </div>
+    
+                        <div class="flex flex-row gap-x-1">
+                            {#if player.status.online}
+                                    <div class="flex flex-col text-md">
+                                        {#if player.status.server?.category === "GAME"}
+                                            <p class="flex flex-row gap-x-1">
+                                                Playing
+                                                <img class="w-4 h-4 2xl:w-6 2xl:h-6 self-center" src={`https://cdn.islandstats.xyz/games/${getStatusIcon(player.status.server?.associatedGame)}/icon.png`} alt={`${player.status.server?.associatedGame} Icon`} />
+                                                <span class="font-semibold">{getStatusGame(player.status.server?.associatedGame || player.status.server.subType)}</span>
+                                            </p>
+                                        {:else if player.status.server?.category === "LOBBY"}
+                                            <p class="flex flex-row gap-x-1">
+                                                {#if player.status.server.subType === "fishing"}
+                                                    <span>On a</span>
+                                                    <img class="w-4 h-4 2xl:w-6 2xl:h-6 self-center" src={`/icons/fishing.png`} alt="Fishing Rod Icon" />
+                                                    <span class="font-semibold">Fishing Island</span>
+                                                {:else}
+                                                    <span>In the</span>
+                                                    <img class="w-4 h-4 2xl:w-6 2xl:h-6 self-center" src={`https://cdn.islandstats.xyz/games/${getStatusIcon(player.status.server?.associatedGame) || "lobby"}/icon.png`} alt="Main Lobby Icon" />
+                                                    <span class="font-semibold">{getStatusGame(player.status.server?.associatedGame || player.status.server.subType) || "Main"} Lobby</span>
+                                                {/if}
+                                            </p>
+                                        {/if}
+                                    </div>
+                                {:else}
+                                    <p class="text-neutral-900 dark:text-neutral-100">Last online: {calculateTimeAgo(player.status.lastJoin.toLocaleString())}</p>
                                 {/if}
-                            </div>
-                        {:else}
-                            <p class="text-neutral-900 dark:text-neutral-100">Last online: {calculateTimeAgo(player.status.lastJoin.toLocaleString())}</p>
-                        {/if}
-                </div>
+                        </div>
+                    </div>
+                {:else}
+                    <img class="w-14 h-14 rounded-sm bg-neutral-400 dark:bg-neutral-600 self-center" src={`https://cdn.islandstats.xyz/ranks/${getRankIcon(player.ranks)}`} alt="" />
+                    <p class="text-2xl font-semibold self-center">{player.username}</p>
+                    {#if player.username === "CarnivalCow"}<span class="text-2xl self-center">🐮</span>{/if}
+                {/if}
             </div>
-        {:else}
-            <p class="text-2xl font-semibold self-center">{player.username}</p>
+            
+            <button on:click={toggleMeta} class="flex h-2/3 my-auto p-1 border-2 border-neutral-300 dark:border-neutral-800 rounded-lg hover:bg-neutral-400 hover:dark:bg-neutral-700/50 duration-75">
+                <span class="w-7 h-7 self-center"><Info /></span>
+            </button>
+        </div>
+
+        {#if showMeta}
+            <div transition:slide={{ duration: 200 }} class="mt-2">
+                <p>First joined: <span use:tooltip title={firstJoin} class="font-semibold tracking-wide">{calculateTimeAgo(player.status.firstJoin.toLocaleString())}</span></p>
+            </div>
         {/if}
-    </div>
+     </div>
+    
 
     <!-- crown level -->
     <div class="flex flex-col gap-y-1 justify-center border-2 border-neutral-300 dark:border-neutral-800 rounded-lg shadow-lg py-4">
@@ -84,27 +112,30 @@
 
             <!-- progress bar -->
             <div class="h-4 w-full self-center rounded-full bg-neutral-200 dark:bg-neutral-700">
-                <div class="flex flex-col h-full left-0 right-0 rounded-l-full text-center group" style={`width: calc(100% * ${Math.round(player.trophies.nextLevel.obtained / player.trophies.nextLevel.obtainable) * 100}); ${getColour(player.level)}`}></div>
+                <div class="flex flex-col h-full left-0 right-0 rounded-l-full text-center group" style={`width: calc(100% * ${player.trophies.nextLevel.obtained / player.trophies.nextLevel.obtainable}); ${getColour(player.level)}`}></div>
             </div>
 
             <span class="self-center font-bold text-xl">{player.level + 1}</span>
         </div>
         <p class="place-self-center text-md text-neutral-500 dark:text-neutral-400">
             Progress:
-            {Math.round(player.trophies.nextLevel.obtained / player.trophies.nextLevel.obtainable) * 100}%
+            {(player.trophies.nextLevel.obtained / player.trophies.nextLevel.obtainable * 100).toFixed(0)}%
             ({player.trophies.nextLevel.obtained.toLocaleString()}/{player.trophies.nextLevel.obtainable.toLocaleString()})
         </p>
+        
         <div class="place-self-center flex flex-row gap-x-2 text-md text-neutral-500 dark:text-neutral-400">
-            <div class="flex flex-row flex-wrap gap-x-2">
-                Next evolution is 
+            <div class="flex flex-row gap-x-2">
+                <span>Next evolution is</span>
                 <img class="w-6 h-6 self-center" src={`https://cdn.islandstats.xyz/icons/crowns/${getIcon(player.trophies.nextEvolutionLevel)}.png`} alt="Next Crown Evolution Icon" />
-                in
-            </div>
-            <div class="flex flex-row gap-x-1">
+                <span class="-ml-1 font-semibold text-neutral-700 dark:text-neutral-300">{player.trophies.nextEvolutionLevel}</span>
+                <!--
+                <span>in</span>
                 <img class="w-6 h-6 self-center" src={`https://cdn.islandstats.xyz/icons/trophies/yellow.png`} alt="Trophy Icon" />
-                {calculateNextEvolution(player).toLocaleString()}
+                <span class="-ml-1 font-semibold text-neutral-700 dark:text-neutral-300">{calculateNextEvolution(player).toLocaleString()}</span>
+                -->
             </div>
         </div>
+        
     </div>
 
     <div class="flex flex-col lg:flex-row gap-x-2">
@@ -160,11 +191,4 @@
             {/each}
         </div>
     </div>
-
-    <!-- other stats -->
-    {#if player.status}
-        <div class="border-2 border-neutral-300 dark:border-neutral-800 rounded-lg shadow-lg p-3">
-            <p>First joined: <span use:tooltip title={firstJoin} class="font-semibold tracking-wide">{calculateTimeAgo(player.status.firstJoin.toLocaleString())}</span></p>
-        </div>
-    {/if}
 </div>
