@@ -5,7 +5,7 @@
 
     export let player;
 
-    let tab = "party";
+    let tab = "friends";
     function switchTab(newTab) { tab = newTab; }
 
     let currentIndex = 0;
@@ -13,12 +13,8 @@
     let fullList = [];
     let intList = [];
     let counter = 0;
-    let friendsOnline = 0;
     // loop through all friends
     for (let friend of player.social?.friends || []) {
-        // if they are online, add one to online counter
-        if (friend.status?.online) friendsOnline++;
-
         // if counter reaches is less than 10, add friend to sublist
         if (counter < 8) {
             intList.push(friend);
@@ -43,9 +39,15 @@
 
 <div class="flex flex-col text-neutral-900 dark:text-neutral-100 border-2 border-neutral-300 dark:border-neutral-800 rounded-md shadow-md">
     {#if player.social}
-        <div class="flex flex-row gap-x-2 text-md border-b border-neutral-300 dark:border-neutral-800 p-2">
-            <button on:click={() => switchTab("party")} class={`hover:bg-neutral-200 dark:hover:bg-neutral-700 duration-100 px-3 py-1 rounded-sm ${tab === "party" ? "bg-neutral-200 dark:bg-neutral-700" : ""}`}>Party</button>
-            <button on:click={() => switchTab("friends")} class={`hover:bg-neutral-200 dark:hover:bg-neutral-700 duration-100 px-3 py-1 rounded-sm ${tab === "friends" ? "bg-neutral-200 dark:bg-neutral-700" : ""}`}>Friends</button>
+        <div class="flex flex-row justify-center gap-x-2 text-md p-2">
+            <button on:click={() => switchTab("friends")} class={`w-1/2 flex flex-row justify-center gap-x-2 hover:bg-neutral-200 dark:hover:bg-neutral-700 duration-100 px-3 py-1 rounded-sm ${tab === "friends" ? "bg-neutral-300 dark:bg-neutral-700" : ""}`}>
+                <img class="w-6 h-6 self-center" src="https://cdn.islandstats.xyz/icons/social/friend.png" alt="Party Icon" />
+                <span class="self-center">Friends</span>
+            </button>
+            <button on:click={() => switchTab("party")} class={`w-1/2 flex flex-row gap-x-1 justify-center hover:bg-neutral-200 dark:hover:bg-neutral-700 duration-100 px-3 py-1 rounded-sm ${tab === "party" ? "bg-neutral-200 dark:bg-neutral-700" : ""}`}>
+                <img class="w-6 h-6 self-center" src="https://cdn.islandstats.xyz/icons/social/party.png" alt="Party Icon" />
+                <span class="self-center">Party</span>
+            </button>
         </div>
         
         {#if tab === "friends"}
@@ -77,7 +79,7 @@
                                             <p class="flex flex-row gap-x-1">
                                                 {#if friend.status.server.subType === "fishing"}
                                                     <span>On a</span>
-                                                    <img class="w-4 h-4 2xl:w-6 2xl:h-6 self-center" src={`/icons/fishing.png`} alt="Fishing Rod Icon" />
+                                                    <img class="w-4 h-4 2xl:w-6 2xl:h-6 self-center" src={`https://cdn.islandstats.xyz/games/fishing/icon.png`} alt="Fishing Rod Icon" />
                                                     <span class="font-semibold">Fishing Island</span>
                                                 {:else}
                                                     <span>In the</span>
@@ -94,21 +96,21 @@
                 {/each}
             </div>
 
-            <div class="flex flex-row gap-2 p-2 border-t border-neutral-300 dark:border-neutral-800 text-md font-semibold">
+            <div class="flex flex-row justify-center gap-2 p-2 text-md font-semibold">
                 <div class="flex flex-row gap-x-2">
-                    <button class="border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-300 dark:hover:bg-neutral-700 duration-100 rounded-sm px-2 py-1" on:click={() => selectPage(currentIndex - 1)}>
+                    <button class="border border-neutral-300 dark:border-neutral-800 hover:bg-neutral-300 dark:hover:bg-neutral-700 duration-100 rounded-sm px-2 py-1" on:click={() => selectPage(currentIndex - 1)}>
                         <span class="flex w-6 h-6 self-center"><LeftChevron /></span>
                     </button>
-                    <div class="flex-1 border border-neutral-300 dark:border-neutral-700 rounded-sm px-2 py-1">{currentIndex + 1} / {fullList.length}</div>
-                    <button class="border border-neutral-300 dark:border-neutral-700 dark:hover:bg-neutral-700 duration-100 rounded-sm px-2 py-1" on:click={() => selectPage(currentIndex + 1)}>
+                    <div class="flex-1 border border-neutral-300 dark:border-neutral-800 rounded-sm px-2 py-1">{currentIndex + 1} / {fullList.length}</div>
+                    <button class="border border-neutral-300 dark:border-neutral-800 dark:hover:bg-neutral-700 duration-100 rounded-sm px-2 py-1" on:click={() => selectPage(currentIndex + 1)}>
                         <span class="flex w-6 h-6 self-center"><RightChevron /></span>
                     </button>
                 </div>
             </div>
             {:else}
-                <div class="flex flex-row gap-x-2">
-                    <p class="text-xl py-2">Nothing to show here yet!</p>
-                    <img class="w-6 h-6 self-center" src="https://cdn.islandstats.xyz/emojis/pensive.png" alt="Sad emoji"/>
+                <div class="flex flex-row justify-center gap-x-2 mb-2">
+                    <img class="w-6 h-6 self-center" src="https://cdn.islandstats.xyz/icons/warnings/yellow.png" alt="Yellow warning icon" />
+                    <p class="self-center text-neutral-600 dark:text-neutral-400 text-lg py-2">You have no friends :(</p>
                 </div>
             {/if}
         {:else}
@@ -125,15 +127,16 @@
                     {/each}
                 </div>
             {:else}
-                <div class="flex justify-center items-center my-auto">
-                    <p class="text-neutral-600 dark:text-neutral-400 text-md 2xl:text-lg py-2 tracking-wide">Not currently partied!</p>
+                <div class="flex flex-row justify-center gap-x-2 mb-2">
+                    <img class="w-6 h-6 self-center" src="https://cdn.islandstats.xyz/icons/warnings/yellow.png" alt="Yellow warning icon" />
+                    <p class="self-center text-neutral-600 dark:text-neutral-400 text-lg py-2">Not partied</p>
                 </div>
             {/if}
         {/if}
     {:else}
         <div class="flex flex-row gap-x-3 justify-center items-center my-auto bg-neutral-300/50 dark:bg-neutral-800/50">
             <img class="w-7 h-7 self-center" src="https://cdn.islandstats.xyz/icons/warnings/yellow.png" alt="Yellow warning icon" />
-            <p class="text-neutral-600 dark:text-neutral-400 text-md 2xl:text-lg my-4 tracking-wide">Social information is disabled!</p>
+            <p class="text-neutral-600 dark:text-neutral-400 text-lg my-4 tracking-wide">Social information is disabled!</p>
         </div>
     {/if}
 </div>

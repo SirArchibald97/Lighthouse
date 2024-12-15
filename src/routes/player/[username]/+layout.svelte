@@ -80,7 +80,7 @@
                         <img class="w-6 h-6 self-center" src="https://cdn.islandstats.xyz/icons/trophies/yellow.png" alt="Games Icon" /><span class="self-center hidden sm:flex">Trophy Hunting</span>
                     </a>
                     <a href={`/player/${data.player.username}/fishing`} class={`flex flex-row gap-x-2 hover:bg-neutral-200 dark:hover:bg-neutral-700 duration-100 px-3 py-1 rounded-sm ${$page.url.pathname.endsWith("/fishing") ? "bg-neutral-200 dark:bg-neutral-700" : ""}`}>
-                        <img class="w-6 h-6 self-center" src="/icons/fishing.png" alt="Fishing Icon" /><span class="self-center hidden sm:flex">Fishing</span>
+                        <img class="w-6 h-6 self-center" src="https://cdn.islandstats.xyz/games/fishing/icon.png" alt="Fishing Icon" /><span class="self-center hidden sm:flex">Fishing</span>
                     </a>
                     <a href={`/player/${data.player.username}/wardrobe`} class={`flex flex-row gap-x-2 hover:bg-neutral-200 dark:hover:bg-neutral-700 duration-100 px-3 py-1 rounded-sm ${$page.url.pathname.endsWith("/wardrobe") ? "bg-neutral-200 dark:bg-neutral-700" : ""}`}>
                         <img class="w-6 h-6 self-center" src="/icons/wardrobe.png" alt="Wardrobe Icon" /><span class="self-center hidden sm:flex">Wardrobe</span>

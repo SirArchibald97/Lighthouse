@@ -69,7 +69,7 @@
                                             <p class="flex flex-row gap-x-1">
                                                 {#if player.status.server.subType === "fishing"}
                                                     <span>On a</span>
-                                                    <img class="w-4 h-4 2xl:w-6 2xl:h-6 self-center" src={`/icons/fishing.png`} alt="Fishing Rod Icon" />
+                                                    <img class="w-4 h-4 2xl:w-6 2xl:h-6 self-center" src={`https://cdn.islandstats.xyz/games/fishing/icon.png`} alt="Fishing Rod Icon" />
                                                     <span class="font-semibold">Fishing Island</span>
                                                 {:else}
                                                     <span>In the</span>

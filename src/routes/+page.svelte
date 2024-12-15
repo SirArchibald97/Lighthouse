@@ -15,6 +15,4 @@
 </svelte:head>
 <div>
     <Favourites {data} {form} />
-    
-    <Features />
 </div>

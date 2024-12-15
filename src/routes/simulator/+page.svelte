@@ -148,10 +148,9 @@
         </div>
     </div>
     
-
+    <!--
     <Ad>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5229589229491714" crossorigin="anonymous"></script>
-        <!-- Simulator Page -->
         <ins class="adsbygoogle"
             style="display:block"
             data-ad-client="ca-pub-5229589229491714"
@@ -162,4 +161,5 @@
             (adsbygoogle = window.adsbygoogle || []).push({});
         </script>
     </Ad>
+    -->
 </div>
