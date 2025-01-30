@@ -1,7 +1,6 @@
 import { redirect } from '@sveltejs/kit';
 import { SAD_API_KEY, DEV_MODE } from "$env/static/private";
-import { formatUUID, getRankIcon } from "$lib/utils.js";
-import db from "$lib/db.js";
+import { formatUUID } from "$lib/utils.js";
 
 export async function load({ params, cookies }) {
     // check username is an existing Minecraft account
@@ -23,9 +22,8 @@ async function fetchPlayer(cookies, uuid, name) {
     const player = data?.player || null;
 
     if (player) {
-        const result = await db.collection("requests").findOne({ username: name });
-        const user = cookies.get("user") ? JSON.parse(cookies.get("user")) : null;
-        return { success: data.success, player, views: result?.requests || 0, user };
+        //const user = cookies.get("user") ? JSON.parse(cookies.get("user")) : null;
+        return { success: data.success, player };
     } else {
         return { success: false };
     }

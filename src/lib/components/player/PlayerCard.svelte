@@ -1,6 +1,6 @@
 <script>
     import { getRankIcon, getStatusGame, getStatusIcon } from "$lib/utils.js";
-    import { getIcon, getColour, calculateNextEvolution } from "$lib/levels.js";
+    import { getIcon, getColour, trophiesToNextEvolution } from "$lib/levels.js";
     import { DateTime } from "luxon";
     import tooltip from "$lib/tooltip.js";
     import Info from "$lib/svgs/Info.svelte";
@@ -107,68 +107,68 @@
     <!-- crown level -->
     <div class="flex flex-col gap-y-1 justify-center border-2 border-neutral-300 dark:border-neutral-800 rounded-lg shadow-lg py-4">
         <div class="flex flex-row gap-x-3 text-lg w-full px-4 place-self-center">
-            <img src={`https://cdn.islandstats.xyz/icons/crowns/${player.trophies.evolution}.png`} alt={`Crown Level ${player.level} Icon`} class="w-7 h-7 self-center" />
-            <span class="self-center font-bold text-xl">{player.level}</span>
+            <img src={`https://cdn.islandstats.xyz/icons/crowns/${player.crownLevel.levelData.evolution}.png`} alt={`Crown Level ${player.crownLevel.levelData.level} Icon`} class="w-7 h-7 self-center" />
+            <span class="self-center font-bold text-xl">{player.crownLevel.levelData.level}</span>
 
             <!-- progress bar -->
             <div class="h-4 w-full self-center rounded-full bg-neutral-200 dark:bg-neutral-700">
-                <div class="flex flex-col h-full left-0 right-0 rounded-l-full text-center group" style={`width: calc(100% * ${player.trophies.nextLevel.obtained / player.trophies.nextLevel.obtainable}); ${getColour(player.level)}`}></div>
+                <div class="flex flex-col h-full left-0 right-0 rounded-l-full text-center group" style={`width: calc(100% * ${player.crownLevel.levelData.nextLevelProgress.obtained / player.crownLevel.levelData.nextLevelProgress.obtainable}); ${getColour(player.crownLevel.levelData.level)}`}></div>
             </div>
 
-            <span class="self-center font-bold text-xl">{player.level + 1}</span>
+            <span class="self-center font-bold text-xl">{player.crownLevel.levelData.level + 1}</span>
         </div>
         <p class="place-self-center text-md text-neutral-500 dark:text-neutral-400">
             Progress:
-            {(player.trophies.nextLevel.obtained / player.trophies.nextLevel.obtainable * 100).toFixed(0)}%
-            ({player.trophies.nextLevel.obtained.toLocaleString()}/{player.trophies.nextLevel.obtainable.toLocaleString()})
+            <span class="font-semibold text-neutral-700 dark:text-neutral-300">{(player.crownLevel.levelData.nextLevelProgress.obtained / player.crownLevel.levelData.nextLevelProgress.obtainable * 100).toFixed(0)}%</span>
+            ({player.crownLevel.levelData.nextLevelProgress.obtained.toLocaleString()}/{player.crownLevel.levelData.nextLevelProgress.obtainable.toLocaleString()})
         </p>
         
         <div class="place-self-center flex flex-row gap-x-2 text-md text-neutral-500 dark:text-neutral-400">
             <div class="flex flex-row gap-x-2">
                 <span>Next evolution is</span>
-                <img class="w-6 h-6 self-center" src={`https://cdn.islandstats.xyz/icons/crowns/${getIcon(player.trophies.nextEvolutionLevel)}.png`} alt="Next Crown Evolution Icon" />
-                <span class="-ml-1 font-semibold text-neutral-700 dark:text-neutral-300">{player.trophies.nextEvolutionLevel}</span>
-                <!--
+                <img class="w-6 h-6 self-center" src={`https://cdn.islandstats.xyz/icons/crowns/${getIcon(player.crownLevel.levelData.nextEvolutionLevel)}.png`} alt="Next Crown Evolution Icon" />
+                <span class="-ml-1 font-semibold text-neutral-700 dark:text-neutral-300">{player.crownLevel.levelData.nextEvolutionLevel}</span>
+                
                 <span>in</span>
                 <img class="w-6 h-6 self-center" src={`https://cdn.islandstats.xyz/icons/trophies/yellow.png`} alt="Trophy Icon" />
-                <span class="-ml-1 font-semibold text-neutral-700 dark:text-neutral-300">{calculateNextEvolution(player).toLocaleString()}</span>
-                -->
+                <span class="-ml-1 font-semibold text-neutral-700 dark:text-neutral-300">{trophiesToNextEvolution(player).toLocaleString()}</span>
+                
             </div>
         </div>
         
     </div>
 
-    <div class="flex flex-col lg:flex-row gap-x-2">
+    <div class="flex flex-row gap-x-2">
         <!-- trophies -->
         <div class="w-1/2 flex flex-col border-2 border-neutral-300 dark:border-neutral-800 rounded-lg shadow-lg p-3">
-            <p class="text-neutral-900 dark:text-neutral-100 font-semibold text-xl pb-1">Trophies</p>
-            <div class="flex flex-col gap-y-2 text-md font-semibold">
+            <p class="text-neutral-900 dark:text-neutral-100 font-semibold text-md lg:text-xl pb-1">Trophies</p>
+            <div class="flex flex-col gap-y-2 text-sm lg:text-md font-semibold">
                 <div class="flex flex-row">
-                    <img src="https://cdn.islandstats.xyz/icons/trophies/yellow.png" class="w-7 h-7 self-center mr-1" alt="Total Trophies" use:tooltip title="Total Trophies" />
+                    <img src="https://cdn.islandstats.xyz/icons/trophies/yellow.png" class="w-5 lg:w-7 h-5 lg:h-7 self-center mr-1" alt="Total Trophies" use:tooltip title="Total Trophies" />
                     <span class="self-center">{player.trophies.total.toLocaleString()}</span>
                     <span class="self-center px-1 text-neutral-400 dark:text-neutral-600">/</span>
                     <span class="self-center text-neutral-400 dark:text-neutral-600">{player.trophies.max.toLocaleString()}</span>
                 </div>
                 <div class="flex flex-row">
-                    <img src="https://cdn.islandstats.xyz/icons/trophies/red.png" class="w-7 h-7 self-center mr-1" alt="Skill Trophies" use:tooltip title="Skill Trophies" />
+                    <img src="https://cdn.islandstats.xyz/icons/trophies/red.png" class="w-5 lg:w-7 h-5 lg:h-7 self-center mr-1" alt="Skill Trophies" use:tooltip title="Skill Trophies" />
                     <span class="self-center">{player.trophies.skill.total.toLocaleString()}</span>
                     <span class="self-center px-1 text-neutral-400 dark:text-neutral-600">/</span>
                     <span class="self-center text-neutral-400 dark:text-neutral-600">{player.trophies.skill.max.toLocaleString()}</span>
                 </div>
                 <div class="flex flex-row">
-                    <img src="https://cdn.islandstats.xyz/icons/trophies/purple.png" class="w-7 h-7 self-center mr-1" alt="Style Trophies" use:tooltip title="Style Trophies" />
+                    <img src="https://cdn.islandstats.xyz/icons/trophies/purple.png" class="w-5 lg:w-7 h-5 lg:h-7 self-center mr-1" alt="Style Trophies" use:tooltip title="Style Trophies" />
                     <span class="self-center">{player.trophies.style.total.toLocaleString()}</span>
                     <span class="self-center px-1 text-neutral-400 dark:text-neutral-600">/</span>
                     <span class="self-center text-neutral-400 dark:text-neutral-600">{player.trophies.style.max.toLocaleString()}</span>
                 </div>
                 <div class="flex flex-row">
-                    <img src="https://cdn.islandstats.xyz/icons/trophies/blue.png" class="w-7 h-7 self-center mr-1" alt="Angler Trophies" use:tooltip title="Angler Trophies" />
+                    <img src="https://cdn.islandstats.xyz/icons/trophies/blue.png" class="w-5 lg:w-7 h-5 lg:h-7 self-center mr-1" alt="Angler Trophies" use:tooltip title="Angler Trophies" />
                     <span class="self-center">{player.trophies.angler.total.toLocaleString()}</span>
                     <span class="self-center px-1 text-neutral-400 dark:text-neutral-600">/</span>
                     <span class="self-center text-neutral-400 dark:text-neutral-600">{player.trophies.angler.max.toLocaleString()}</span>
                 </div>
                 <div class="flex flex-row">
-                    <img src="https://cdn.islandstats.xyz/icons/trophies/silver.png" class="w-7 h-7 self-center mr-1" alt="Bonus Trophies" use:tooltip title="Bonus Trophies" />
+                    <img src="https://cdn.islandstats.xyz/icons/trophies/silver.png" class="w-5 lg:w-7 h-5 lg:h-7 self-center mr-1" alt="Bonus Trophies" use:tooltip title="Bonus Trophies" />
                     <span class="self-center">{player.trophies.bonus.toLocaleString()}</span>
                 </div>
             </div>
@@ -176,17 +176,17 @@
 
         <!-- wallet -->
         <div class="w-1/2 flex flex-col border-2 border-neutral-300 dark:border-neutral-800 rounded-lg shadow-lg p-3">
-            <p class="text-neutral-900 dark:text-neutral-100 font-semibold text-xl">Wallet</p>
+            <p class="text-neutral-900 dark:text-neutral-100 font-semibold text-md lg:text-xl">Wallet</p>
             {#each [
                 { stat: "coins", icon: "coin", name: "Coins" },
-                { stat: "gems", icon: "gem", name: "Gems" },
                 { stat: "silver", icon: "silver", name: "Silver" },
                 { stat: "materialDust", icon: "material_dust", name: "Material Dust" },
-                { stat: "royalReputation", icon: "royal_reputation", name: "Royal Reputation" }
+                { stat: "royalReputation", icon: "royal_reputation", name: "Royal Reputation" },
+                { stat: "anglrTokens", icon: "angler_token", name: "Anglr Tokens" }
             ] as currency}
                 <div class="flex flex-row sm:gap-1 my-1 font-semibold tracking-wider">
-                    <img src={`https://cdn.islandstats.xyz/icons/currency/${currency.icon}.png`} class="w-6 h-6 self-center" alt={currency.name} use:tooltip title={currency.name} />
-                    <p class="text-md ml-1">{player.collections?.currency[currency.stat].toLocaleString() || "Hidden"}</p>
+                    <img src={`https://cdn.islandstats.xyz/icons/currency/${currency.icon}.png`} class="w-5 lg:w-6 h-5 lg:h-6 self-center" alt={currency.name} use:tooltip title={currency.name} />
+                    <p class="text-sm lg:text-md ml-1">{player.collections?.currency[currency.stat].toLocaleString() || "Hidden"}</p>
                 </div>
             {/each}
         </div>

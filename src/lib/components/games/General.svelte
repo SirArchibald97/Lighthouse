@@ -5,6 +5,8 @@
     import tooltip from "$lib/tooltip.js";
     import Pie from "$lib/svgs/Pie.svelte";
     import TrendingUpArrow from "$lib/svgs/TrendingUpArrow.svelte";
+	import Highcharts from "highcharts";
+	import { onMount } from "svelte";
 
     export let player;
     const gamesWon = player.statistics.battle_box.team_first_place + 
@@ -19,16 +21,96 @@
     function toggleOverall() { overall = !overall; }
 
     const games = [
-        { icon: "battle_box", trophies: calculateTrophies(player.statistics.battle_box, badges.battle_box.concat(badges.battle_box_tiered)), maxTrophies: calculateMaxTrophies(badges.battle_box.concat(badges.battle_box_tiered)) },
-        { icon: "sky_battle", trophies: calculateTrophies(player.statistics.sky_battle.quads, badges.sky_battle.concat(badges.sky_battle_tiered)), maxTrophies: calculateMaxTrophies(badges.sky_battle.concat(badges.sky_battle_tiered)) },
-        { icon: "tgttos", trophies: calculateTrophies(player.statistics.tgttos, badges.tgttos.concat(badges.tgttos_tiered)), maxTrophies: calculateMaxTrophies(badges.tgttos.concat(badges.tgttos_tiered)) },
-        { icon: "hitw", trophies: calculateTrophies(player.statistics.hitw, badges.hitw.concat(badges.hitw_tiered)), maxTrophies: calculateMaxTrophies(badges.hitw.concat(badges.hitw_tiered)) },
-        { icon: "dynaball", trophies: calculateTrophies(player.statistics.dynaball, badges.dynaball.concat(badges.dynaball_tiered)), maxTrophies: calculateMaxTrophies(badges.dynaball.concat(badges.dynaball_tiered)) },
-        { icon: "parkour_warrior/solo", trophies: calculateTrophies(player.statistics.pkw.dojo, badges.dojo_tiered), maxTrophies: calculateMaxTrophies(badges.dojo_tiered) },
-        { icon: "parkour_warrior", trophies: calculateTrophies(player.statistics.pkw.survivor, badges.survivor_tiered), maxTrophies: calculateMaxTrophies(badges.survivor_tiered) },
-        { icon: "rocket_spleef", trophies: calculateTrophies(player.statistics.rocket_spleef, badges.rocket_spleef.concat(badges.rocket_spleef_tiered)), maxTrophies: calculateMaxTrophies(badges.rocket_spleef.concat(badges.rocket_spleef_tiered)) },
+        { name: "Battle Box", colour: "#65a30d", icon: "battle_box", trophies: calculateTrophies(player.statistics.battle_box, badges.battle_box.concat(badges.battle_box_tiered)), maxTrophies: calculateMaxTrophies(badges.battle_box.concat(badges.battle_box_tiered)) },
+        { name: "Sky Battle", colour: "#ef4444", icon: "sky_battle", trophies: calculateTrophies(player.statistics.sky_battle.quads, badges.sky_battle.concat(badges.sky_battle_tiered)), maxTrophies: calculateMaxTrophies(badges.sky_battle.concat(badges.sky_battle_tiered)) },
+        { name: "TGTTOS", colour: "#fef08a", icon: "tgttos", trophies: calculateTrophies(player.statistics.tgttos, badges.tgttos.concat(badges.tgttos_tiered)), maxTrophies: calculateMaxTrophies(badges.tgttos.concat(badges.tgttos_tiered)) },
+        { name: "HITW", colour: "#22c55e", icon: "hitw", trophies: calculateTrophies(player.statistics.hitw, badges.hitw.concat(badges.hitw_tiered)), maxTrophies: calculateMaxTrophies(badges.hitw.concat(badges.hitw_tiered)) },
+        { name: "Dynaball", colour: "#292524", icon: "dynaball", trophies: calculateTrophies(player.statistics.dynaball, badges.dynaball.concat(badges.dynaball_tiered)), maxTrophies: calculateMaxTrophies(badges.dynaball.concat(badges.dynaball_tiered)) },
+        { name: "PKW Dojo", colour: "#facc15", icon: "parkour_warrior/solo", trophies: calculateTrophies(player.statistics.pkw.dojo, badges.dojo_tiered), maxTrophies: calculateMaxTrophies(badges.dojo_tiered) },
+        { name: "PKW Survivor", colour: "#a3e635", icon: "parkour_warrior", trophies: calculateTrophies(player.statistics.pkw.survivor, badges.survivor_tiered), maxTrophies: calculateMaxTrophies(badges.survivor_tiered) },
+        { name: "Rocket Spleef Rush", colour: "#94a3b8", icon: "rocket_spleef", trophies: calculateTrophies(player.statistics.rocket_spleef, badges.rocket_spleef.concat(badges.rocket_spleef_tiered)), maxTrophies: calculateMaxTrophies(badges.rocket_spleef.concat(badges.rocket_spleef_tiered)) },
     ];
     const totalTrophies = games.reduce((a, b) => a + b.trophies, 0);
+
+    onMount(() => {
+        Highcharts.chart("trophyPie", {
+            chart: { 
+                plotBackgroundColor: "#171717",
+                plotShadow: false,
+                type: "pie",
+                margin: [0, 0, 0, 0]
+            },
+            title: "Trophies",
+            tooltip: { pointFormat: "<b>{point.y}</b>" },
+            accessibility: {
+                point: { valueSuffix: '%' }
+            },
+            plotOptions: {
+                pie: {
+                    animation: false,
+                    borderWidth: 0,
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<span style="font-size: 1.2em"><b>{point.name}</b>' +
+                            '</span><br>' +
+                            '<span style="opacity: 0.6">{point.percentage:.1f}' +
+                            '%</span>',
+                        connectorColor: 'rgba(128,128,128,0.5)'
+                    }
+                }
+            },
+            series: [{
+                name: "Trophies",
+                data: [
+                    { name: "Skill Trophies", y: player.trophies.skill.total, color: "#ef4444" },
+                    { name: "Style Trophies", y: player.trophies.style.total, color: "#8b5cf6" },
+                    { name: "Angler Trophies", y: player.trophies.angler.total, color: "#06b6d4" }
+                ]
+            }],
+            credits: {
+                enabled: false,
+            }
+        });
+
+        Highcharts.chart("gameTrophyPie", {
+            chart: { 
+                plotBackgroundColor: "#171717",
+                plotShadow: false,
+                type: "pie",
+                margin: [0, 0, 0, 0]
+            },
+            title: "Trophies",
+            tooltip: { pointFormat: "<b>{point.y}</b>" },
+            accessibility: {
+                point: { valueSuffix: '%' }
+            },
+            plotOptions: {
+                pie: {
+                    animation: false,
+                    borderWidth: 0,
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<span style="font-size: 1.2em"><b>{point.name}</b>' +
+                            '</span><br>' +
+                            '<span style="opacity: 0.6">{point.percentage:.1f}' +
+                            '%</span>',
+                        connectorColor: 'rgba(128,128,128,0.5)'
+                    }
+                }
+            },
+            series: [{
+                name: "Trophies",
+                data: games.map(game => { return { name: game.name, y: game.trophies, color: game.colour } })
+            }],
+            credits: {
+                enabled: false,
+            }
+        });
+    });
 </script>
 
 <div class="flex flex-col gap-y-8">
@@ -49,21 +131,16 @@
     </div>
     
     <div class="flex flex-col gap-y-2">
-        <div class="flex flex-col gap-y-3 md:flex-row md:justify-between">
+        <div class="flex flex-col gap-y-3">
             <div class="flex flex-col gap-y-1">
                 <p class="text-xl font-bold leading-none text-neutral-900 dark:text-neutral-100">Skill Trophy Breakdown</p>
                 <p class="text-sm text-neutral-600 dark:text-neutral-400">{overall ? "Which games do your trophies come from?" : "How many trophies do you have in each game?"}</p>
             </div>
 
-            <button class="flex flex-row gap-x-1 text-md border border-neutral-300 dark:border-neutral-800 px-2 py-1 rounded-md dark:text-neutral-100 bg-neutral-50 dark:bg-neutral-950 hover:bg-neutral-200 dark:hover:bg-neutral-800 duration-100" on:click={toggleOverall}>
-                {#if overall}
-                    <span class="w-6 h-6 self-center"><Pie /></span>
-                    <span class="self-center">Overall</span>
-                {:else}
-                    <span class="w-6 h-6 self-center"><TrendingUpArrow /></span>
-                    <span class="self-center">Progress</span>
-                {/if}
-            </button>
+            <div class="flex flex-row gap-x-4">
+                <div class="h-64" id="trophyPie"></div>
+                <div class="h-64" id="gameTrophyPie"></div>
+            </div>
         </div>
 
         {#if games.reduce((a, b) => a + b.trophies, 0) === games.reduce((a, b) => a + b.maxTrophies, 0)}
@@ -73,6 +150,7 @@
             </div>
         {/if}
 
+        <!--
         <div class="flex flex-col gap-y-2">
             {#each games.sort((a, b) => {
                 if (overall) {
@@ -105,5 +183,6 @@
                 </div>
             {/each}
         </div>
+        -->
     </div>
 </div>
