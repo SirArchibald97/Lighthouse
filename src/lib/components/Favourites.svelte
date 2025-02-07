@@ -24,7 +24,7 @@
                 <div class="flex flex-col justify-center items-center gap-y-3">
                     <img class="rounded-md w-24 h-24 sm:w-44 sm:h-44" src={`https://mc-heads.net/avatar/${profile.uuid}/128`} alt={`${profile.username}'s Profile'`} />
                     <div class="flex flex-row gap-x-2">
-                        <img class="h-8 w-8 rounded-md bg-slate-400 hidden sm:block" src={`https://cdn.islandstats.xyz/ranks/${getRankIcon(profile.player.ranks)}`} alt={`${profile.username}'s rank`} />
+                        <img class="h-8 w-8 rounded-md bg-slate-400 hidden sm:block" src={`https://cdn.islandstats.xyz/ranks/${getRankIcon(profile.ranks)}`} alt={`${profile.username}'s rank`} />
                         <p class="text-neutral-900 dark:text-neutral-100 text-center text-sm md:text-lg font-semibold self-center">{profile.username}</p>
                     </div>
                 </div>

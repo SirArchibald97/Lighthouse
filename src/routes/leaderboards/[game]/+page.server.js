@@ -20,7 +20,7 @@ async function getLeaderboard(game) {
         .toArray();
     } else {
         players = await db.collection("players")
-        .find({ [`player.statistics`]: { $exists: true } })
+        .find({ "player.statistics": { $exists: true } })
         .project(fields)
         .toArray();
     }

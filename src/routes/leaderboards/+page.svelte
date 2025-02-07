@@ -25,6 +25,9 @@
 </svelte:head>
 <div class="flex flex-col gap-y-4 text-neutral-900 dark:text-neutral-100">
     <p class="text-center text-4xl font-semibold mx-4 sm:mx-44">Leaderboards</p>
+    <p class="text-center text-xl">Leaderboards disabled for maintenance!</p>
+
+    <!--
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         {#each leaderboards as leaderboard}
             <a href={`/leaderboards/${leaderboard.page}`} class="flex flex-col gap-y-3 py-2 rounded-sm border border-neutral-300 dark:border-neutral-800 hover:bg-neutral-300 dark:hover:bg-neutral-800 duration-100">
@@ -33,16 +36,5 @@
             </a>
         {/each}
     </div>
-    <Ad>
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5229589229491714" crossorigin="anonymous"></script>
-        <ins class="adsbygoogle"
-            style="display:block"
-            data-ad-client="ca-pub-5229589229491714"
-            data-ad-slot="6242704329"
-            data-ad-format="auto"
-            data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </Ad>
+    -->
 </div>

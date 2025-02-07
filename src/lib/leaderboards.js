@@ -2,9 +2,9 @@ import { badges } from "$lib/badges.js";
 
 export const games = [
     {
-        name: "trophies", stats: ["player.level", "player.trophies"], title: "Trophy", icon: "https://cdn.islandstats.xyz/icons/trophies/yellow.png",
+        name: "trophies", stats: ["player.crownLevel.levelData.level", "player.trophies"], title: "Trophy", icon: "https://cdn.islandstats.xyz/icons/trophies/yellow.png",
         boards: [
-            { name: "Crown Level", stat: "trophies.total", display: "level", icon: "https://cdn.islandstats.xyz/icons/crowns/1.png" },
+            { name: "Crown Level", stat: "trophies.total", display: "crownLevel.levelData.level", icon: "https://cdn.islandstats.xyz/icons/crowns/0.png" },
             { name: "Total Trophies", stat: "trophies.total", icon: "https://cdn.islandstats.xyz/icons/trophies/yellow.png" },
             { name: "Skill Trophies", stat: "trophies.skill.total", icon: "https://cdn.islandstats.xyz/icons/trophies/red.png" },
             { name: "Style Trophies", stat: "trophies.style.total", icon: "https://cdn.islandstats.xyz/icons/trophies/purple.png" },

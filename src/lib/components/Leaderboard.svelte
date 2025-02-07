@@ -4,7 +4,6 @@
     import tooltip from "$lib/tooltip.js";
     import ChevronLeft from "$lib/svgs/LeftChevron.svelte";
     import ChevronRight from "$lib/svgs/RightChevron.svelte";
-    import Plus from "$lib/svgs/Plus.svelte";
 
     export let name;
     export let stat;
@@ -95,7 +94,7 @@
                     </td>
                     <td>
                         <div class="flex flex-row gap-x-2">
-                            {#if display === "level"}<img src={`https://cdn.islandstats.xyz/icons/crowns/${getIcon(player.player.level)}.png`} class="w-5 sm:w-7 h-5 sm:h-7 self-center" alt="Crown Level Icon" />{/if}
+                            {#if name === "Crown Level"}<img src={`https://cdn.islandstats.xyz/icons/crowns/${getIcon(player.player.crownLevel.levelData.level)}.png`} class="w-5 sm:w-7 h-5 sm:h-7 self-center" alt="Crown Level Icon" />{/if}
                             <span class="self-center text-neutral-900 dark:text-neutral-100">{fetchStat(player.player, display || stat)?.toLocaleString() || "-"}</span>
                         </div>
                     </td>

@@ -1,7 +1,5 @@
 <script>
     import "../app.css";
-    import { inject } from '@vercel/analytics';
-    inject();
 
     import Sun from "$lib/svgs/Sun.svelte";
     import Moon from "$lib/svgs/Moon.svelte";

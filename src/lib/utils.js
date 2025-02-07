@@ -24,7 +24,7 @@ export function getRankIcon(ranks) {
     };
 
     for (let rank in rankIcons) {
-        if (ranks.includes(rank)) {
+        if (ranks?.includes(rank)) {
             return rankIcons[rank];
         }
     }

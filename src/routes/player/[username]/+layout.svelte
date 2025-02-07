@@ -55,20 +55,6 @@
                         {/if}
                     {/if}
                 {/if}
-
-                <!--
-                <Ad>
-                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5229589229491714" crossorigin="anonymous"></script>
-                    <ins class="adsbygoogle"
-                        style="display:block"
-                        data-ad-client="ca-pub-5229589229491714"
-                        data-ad-slot="4157179618"
-                        data-ad-format="auto"
-                        data-full-width-responsive="true">
-                    </ins>
-                    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-                </Ad>
-                -->
             </div>
 
             <div class="w-full xl:w-3/4 flex flex-col gap-y-2 text-neutral-900 dark:text-neutral-100">

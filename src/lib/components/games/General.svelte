@@ -132,15 +132,28 @@
     
     <div class="flex flex-col gap-y-2">
         <div class="flex flex-col gap-y-3">
-            <div class="flex flex-col gap-y-1">
-                <p class="text-xl font-bold leading-none text-neutral-900 dark:text-neutral-100">Skill Trophy Breakdown</p>
-                <p class="text-sm text-neutral-600 dark:text-neutral-400">{overall ? "Which games do your trophies come from?" : "How many trophies do you have in each game?"}</p>
-            </div>
+            <div class="flex flex-row justify-between gap-y-1">
+                <div class="flex flex-col">
+                    <p class="text-xl font-bold leading-none text-neutral-900 dark:text-neutral-100">Skill Trophy Breakdown</p>
+                    <p class="text-sm text-neutral-600 dark:text-neutral-400">{overall ? "Which games do your trophies come from?" : "How many trophies do you have in each game?"}</p>
+                </div>
 
+                <button on:click={toggleOverall} class="flex flex-row gap-x-1 text-md border border-neutral-300 dark:border-neutral-800 px-2 py-1 rounded-md dark:text-neutral-100 bg-neutral-50 dark:bg-neutral-950 hover:bg-neutral-200 dark:hover:bg-neutral-800 duration-100">
+                    {#if overall}
+                        <span class="w-6 h-6 self-center"><Pie /></span>
+                        <span class="self-center">Overall</span>
+                    {:else}
+                        <span class="w-6 h-6 self-center"><TrendingUpArrow /></span>
+                        <span class="self-center">Progress</span>
+                    {/if}
+                </button>
+            </div>
+            <!--
             <div class="flex flex-row gap-x-4">
                 <div class="h-64" id="trophyPie"></div>
                 <div class="h-64" id="gameTrophyPie"></div>
             </div>
+            -->
         </div>
 
         {#if games.reduce((a, b) => a + b.trophies, 0) === games.reduce((a, b) => a + b.maxTrophies, 0)}
@@ -150,7 +163,7 @@
             </div>
         {/if}
 
-        <!--
+        
         <div class="flex flex-col gap-y-2">
             {#each games.sort((a, b) => {
                 if (overall) {
@@ -183,6 +196,6 @@
                 </div>
             {/each}
         </div>
-        -->
+        
     </div>
 </div>

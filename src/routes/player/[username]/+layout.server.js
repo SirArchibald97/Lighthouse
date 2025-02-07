@@ -14,7 +14,7 @@ export async function load({ params, cookies }) {
 
 async function fetchPlayer(cookies, uuid, name) {
     // fetch player data from the MCC Island API
-    const res = await fetch(`${DEV_MODE === "true" ? "http://localhost:3000" : "https://api.sirarchibald.dev"}/islandstats/player/${uuid}`, {
+    const res = await fetch(`${DEV_MODE === "true" ? "http://localhost:3000" : "https://api.sirarchibald.dev"}/lighthouse/player/${uuid}`, {
         method: "GET",
         headers: { "Content-Type": "application/json", "Accept": "application/json", "auth": `${SAD_API_KEY}` },
     });
