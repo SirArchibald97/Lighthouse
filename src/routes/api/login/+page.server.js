@@ -1,6 +1,6 @@
 import db from "$lib/db.js";
 import { redirect } from '@sveltejs/kit';
-import { DISCORD_REDIRECT_URI, DISCORD_CLIENT_ID, DISCORD_CLIENT_SECRET, DISCORD_BOT_TOKEN } from '$env/static/private';
+//import { DISCORD_REDIRECT_URI, DISCORD_CLIENT_ID, DISCORD_CLIENT_SECRET, DISCORD_BOT_TOKEN } from '$env/static/private';
 
 export async function load({ url, cookies }) {
     const code = url.searchParams.get('code');

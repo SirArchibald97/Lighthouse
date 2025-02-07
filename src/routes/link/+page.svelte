@@ -3,7 +3,7 @@
     import Moon from "$lib/svgs/Moon.svelte";
     import Footer from "$lib/components/Footer.svelte";
     import theme from '$lib/stores/theme.js';
-    import { PUBLIC_DISCORD_LOGIN_URL } from "$env/static/public";
+    //import { PUBLIC_DISCORD_LOGIN_URL } from "$env/static/public";
 
     $: dark = $theme === 'dark';
     let username = "";
@@ -72,7 +72,7 @@
                 </div>
             {:else}
                 <p class="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">You must be logged in to access this page!</p>
-                <a class="bg-red-500 dark:bg-red-500/40 text-neutral-900 dark:text-neutral-100 px-3 py-2 rounded-md" href={PUBLIC_DISCORD_LOGIN_URL}>Login</a>
+                <a class="bg-red-500 dark:bg-red-500/40 text-neutral-900 dark:text-neutral-100 px-3 py-2 rounded-md" href="/">Login</a>
             {/if}
         </div>
     </div>

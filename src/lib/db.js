@@ -5,3 +5,5 @@ import { DB_URI } from "$env/static/private";
 //await client.connect();
 
 //export default client.db("island-stats");
+
+export default null;
