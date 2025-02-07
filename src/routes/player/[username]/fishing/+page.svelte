@@ -121,7 +121,7 @@
                                 <div class="flex flex-col gap-y-4 items-start rounded-md border border-neutral-300 dark:border-neutral-800 p-3">
                                     <button on:click={() => switchCategory(expandedCategory === island.name ? null : island.name)} class="flex flex-row w-full justify-between">
                                         <div class="flex flex-row gap-x-2 self-center">
-                                            <img class="w-5 md:w-8 h-5 md:h-8 self-center" src={`/icons/fishing/${island.icon}.png`} alt="General Icon" />
+                                            <img class="w-5 md:w-8 h-5 md:h-8 self-center" src={`/icons/fishing/${island.icon}.png`} alt={`${island.icon} Icon`} />
                                             <p class="text-md md:text-lg xl:text-xl font-semibold self-center">{island.name}</p>
                                         </div>
                                         <p class={`self-center text-xs md:text-sm xl:text-md border-2 ${collection.style} rounded-full px-3 py-1`}>{collection.climate} {island.grotto ? "Grotto" : (island.type === "crab" ? "Crabs" : "Island")}</p>
@@ -188,7 +188,7 @@
                                 <div class="flex flex-col items-start rounded-md bg-neutral-300/50 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-800 p-3">
                                     <button class="flex flex-row justify-between w-full">
                                         <div class="flex flex-row gap-x-2">
-                                            <img class="w-5 md:w-8 h-5 md:h-8 self-center" src="https://cdn.islandstats.xyz/emojis/crown.png" alt="General Icon" />
+                                            <img class="w-5 md:w-8 h-5 md:h-8 self-center" src={`/icons/fishing/${island.icon}.png`} alt={`${island.icon} Icon`} />
                                             <p class="text-md md:text-lg xl:text-xl font-semibold self-center">{island.name}</p>
                                         </div>
 
