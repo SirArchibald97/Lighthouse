@@ -32,6 +32,7 @@
     ];
     const totalTrophies = games.reduce((a, b) => a + b.trophies, 0);
 
+    /*
     onMount(() => {
         Highcharts.chart("trophyPie", {
             chart: { 
@@ -111,6 +112,7 @@
             }
         });
     });
+    */
 </script>
 
 <div class="flex flex-col gap-y-8">

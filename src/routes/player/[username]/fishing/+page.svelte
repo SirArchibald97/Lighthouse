@@ -1,5 +1,6 @@
 <script>
     import { getIcon, getColour, trophiesToNextFishingEvolution } from "$lib/levels.js";
+    import { calculatePercentage } from "$lib/utils.js";
     import tooltip from "$lib/tooltip.js";
     import { slide } from "svelte/transition";
 
@@ -132,54 +133,65 @@
                                             <div class="mb-4">
                                                 <div class="flex flex-row gap-x-1">
                                                     <img class="w-6 h-6 self-center" src="https://cdn.islandstats.xyz/icons/trophies/blue.png" alt="Angler Tropy Icon" />
-                                                    <p class="self-center font-semibold">{earnedTrophiesForIsland(island.name)} / {totalTrophiesForIsland(island.name)}</p>
+                                                    <p class="self-center font-semibold">{earnedTrophiesForIsland(island.name)} <span class="text-neutral-500">/ {totalTrophiesForIsland(island.name)}</span></p>
                                                 </div>
-                                                <p>Fish Caught: <span class="font-semibold">{data.player.collections.fish.filter(f => f.fish.collection === island.name && f.weights.length > 0).length}/{data.player.collections.fish.filter(f => f.fish.collection === island.name).length}</span></p>
-                                                <p>Weights Caught: <span class="font-semibold">{caughtWeightsForIsland(island.name)}/{data.player.collections.fish.filter(f => f.fish.collection === island.name).length * (island.name.includes("Crab Pots") ? 3 : 4)}</span></p>
+                                                <p>
+                                                    <span>Fish Caught: </span>
+                                                    <span class="font-semibold">{data.player.collections.fish.filter(f => f.fish.collection === island.name && f.weights.length > 0).length}/{data.player.collections.fish.filter(f => f.fish.collection === island.name).length}</span>
+                                                    <span class="text-neutral-500">({calculatePercentage(data.player.collections.fish.filter(f => f.fish.collection === island.name && f.weights.length > 0).length, data.player.collections.fish.filter(f => f.fish.collection === island.name).length)}%)</span>
+                                                </p>
+                                                <p>
+                                                    <span>Weights Caught: </span>
+                                                    <span class="font-semibold">{caughtWeightsForIsland(island.name)}/{data.player.collections.fish.filter(f => f.fish.collection === island.name).length * (island.name.includes("Crab Pots") ? 3 : 4)}</span>
+                                                    <span class="text-neutral-500">({calculatePercentage(caughtWeightsForIsland(island.name), data.player.collections.fish.filter(f => f.fish.collection === island.name).length * (island.name.includes("Crab Pots") ? 3 : 4))}%)</span>
+                                                </p>
                                             </div>
 
-                                            <div class="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-2">
-                                                <!-- FISH -->
-                                                {#each (island.type === "fish" ? data.player.collections.fish.filter(fish => fish.fish.collection === island.name) : data.player.collections.fish.filter(fish => fish.fish.climate === collection.climate && fish.fish.name.includes(" Crab"))) as fish}
-                                                    <div class={`flex flex-row gap-x-2 p-2 bg-neutral-200 dark:bg-neutral-800 rounded-md`}>
-                                                        <img class="w-8 md:w-12 h-8 md:h-12 self-center" src={`https://cdn.islandstats.xyz/fishing/fish/${island.type === "fish" ? fish.fish.collection.toLowerCase().replaceAll(" ", "_") : "crab_collection"}/${fish.fish.name.toLowerCase().replaceAll(" ", "_")}.png`} alt={fish.fish.name} />
-                                                        <div class="flex flex-col md:w-full">
-                                                            <div class="flex flex-row justify-between">
-                                                                <div class="flex flex-row gap-x-1 md:gap-x-3">
-                                                                    <p class={`self-center text-sm md:text-md font-semibold ${colours[fish.fish.rarity]}`}>{fish.fish.name}</p>
-                                                                    <div class="flex flex-row gap-x-1">
-                                                                        {#each weights.filter(w => { if (island.type === "fish" && w.value === "COLOSSAL") return false; else if (island.type === "crab" && (w.value === "MASSIVE" || w.value === "GARGANTUAN")) return false; else return true }) as weight}
-                                                                            <img class={`w-4 md:w-5 h-4 md:h-5 self-center`} use:tooltip title={fish.weights.find(w => w.weight === weight.value) ? `First Caught: ${fish.weights.find(w => w.weight === weight.value).firstCaught}` : "Not Caught"} src={`/icons/${weight.name.toLowerCase()}_${fish.weights.find(w => w.weight === weight.value) ? "" : "empty_"}star.png`} alt={`${weight.name} Star Icon`} />
-                                                                        {/each}
+                                            <div class="flex flex-col gap-y-2">
+                                                {#each ["COMMON", "UNCOMMON", "RARE", "EPIC", "LEGENDARY", "MYTHIC"] as rarity}
+                                                    <div class="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-2">
+                                                        <!-- FISH -->
+                                                        {#each (island.type === "fish" ? data.player.collections.fish.filter(fish => fish.fish.collection === island.name && fish.fish.rarity === rarity) : data.player.collections.fish.filter(fish => fish.fish.climate === collection.climate && fish.fish.name.includes(" Crab") && fish.fish.rarity === rarity)) as fish}
+                                                            <div class={`flex flex-row gap-x-2 p-2 bg-neutral-200 dark:bg-neutral-800 rounded-md`}>
+                                                                <img class="w-8 md:w-12 h-8 md:h-12 self-center" src={`https://cdn.islandstats.xyz/fishing/fish/${island.type === "fish" ? fish.fish.collection.toLowerCase().replaceAll(" ", "_") : "crab_collection"}/${fish.fish.name.toLowerCase().replaceAll(" ", "_")}.png`} alt={fish.fish.name} />
+                                                                <div class="flex flex-col md:w-full">
+                                                                    <div class="flex flex-row justify-between">
+                                                                        <div class="flex flex-row gap-x-1 md:gap-x-3">
+                                                                            <p class={`self-center text-sm md:text-md font-semibold ${colours[fish.fish.rarity]}`}>{fish.fish.name}</p>
+                                                                            <div class="flex flex-row gap-x-1">
+                                                                                {#each weights.filter(w => { if (island.type === "fish" && w.value === "COLOSSAL") return false; else if (island.type === "crab" && (w.value === "MASSIVE" || w.value === "GARGANTUAN")) return false; else return true }) as weight}
+                                                                                    <img class={`w-4 md:w-5 h-4 md:h-5 self-center`} use:tooltip title={fish.weights.find(w => w.weight === weight.value) ? `First Caught: ${fish.weights.find(w => w.weight === weight.value).firstCaught}` : "Not Caught"} src={`/icons/${weight.name.toLowerCase()}_${fish.weights.find(w => w.weight === weight.value) ? "" : "empty_"}star.png`} alt={`${weight.name} Star Icon`} />
+                                                                                {/each}
+                                                                            </div>
+                                                                        </div>
+                                                                        
+                                                                        <div class={`hidden md:flex flex-row gap-x-1 px-1 md:px-2 py-1 rounded-full border ${(island.type === "fish" && fish.weights.length === 4) || (island.type === "crab" && fish.weights.length === 3) ? "border-green-400 dark:border-green-800 bg-green-300/50 dark:bg-green-700/50" : "border-neutral-400 dark:border-neutral-800 bg-neutral-300/50 dark:bg-neutral-700/50"}`}>
+                                                                            <img class="w-3 md:w-5 h-3 md:h-5 self-center" src="https://cdn.islandstats.xyz/icons/trophies/blue.png" alt="Angler Trophy Icon" />
+                                                                            <p class={`text-xs md:text-md self-center`}>
+                                                                                {fish.weights.reduce((a, b) => a += fish.fish[`${weights.find(w => w.value === b.weight).name.toLowerCase()}Trophies`], 0)}/{fish.fish.averageTrophies + fish.fish.largeTrophies + (fish.fish.massiveTrophies || 0) + (fish.fish.gargantuanTrophies || 0) + (fish.fish.colossalTrophies || 0)}
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="flex flex-col gap-y-2 text-xs md:text-sm xl:text-md">
+                                                                        <div class="flex flex-col md:flex-row gap-x-2 text-neutral-600 dark:text-neutral-400">
+                                                                            <p>Type: <span class="text-neutral-900 dark:text-neutral-100">{fish.fish.elusive ? "Elusive" : "Normal"}</span></p>
+                                                                            <p class="hidden md:flex">•</p>
+                                                                            <p>Catch Time: <span class="text-neutral-900 dark:text-neutral-100">{fish.fish.catchTime.toLowerCase()[0].toUpperCase() + fish.fish.catchTime.toLowerCase().slice(1, fish.fish.catchTime.length)}</span></p>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <!-- SHOWN ONLY ON MOBILE -->
+                                                                    <div class={`flex md:hidden w-24 justify-center flex-row gap-x-1 mt-1 md:mt-0 px-1 md:px-2 py-1 rounded-full border ${(island.type === "fish" && fish.weights.length === 4) || (island.type === "crab" && fish.weights.length === 3) ? "border-green-400 dark:border-green-800 bg-green-300/50 dark:bg-green-700/50" : "border-neutral-400 dark:border-neutral-800 bg-neutral-300/50 dark:bg-neutral-700/50"}`}>
+                                                                        <img class="w-4 md:w-5 h-4 md:h-5 self-center" src="https://cdn.islandstats.xyz/icons/trophies/blue.png" alt="Angler Trophy Icon" />
+                                                                        <p class={`text-xs md:text-md self-center`}>
+                                                                            {fish.weights.reduce((a, b) => a += fish.fish[`${weights.find(w => w.value === b.weight).name.toLowerCase()}Trophies`], 0)}/{fish.fish.averageTrophies + fish.fish.largeTrophies + (fish.fish.massiveTrophies || 0) + (fish.fish.gargantuanTrophies || 0) + (fish.fish.colossalTrophies || 0)}
+                                                                        </p>
                                                                     </div>
                                                                 </div>
-                                                                
-                                                                <div class={`hidden md:flex flex-row gap-x-1 px-1 md:px-2 py-1 rounded-full border ${(island.type === "fish" && fish.weights.length === 4) || (island.type === "crab" && fish.weights.length === 3) ? "border-green-400 dark:border-green-800 bg-green-300/50 dark:bg-green-700/50" : "border-neutral-400 dark:border-neutral-800 bg-neutral-300/50 dark:bg-neutral-700/50"}`}>
-                                                                    <img class="w-3 md:w-5 h-3 md:h-5 self-center" src="https://cdn.islandstats.xyz/icons/trophies/blue.png" alt="Angler Trophy Icon" />
-                                                                    <p class={`text-xs md:text-md self-center`}>
-                                                                        {fish.weights.reduce((a, b) => a += fish.fish[`${weights.find(w => w.value === b.weight).name.toLowerCase()}Trophies`], 0)}/{fish.fish.averageTrophies + fish.fish.largeTrophies + (fish.fish.massiveTrophies || 0) + (fish.fish.gargantuanTrophies || 0) + (fish.fish.colossalTrophies || 0)}
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="flex flex-col gap-y-2 text-xs md:text-sm xl:text-md">
-                                                                <div class="flex flex-col md:flex-row gap-x-2 text-neutral-600 dark:text-neutral-400">
-                                                                    <p>Type: <span class="text-neutral-900 dark:text-neutral-100">{fish.fish.elusive ? "Elusive" : "Normal"}</span></p>
-                                                                    <p class="hidden md:flex">•</p>
-                                                                    <p>Catch Time: <span class="text-neutral-900 dark:text-neutral-100">{fish.fish.catchTime.toLowerCase()[0].toUpperCase() + fish.fish.catchTime.toLowerCase().slice(1, fish.fish.catchTime.length)}</span></p>
-                                                                </div>
-                                                            </div>
-
-                                                            <!-- SHOWN ONLY ON MOBILE -->
-                                                            <div class={`flex md:hidden w-24 justify-center flex-row gap-x-1 mt-1 md:mt-0 px-1 md:px-2 py-1 rounded-full border ${(island.type === "fish" && fish.weights.length === 4) || (island.type === "crab" && fish.weights.length === 3) ? "border-green-400 dark:border-green-800 bg-green-300/50 dark:bg-green-700/50" : "border-neutral-400 dark:border-neutral-800 bg-neutral-300/50 dark:bg-neutral-700/50"}`}>
-                                                                <img class="w-4 md:w-5 h-4 md:h-5 self-center" src="https://cdn.islandstats.xyz/icons/trophies/blue.png" alt="Angler Trophy Icon" />
-                                                                <p class={`text-xs md:text-md self-center`}>
-                                                                    {fish.weights.reduce((a, b) => a += fish.fish[`${weights.find(w => w.value === b.weight).name.toLowerCase()}Trophies`], 0)}/{fish.fish.averageTrophies + fish.fish.largeTrophies + (fish.fish.massiveTrophies || 0) + (fish.fish.gargantuanTrophies || 0) + (fish.fish.colossalTrophies || 0)}
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>                                             
+                                                            </div>                                             
+                                                        {/each}
+                                                    </div>
                                                 {/each}
-
                                             </div>
                                         </div>
                                     {/if}
